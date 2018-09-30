@@ -128,7 +128,7 @@ STATIC_URL = '/static/'
 
 
 SUIT_CONFIG = {
-    'ADMIN_NAME': '苹果树',
+    'ADMIN_NAME': 'evaluate',
     # 'ADMIN_NAME': 'TSWGAIMS',
     'HEADER_DATE_FORMAT': 'Y-m-d l',
     'HEADER_TIME_FORMAT': 'H:i',
