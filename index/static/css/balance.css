@@ -1,0 +1,47 @@
+
+
+
+table{
+    border:3px solid black;
+    font-size: 14px;
+    float: right;
+}
+
+td,th{
+    border:2px solid black;
+    background: #aaa;
+    height:30px;
+    padding: 0px;
+}
+
+td.input input{
+    border: none;
+    background:none;
+    margin: 0px;
+    height: 20px;
+    width: 120px;
+}
+
+
+
+td.input{
+    background: #eee;
+}
+
+span{
+    padding:5px;
+}
+
+
+form.file{
+    position: absolute;
+}
+
+input.upload{
+    float: right;
+    margin: 0px 0px 20px 0px;
+}
+
+form.mtable{
+    width: 892px;
+}

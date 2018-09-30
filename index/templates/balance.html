@@ -1,0 +1,71 @@
+{% extends "admin/base_site.html" %} 
+
+
+
+
+{% load admin_static %}
+{% block extrahead %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/balance.css' %}" media="all"/>
+<script type="text/javascript" src="{% static 'js/balance.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery-1.11.3.js' %}"></script>
+
+
+
+{% endblock %}
+
+
+
+
+
+
+
+
+{% load admin_static %}
+
+{% block extrajs %}
+
+{% endblock extrajs %}
+
+{% block extrastyle %}
+
+{% endblock extrastyle %}
+
+{% block content %}
+
+
+<form class='file' action="excel" method="post">
+    <input type="file" name="excel" accept=".xlsx" defaultValue="导入" >
+    <input type="submit" value="上传文件">
+</form>
+<form class='mtable' action="table" method="post">
+
+    <input class='upload' type="submit" name="保存数据">
+    <table >
+        <tr >
+            <th> 资产 </th>
+            <th> 年初余额</th>
+            <th> 期末余额</th>
+            <th> 负债及所有者权益</th>
+            <th> 年初余额</th>
+            <th> 期末余额</th>
+        </tr>
+        {%for da in data%}
+        <tr >
+            {%for d in da%}
+                {%if d.1 == False %}
+                    <td class="{{d.0}}"><span></span> </td>
+                {% elif d.1 == True%}
+                    <td class="input">
+                        <input type="text" class="{{d.0}} " name="{{d.0}} " placeholder="请填写">
+                    </td>
+                    
+                {%else%}
+                    <td class="{{d.0}}"> <span>{{d.1}}</span></td>
+                {% endif %}
+            {%endfor%}
+        </tr>
+        {%endfor%}
+    </table>
+
+</form>
+{% endblock content %}
