@@ -1,34 +1,13 @@
-{% extends "admin/base_site.html" %} 
-
-
-
-
+{% extends "balance.html" %} 
 {% load admin_static %}
 {% block extrahead %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/balance.css' %}" media="all"/>
-<script type="text/javascript" src="{% static 'js/balance.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/profit.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/jquery-1.11.3.js' %}"></script>
 
 
 
 {% endblock %}
-
-
-
-
-
-
-
-
-{% load admin_static %}
-
-{% block extrajs %}
-
-{% endblock extrajs %}
-
-{% block extrastyle %}
-
-{% endblock extrastyle %}
 
 {% block content %}
 
@@ -57,14 +36,10 @@
     <div class="nf"> 年份： </div>
 
 
-    <table >
+    <table class="profit">
         <tr >
-            <th> 资产 </th>
-            <th> 年初余额</th>
-            <th> 期末余额</th>
-            <th> 负债及所有者权益</th>
-            <th> 年初余额</th>
-            <th> 期末余额</th>
+            <th> 项目 </th>
+            <th> 本年金额</th>
         </tr>
         {%for da in data%}
         <tr >

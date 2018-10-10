@@ -4,7 +4,7 @@
 table{
     border:3px solid black;
     font-size: 14px;
-    float: right;
+    float: left;
 }
 
 td,th{
@@ -37,11 +37,27 @@ form.file{
     position: absolute;
 }
 
-input.upload{
+input.upload,div.select{
     float: right;
-    margin: 0px 0px 20px 0px;
+    margin: 0px 10px 20px 0px;
 }
+select{
+    width: 100px;
+    height:25px;
+}
+div.nf{
+    float: right;
+    margin: 4px 10px 0px 0px;
+}
+
+
 
 form.mtable{
     width: 892px;
 }
+
+table.profit{
+    margin: 55px 0px 0px 0px ;
+}
+
+

@@ -143,7 +143,12 @@ SUIT_CONFIG = {
             {'label': '基本信息',
               'app': 'index',
               'models': ('CompanyInfo','CoreMember','FinancialSituation','ProductsAndMarket','TechnologyRD',
-                        'ServerRequest',{'label': '资产负债表', 'url': '/admin/index/balance'})},
+                        'ServerRequest',
+                        {'label': '资产负债表', 'url': '/admin/index/balance'},
+                        {'label': '利润表', 'url': '/admin/index/profit'},
+                        {'label': '现金流量表', 'url': '/admin/index/cash_flow'},
+
+                        )},
 
              ),
     # 每一个字典表示左侧菜单的一栏

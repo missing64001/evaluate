@@ -103,6 +103,27 @@ window.onload=function(){
 
         
     });
+    d17()
+    e17()
+    d26()
+    e26()
+    d28()
+    e28()
+    d37()
+    e37()
+    d38()
+    e38()
+    h18()
+    i18()
+    h27()
+    i27()
+    h28()
+    i28()
+    h35()
+    i35()
+    h38()
+    i38()
+
 }
 
 function d17() {
@@ -165,7 +186,7 @@ function h18() {
     cal('h6,h7,h8,h9,h10,h11,h12,h13,h14,h15,h16,h17,h18')
 }
 function i18() {
-    cal('i6,i7,i8,i9,i10,i11,i12,i13,i14,i15,i16,i17,h18')
+    cal('i6,i7,i8,i9,i10,i11,i12,i13,i14,i15,i16,i17,i18')
 }
 function h27() {
     cal('h19,h20,h21,h22,h23,h24,h25,h26,h27')

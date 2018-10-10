@@ -280,12 +280,22 @@ class EvaluationOfEnterprises(models.Model):
     team = models.SmallIntegerField(verbose_name='企业经营及管理团队（40）',blank=True,null=True)
 
 class Balance(models.Model):
-    companyInfo = models.OneToOneField(CompanyInfo,verbose_name='企业')
+    companyInfo = models.ForeignKey(CompanyInfo,verbose_name='企业')
     year = models.SmallIntegerField(verbose_name='年份')
-    name = models.CharField(max_length=2)
+    name = models.CharField(max_length=4)
     value = models.FloatField()
 
+class Profit(models.Model):
+    companyInfo = models.ForeignKey(CompanyInfo,verbose_name='企业')
+    year = models.SmallIntegerField(verbose_name='年份')
+    name = models.CharField(max_length=4)
+    value = models.FloatField()
 
+class CashFlow(models.Model):
+    companyInfo = models.ForeignKey(CompanyInfo,verbose_name='企业')
+    year = models.SmallIntegerField(verbose_name='年份')
+    name = models.CharField(max_length=4)
+    value = models.FloatField()
 
 
 
