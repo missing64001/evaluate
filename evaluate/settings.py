@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'index',
     'company',
     'incubator',
+    'institution',
 ]
 
 MIDDLEWARE = [
@@ -144,8 +145,10 @@ SUIT_CONFIG = {
             'sites',
             {'label': '基本信息',
               'app': 'company',
-              'models': ('CompanyInfo','CoreMember','FinancialSituation','ProductsAndMarket','TechnologyRD',
-                        'ServerRequest',
+              'models': (
+                        {'label': '企业基本信息', 'url': '/admin/company/companyinfo_opt'},
+                        'CoreMember','IndependentEvaluationOfEnterprises',
+                        # 'FinancialSituation','ProductsAndMarket','TechnologyRD','ServerRequest',
                         {'label': '资产负债表', 'url': '/admin/company/balance'},
                         {'label': '利润表', 'url': '/admin/company/profit'},
                         {'label': '现金流量表', 'url': '/admin/company/cash_flow'},

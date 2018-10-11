@@ -8,6 +8,8 @@ from django.http import HttpResponseRedirect
 from .models import *
 from pprint import pprint
 from django.db.models import F
+from django.contrib import admin
+
 # 用户注册
 # 
 # 
@@ -15,11 +17,15 @@ from django.db.models import F
 
 def companyinfo_view(request):
     #  render
-    
-    _id = CompanyInfo.objects.get(user=request.user).id
-    ren = redirect ('/admin/company/companyinfo/%s'%_id)
+    group_name = None
+    if not request.user.is_superuser:
+        group_name = request.user.groups.all()[0].name
+    if group_name == '企业用户':
+        _id = CompanyInfo.objects.get(user=request.user).id
+        ren = redirect ('/admin/company/companyinfo/%s'%_id)
+        return ren
+    ren = redirect ('/admin/company/companyinfo/')
     return ren
-    
 def financialsituation_view(request):
     _id = FinancialSituation.objects.get(companyInfo=CompanyInfo.objects.get(user=request.user)).id
     return HttpResponseRedirect('/admin/company/financialsituation/%s'%_id)

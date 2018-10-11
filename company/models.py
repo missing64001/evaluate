@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from incubator.models import Incubator
 # Create your models here.
 
 x1_d = ((1 ,'集成电路布图'),  (2 ,'其他'))
@@ -7,6 +8,7 @@ class CompanyInfo(models.Model):
     '一、基本信息'
 
     user = models.OneToOneField(User)
+    incubator = models.ForeignKey(Incubator,verbose_name='孵化器',blank=True,null=True)
 
     name = models.CharField(max_length=50,verbose_name='企业名称',blank=True,null=True)
     create_date = models.DateField(verbose_name='成立时间',blank=True,null=True)
@@ -251,14 +253,32 @@ class ServerRequest(models.Model):
         verbose_name_plural=verbose_name
 
 
-
+external_environment_choices=((1,'1分'),
+                              (2,'2分'),
+                              (3,'3分'),
+                              (4,'4分'),
+                              (5,'5分'),
+                              (6,'6分'),
+                              (7,'7分'),
+                              (8,'8分'),
+                              (9,'9分'),
+                              (10,'10分'),
+                                )
 class IndependentEvaluationOfEnterprises(models.Model):
-    external_environment = models.SmallIntegerField(verbose_name='企业所处外部环境（权重：2）',blank=True,null=True)
-    products_and_market = models.SmallIntegerField(verbose_name='企业主营产品及市场开拓（权重：2）',blank=True,null=True)
-    technology_R_D = models.SmallIntegerField(verbose_name='企业核心技术及研发实力（权重：2）',blank=True,null=True)
-    team = models.SmallIntegerField(verbose_name='企业经营及管理团队（权重：4）',blank=True,null=True)
+    companyInfo = models.OneToOneField(CompanyInfo,verbose_name='企业',blank=True,null=True)
+    external_environment = models.SmallIntegerField(choices=external_environment_choices,verbose_name='企业所处外部环境（权重：2）',default=1,blank=True,null=True)
+    products_and_market = models.SmallIntegerField(choices=external_environment_choices,verbose_name='企业主营产品及市场开拓（权重：2）',default=1,blank=True,null=True)
+    technology_R_D = models.SmallIntegerField(choices=external_environment_choices,verbose_name='企业核心技术及研发实力（权重：2）',default=1,blank=True,null=True)
+    team = models.SmallIntegerField(choices=external_environment_choices,verbose_name='企业经营及管理团队（权重：4）',default=1,blank=True,null=True)
+    
+    class Meta:
+        verbose_name='自主评价'
+        verbose_name_plural=verbose_name
+
+
 
 class EvaluationOfEnterprises(models.Model):
+    companyInfo = models.OneToOneField(CompanyInfo,verbose_name='企业',blank=True,null=True)
     external_environment = models.SmallIntegerField(verbose_name='外部环境（20）',blank=True,null=True)
     products_and_market = models.SmallIntegerField(verbose_name='企业主营产品及市场开拓（20）',blank=True,null=True)
     technology_R_D = models.SmallIntegerField(verbose_name='企业核心技术及研发实力（20）',blank=True,null=True)

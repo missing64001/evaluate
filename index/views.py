@@ -6,6 +6,8 @@ from django.contrib.auth.models import User,Group
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponseRedirect
 from company.models import *
+from incubator.models import Incubator
+from institution.models import Institution
 from pprint import pprint
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
@@ -24,6 +26,7 @@ def my_register(request):
         # phone
         # business_license_pic
         
+        
 
         if request.POST['password'] != request.POST['password2']:
             errors.append('两次输入密码不一致')
@@ -34,32 +37,66 @@ def my_register(request):
         if errors:
             return render(request,'res.html',{'errors':errors})
 
-        if request.POST['type'] == '1':
-            image = request.FILES.get('img')
+
+        account = request.POST['username']
+        password = request.POST['password']
+        user = User.objects.create_user(account,'xx@qq.com',password)
+        user.save()
+        userlogin = auth.authenticate(username = account,password = password)
+        auth.login(request,userlogin)
+
+        if True: # request.POST['type'] == '1':
+            image = request.FILES['business_license_pic']
 
             # set user
-            account = request.POST['username']
-            password = request.POST['password']
-            user = User.objects.create_user(account,'xx@qq.com',password)
-            user.save()
-
-            userlogin = auth.authenticate(username = account,password = password)
-            auth.login(request,userlogin)
-
             user.is_active = True
             user.is_staff = True
             user.groups.add(Group.objects.get(name='企业用户'))
             user.save()
 
             # set company
-            need_data = ['name','credit_code','phone','business_license_pic']
+            need_data = ['name','credit_code','phone','incubator']
             dic = {  da:request.POST[da]    for da in request.POST if da in need_data}
-            com = CompanyInfo.objects.create(user=user,**dic)
+            dic['incubator'] = Incubator.objects.get(name=dic['incubator'])
+            com = CompanyInfo.objects.create(user=user,business_license_pic=image,**dic)
             FinancialSituation.objects.create(companyInfo=com)
             ProductsAndMarket.objects.create(companyInfo=com)
             TechnologyRD.objects.create(companyInfo=com)
             ServerRequest.objects.create(companyInfo=com)
             return HttpResponseRedirect('/admin')
+
+        # elif request.POST['type'] == '2':
+
+        #     user.is_active = True
+        #     user.is_staff = True
+        #     user.groups.add(Group.objects.get(name='孵化器用户'))
+        #     user.save()
+        #     need_data = ['name','phone']
+        #     dic = {  da:request.POST[da]    for da in request.POST if da in need_data}
+        #     inc = Incubator.objects.create(user=user,**dic)
+        #     return HttpResponseRedirect('/admin')
+
+        # elif request.POST['type'] == '3':
+
+        #     user.is_active = True
+        #     user.is_staff = True
+        #     user.groups.add(Group.objects.get(name='机构用户'))
+        #     user.save()
+        #     need_data = ['name','phone']
+        #     dic = {  da:request.POST[da]    for da in request.POST if da in need_data}
+        #     inc = Incubator.objects.create(user=user,type=1,**dic)
+        #     return HttpResponseRedirect('/admin')
+
+        # elif request.POST['type'] == '4':
+
+        #     user.is_active = True
+        #     user.is_staff = True
+        #     user.groups.add(Group.objects.get(name='机构用户'))
+        #     user.save()
+        #     need_data = ['name','phone']
+        #     dic = {  da:request.POST[da]    for da in request.POST if da in need_data}
+        #     inc = Incubator.objects.create(user=user,type=2,**dic)
+        #     return HttpResponseRedirect('/admin')
         
 
     return render(request,'res.html',{'errors':errors})

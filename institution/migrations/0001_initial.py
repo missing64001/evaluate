@@ -17,11 +17,12 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Incubator',
+            name='institution',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(blank=True, max_length=50, null=True, verbose_name='孵化器名称')),
-                ('phone', models.BigIntegerField(blank=True, null=True, verbose_name='孵化器手机')),
+                ('type', models.SmallIntegerField(blank=True, choices=[(1, '投资'), (2, '银行')], null=True, verbose_name='机构类型')),
+                ('name', models.CharField(blank=True, max_length=50, null=True, verbose_name='机构名称')),
+                ('phone', models.BigIntegerField(blank=True, null=True, verbose_name='机构手机')),
                 ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
