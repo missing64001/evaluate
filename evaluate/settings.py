@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'index',
+    'company',
+    'incubator',
 ]
 
 MIDDLEWARE = [
@@ -141,12 +143,12 @@ SUIT_CONFIG = {
     'MENU': (
             'sites',
             {'label': '基本信息',
-              'app': 'index',
+              'app': 'company',
               'models': ('CompanyInfo','CoreMember','FinancialSituation','ProductsAndMarket','TechnologyRD',
                         'ServerRequest',
-                        {'label': '资产负债表', 'url': '/admin/index/balance'},
-                        {'label': '利润表', 'url': '/admin/index/profit'},
-                        {'label': '现金流量表', 'url': '/admin/index/cash_flow'},
+                        {'label': '资产负债表', 'url': '/admin/company/balance'},
+                        {'label': '利润表', 'url': '/admin/company/profit'},
+                        {'label': '现金流量表', 'url': '/admin/company/cash_flow'},
 
                         )},
 
