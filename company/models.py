@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from incubator.models import Incubator
+from datetime import timedelta
 # Create your models here.
 
 x1_d = ((1 ,'集成电路布图'),  (2 ,'其他'))
@@ -270,19 +271,35 @@ class IndependentEvaluationOfEnterprises(models.Model):
     products_and_market = models.SmallIntegerField(choices=external_environment_choices,verbose_name='企业主营产品及市场开拓（权重：2）',default=1,blank=True,null=True)
     technology_R_D = models.SmallIntegerField(choices=external_environment_choices,verbose_name='企业核心技术及研发实力（权重：2）',default=1,blank=True,null=True)
     team = models.SmallIntegerField(choices=external_environment_choices,verbose_name='企业经营及管理团队（权重：4）',default=1,blank=True,null=True)
-    
+    create_date = models.DateTimeField(verbose_name='生成时间',auto_now=True,blank=True,null=True)
+
+    # def tname(self):
+    #     print(type(self.create_date))
+    #     verbose_name='自我评价'
+    #     verbose_name_plural=verbose_name
+    #     return self.companyInfo.name + ' %s' % (self.create_date+ timedelta(hours=8)).strftime("%Y-%m-%d %H:%M:%S")
+
+    def __str__(self):
+        return '自主评价'
+
     class Meta:
         verbose_name='自主评价'
         verbose_name_plural=verbose_name
 
 
-
 class EvaluationOfEnterprises(models.Model):
     companyInfo = models.OneToOneField(CompanyInfo,verbose_name='企业',blank=True,null=True)
-    external_environment = models.SmallIntegerField(verbose_name='外部环境（20）',blank=True,null=True)
-    products_and_market = models.SmallIntegerField(verbose_name='企业主营产品及市场开拓（20）',blank=True,null=True)
-    technology_R_D = models.SmallIntegerField(verbose_name='企业核心技术及研发实力（20）',blank=True,null=True)
-    team = models.SmallIntegerField(verbose_name='企业经营及管理团队（40）',blank=True,null=True)
+    external_environment = models.SmallIntegerField(choices=external_environment_choices,verbose_name='企业所处外部环境（权重：2）',blank=True,null=True)
+    products_and_market = models.SmallIntegerField(choices=external_environment_choices,verbose_name='企业主营产品及市场开拓（权重：2）',blank=True,null=True)
+    technology_R_D = models.SmallIntegerField(choices=external_environment_choices,verbose_name='企业核心技术及研发实力（权重：2）',blank=True,null=True)
+    team = models.SmallIntegerField(choices=external_environment_choices,verbose_name='企业经营及管理团队（权重：4）',blank=True,null=True)
+    create_date = models.DateTimeField(verbose_name='生成时间',auto_now=True,blank=True,null=True)
+    def __str__(self):
+        return '校正评价'
+
+    class Meta:
+        verbose_name='校正评价'
+        verbose_name_plural=verbose_name
 
 class Balance(models.Model):
     companyInfo = models.ForeignKey(CompanyInfo,verbose_name='企业')
@@ -301,3 +318,20 @@ class CashFlow(models.Model):
     year = models.SmallIntegerField(verbose_name='年份')
     name = models.CharField(max_length=4)
     value = models.FloatField()
+
+def get_user_group(request,groupname=None):
+    try:
+        user = request.user
+    except Exception:
+        user = request
+        
+    if user.is_superuser:
+        if not groupname:
+            return 'super'
+        else:
+            mygname = 'super'
+    elif not  groupname:
+        return user.groups.all()[0].name
+    else:
+        mygname = user.groups.all()[0].name
+    return mygname == groupname

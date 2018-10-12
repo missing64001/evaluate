@@ -5,6 +5,7 @@ class Incubator(models.Model):
     user = models.OneToOneField(User)
     name = models.CharField(max_length=50,verbose_name='孵化器名称',blank=True,null=True)
     phone = models.BigIntegerField(verbose_name='孵化器手机',blank=True,null=True)
+    credit_code = models.CharField(max_length=50,verbose_name='统一社会信用代码',blank=True,null=True)
 
     def __str__(self):
         if self.name:

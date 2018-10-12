@@ -142,18 +142,34 @@ SUIT_CONFIG = {
     'LIST_PER_PAGE': 10,
     'MENU_OPEN_FIRST_CHILD': True,
     'MENU': (
-            'sites',
-            {'label': '基本信息',
-              'app': 'company',
-              'models': (
-                        {'label': '企业基本信息', 'url': '/admin/company/companyinfo_opt'},
-                        'CoreMember','IndependentEvaluationOfEnterprises',
-                        # 'FinancialSituation','ProductsAndMarket','TechnologyRD','ServerRequest',
-                        {'label': '资产负债表', 'url': '/admin/company/balance'},
-                        {'label': '利润表', 'url': '/admin/company/profit'},
-                        {'label': '现金流量表', 'url': '/admin/company/cash_flow'},
+                'sites',
 
-                        )},
+                {'label': '平台管理团队',
+                  'app': 'index',
+                  'models': (
+                            {'label': '资产负债表', 'url': '/admin/company/balance'},
+
+                )},
+
+                  
+                {'label': '基本信息',
+                  'app': 'company',
+                  'models': (
+                            {'label': '企业基本信息', 'url': '/admin/company/companyinfo_opt'},
+                            'CoreMember','IndependentEvaluationOfEnterprises',
+                            # 'FinancialSituation','ProductsAndMarket','TechnologyRD','ServerRequest',
+                            {'label': '资产负债表', 'url': '/admin/company/balance'},
+                            {'label': '利润表', 'url': '/admin/company/profit'},
+                            {'label': '现金流量表', 'url': '/admin/company/cash_flow'},
+
+                )},
+
+
+                  
+
+
+
+
 
              ),
     # 每一个字典表示左侧菜单的一栏

@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-
+from django.core.urlresolvers import reverse
 # Create your views here.
 from django.contrib import auth
 from django.contrib.auth.models import User,Group
@@ -9,7 +9,7 @@ from .models import *
 from pprint import pprint
 from django.db.models import F
 from django.contrib import admin
-
+from .admin import IndependentEvaluationOfEnterprisesAdmin,EvaluationOfEnterprisesAdmin
 # 用户注册
 # 
 # 
@@ -387,6 +387,25 @@ def cash_flow_submit_table_view(request):
 
     ren = redirect ('/admin/company/cash_flow/')
     return ren
+
+def independentevaluationofenterprises_view(request,arg1):
+    group_name = None
+    if request.user.is_superuser:
+        return IndependentEvaluationOfEnterprisesAdmin(IndependentEvaluationOfEnterprises,admin.AdminSite()).change_view(request,arg1)
+        group_name = None
+    else:
+        group_name = request.user.groups.all()[0].name
+
+    if group_name == '企业用户':
+        return IndependentEvaluationOfEnterprisesAdmin(IndependentEvaluationOfEnterprises,admin.AdminSite()).change_view(request,arg1)
+    elif group_name == '孵化器用户':
+        iobj = IndependentEvaluationOfEnterprises.objects.get(id=arg1)
+        try:
+            eobj = EvaluationOfEnterprises.objects.get(companyInfo=iobj.companyInfo)
+        except EvaluationOfEnterprises.DoesNotExist as e:
+            eobj = EvaluationOfEnterprises.objects.create(companyInfo=iobj.companyInfo)
+        print(eobj.id)
+        return EvaluationOfEnterprisesAdmin(EvaluationOfEnterprises,admin.AdminSite()).change_view(request,str(eobj.id))
 
 
 

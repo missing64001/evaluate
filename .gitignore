@@ -12,6 +12,9 @@ Desktop.ini
 dist
 build
 
+
 # My configurations:
 db.ini
 index/api/err
+static/upload
+*/migrations

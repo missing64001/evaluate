@@ -1,6 +1,7 @@
 from django.conf.urls import url
 from .views import *
 from django.contrib import admin
+# 
 
 urlpatterns = [
     # url(r'^$', index, name='index'),
@@ -19,6 +20,6 @@ urlpatterns = [
     url(r'^profit/submit_table/$',profit_submit_table_view, name='profit_submit_table_view'),
     url(r'^cash_flow/$',cash_flow_view, name='cash_flow_view'),
     url(r'^cash_flow/submit_table/$',cash_flow_submit_table_view, name='cash_flow_submit_table_view'),
-
-
+    url(r'^independentevaluationofenterprises/(\d+)/',independentevaluationofenterprises_view, name='independentevaluationofenterprises_view'),
+    # url(r'^independentevaluationofenterprises_change/(\d+)/',IndependentEvaluationOfEnterprisesAdmin.change_view, name='independentevaluationofenterprises_change_view'),
 ]

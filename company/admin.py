@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import *
+from incubator.models import Incubator
 
 class ShareholderInl(admin.StackedInline):
     model = Shareholder
@@ -77,21 +78,7 @@ class ServerRequestInl(admin.StackedInline):
     
 
     
-@admin.register(IndependentEvaluationOfEnterprises)
-class IndependentEvaluationOfEnterprisesAdmin(admin.ModelAdmin):
-    exclude = ('companyInfo',)
-    def get_queryset(self, request):
-        qs = super().get_queryset(request)
-        if request.user.is_superuser:
-            return qs
-        return qs.filter(companyInfo=CompanyInfo.objects.get(user=request.user))
 
-    class Media:
-        js = ('/static/js/opt_evaluation.js',)
-
-    def save_model(self, request, obj, form, change):
-        obj.companyInfo = CompanyInfo.objects.get(user=request.user)
-        obj.save()
 
 @admin.register(CoreMember)
 class CoreMemberAdmin(admin.ModelAdmin):
@@ -202,6 +189,50 @@ class ServerRequestAdmin(admin.ModelAdmin):
         if request.user.is_superuser:
             return qs
         return qs.filter(companyInfo=CompanyInfo.objects.get(user=request.user))
+
+
+@admin.register(IndependentEvaluationOfEnterprises)
+class IndependentEvaluationOfEnterprisesAdmin(admin.ModelAdmin):
+    list_display=['companyInfo','external_environment','products_and_market','technology_R_D','team','create_date']
+    # exclude = ('companyInfo',)
+    readonly_fields = ('companyInfo',)
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        if get_user_group(request,'super'):
+            return qs
+        elif get_user_group(request,'企业用户'):
+            return qs.filter(companyInfo=CompanyInfo.objects.get(user=request.user))
+        elif get_user_group(request,'孵化器用户'):
+            return qs.filter(companyInfo__incubator=Incubator.objects.get(user=request.user))
+            
+    class Media:
+        js = ('/static/js/opt_evaluation.js',)
+
+    def save_model(self, request, obj, form, change):
+        obj.companyInfo = CompanyInfo.objects.get(user=request.user)
+        obj.save()
+
+    # def change_view(self, request, object_id, form_url='', extra_context=None):
+    #     return self.changeform_view(request, object_id, form_url, extra_context)
+
+
+@admin.register(EvaluationOfEnterprises)
+class EvaluationOfEnterprisesAdmin(admin.ModelAdmin):
+    readonly_fields = ('companyInfo',)
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+
+        # if db_field.name == "car":
+        #     kwargs["queryset"] = Car.objects.filter(owner=request.user)
+        return super(EvaluationOfEnterprisesAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
+    class Media:
+        js = ('/static/js/opt_evaluation.js',)
+# EvaluationOfEnterprises
+
+
+
+
+
+
 
 
 
