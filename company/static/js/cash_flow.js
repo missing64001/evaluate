@@ -120,7 +120,21 @@ function g38(){
 }
 
 
-
+function refreshdata() {
+    d9()
+    d14()
+    d15()
+    d21()
+    d25()
+    d26()
+    d31()
+    d35()
+    d36()
+    d38()
+    g21()
+    g22()
+    g38()
+}
 
 function cal(str) {
     var total = 0
@@ -142,4 +156,76 @@ function cal(str) {
         }
     }
     $("." + res_s + " span").text(total.toFixed(2))
+}
+
+
+var wb;//读取完成的数据
+var rABS = false; //是否将文件读取为二进制字符串
+
+function importf(obj) {//导入
+    if(!obj.files) {
+        return;
+    }
+    var f = obj.files[0];
+    var reader = new FileReader();
+    reader.onload = function(e) {
+        var data = e.target.result;
+        if(rABS) {
+            wb = XLSX.read(btoa(fixdata(data)), {//手动转化
+                type: 'base64'
+            });
+        } else {
+            wb = XLSX.read(data, {
+                type: 'binary'
+            });
+        }
+        //wb.SheetNames[0]是获取Sheets中第一个Sheet的名字
+        //wb.Sheets[Sheet名]获取第一个Sheet的数据
+        deal_excel(wb)
+    };
+    if(rABS) {
+        reader.readAsArrayBuffer(f);
+    } else {
+        reader.readAsBinaryString(f);
+    }
+}
+
+function fixdata(data) { //文件流转BinaryString
+    var o = "",
+        l = 0,
+        w = 10240;
+    for(; l < data.byteLength / w; ++l) o += String.fromCharCode.apply(null, new Uint8Array(data.slice(l * w, l * w + w)));
+    o += String.fromCharCode.apply(null, new Uint8Array(data.slice(l * w)));
+    return o;
+}
+
+function deal_excel(wb) {
+    var ce=XLSX.utils.sheet_to_formulae(wb.Sheets['现金流量表（自动生成）']);
+
+    var dic = new Array();
+    for (var i=0;i<ce.length;i++){
+        var c = ce[i].split('=')
+        if (c.length == 2){
+            dic[c[0]] = c[1].toLowerCase() 
+        }
+        else{
+            window.alert(i + '  '+ ce[i]);
+        }
+    }
+    for (let item in $(".input input")){
+        console.log($(item).attr('name'))
+    }
+    var input = $(".input input")
+    for (var i=0;i<input.length;i++){
+        _name = $(input[i]).attr('name').toUpperCase().replace(/^(\s|\xA0)+|(\s|\xA0)+$/g, '')
+        if (parseFloat(dic[_name])){
+            $(input[i]).val(dic[_name])
+        }
+        else{
+            $(input[i]).val(dic['aaaa55555'])
+        }
+        
+    }
+    console.log(dic)
+    refreshdata()
 }

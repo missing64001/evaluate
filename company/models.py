@@ -9,7 +9,7 @@ class CompanyInfo(models.Model):
     '一、基本信息'
 
     user = models.OneToOneField(User)
-    incubator = models.ForeignKey(Incubator,verbose_name='孵化器',blank=True,null=True)
+    incubator = models.ForeignKey(Incubator,verbose_name='所属孵化器',blank=True,null=True)
 
     name = models.CharField(max_length=50,verbose_name='企业名称',blank=True,null=True)
     create_date = models.DateField(verbose_name='成立时间',blank=True,null=True)
@@ -41,7 +41,7 @@ class CompanyInfo(models.Model):
 
 
     credit_code = models.CharField(max_length=50,verbose_name='统一社会信用代码',blank=True,null=True)
-    phone = models.BigIntegerField(verbose_name='企业手机',blank=True,null=True)
+    phone = models.BigIntegerField(verbose_name='联系电话',blank=True,null=True)
     business_license_pic = models.ImageField(upload_to='static/upload/company',blank=True,null=True)
 
 
@@ -205,6 +205,7 @@ class WorkExperience(models.Model):
 class FinancialSituation(models.Model):
     '二、财务状况'
     companyInfo = models.ForeignKey(CompanyInfo,verbose_name='企业',blank=True,null=True)
+    year = models.SmallIntegerField(verbose_name='年份',blank=True,null=True)
     income = models.IntegerField(verbose_name='累计销售收入',blank=True,null=True)
     profit = models.IntegerField(verbose_name='累计净利润',blank=True,null=True)
     total = models.IntegerField(verbose_name='期末总资产',blank=True,null=True)
@@ -302,22 +303,30 @@ class EvaluationOfEnterprises(models.Model):
         verbose_name_plural=verbose_name
 
 class Balance(models.Model):
-    companyInfo = models.ForeignKey(CompanyInfo,verbose_name='企业')
-    year = models.SmallIntegerField(verbose_name='年份')
+    companyInfo = models.ForeignKey(CompanyInfo,verbose_name='企业',blank=True,null=True)
+    year = models.SmallIntegerField(verbose_name='年份',blank=True,null=True)
     name = models.CharField(max_length=4)
     value = models.FloatField()
 
 class Profit(models.Model):
-    companyInfo = models.ForeignKey(CompanyInfo,verbose_name='企业')
-    year = models.SmallIntegerField(verbose_name='年份')
+    companyInfo = models.ForeignKey(CompanyInfo,verbose_name='企业',blank=True,null=True)
+    year = models.SmallIntegerField(verbose_name='年份',blank=True,null=True)
     name = models.CharField(max_length=4)
     value = models.FloatField()
 
 class CashFlow(models.Model):
-    companyInfo = models.ForeignKey(CompanyInfo,verbose_name='企业')
-    year = models.SmallIntegerField(verbose_name='年份')
+    companyInfo = models.ForeignKey(CompanyInfo,verbose_name='企业',blank=True,null=True)
+    year = models.SmallIntegerField(verbose_name='年份',blank=True,null=True)
     name = models.CharField(max_length=4)
     value = models.FloatField()
+
+
+
+
+
+
+
+
 
 def get_user_group(request,groupname=None):
     try:
@@ -331,7 +340,11 @@ def get_user_group(request,groupname=None):
         else:
             mygname = 'super'
     elif not  groupname:
-        return user.groups.all()[0].name
+        if user.groups.all():
+            return user.groups.all()[0].name
     else:
-        mygname = user.groups.all()[0].name
+        if user.groups.all():
+            mygname = user.groups.all()[0].name
+        else:
+            mygname = None
     return mygname == groupname

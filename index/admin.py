@@ -58,3 +58,30 @@ class UserAdmin(admin.ModelAdmin):
     #                 ret,
     #             )
     # expired.short_description = '是否已过期'
+    # 
+    # 
+    @admin.register(Bonus)
+    class BonusAdmin(admin.ModelAdmin):
+        list_display = ('companyInfo','incubator','item','note','value')
+        search_fields = ('companyInfo__name','companyInfo__incubator__name')
+
+        def incubator(self,obj):
+
+            return obj.companyInfo.incubator
+            
+    @admin.register(Subtraction)
+    class SubtractionAdmin(admin.ModelAdmin):
+        list_display = ('companyInfo','incubator','item','note','value')
+        search_fields = ('companyInfo__name','companyInfo__incubator__name')
+
+        def incubator(self,obj):
+
+            return obj.companyInfo.incubator
+
+
+
+
+
+
+
+

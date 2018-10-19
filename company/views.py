@@ -46,7 +46,7 @@ def balance_view(request):
 
     year = 2018
     bal_data = Balance.objects.all().filter(companyInfo=CompanyInfo.objects.get(user=request.user),year=year)
-    bal_dict = { da.name:da.value for da in bal_data}
+    bal_dict = { da.name:  da.value if da.value != 0 else '' for da in bal_data}
 
     data = []
 
@@ -83,14 +83,19 @@ def balance_submit_table_view(request):
     year = 2018
     # data = { x:request.POST[x]    for x in request.POST if len(x)<6 and request.POST[x]}
     for x in request.POST:
-        if len(x)<6 and request.POST[x]:
+        if len(x)<6:
+            if not request.POST[x]:
+                res = 0
+            else:
+                res = request.POST[x]
+
             try:
                 bal = Balance.objects.get(companyInfo=CompanyInfo.objects.get(user=request.user),year=year,name=x)
-                bal.value=request.POST[x]
+                bal.value=res
                 bal.save()
             except Balance.DoesNotExist as e:
                 Balance(companyInfo=CompanyInfo.objects.get(user=request.user),year=year,
-                        name=x,value=request.POST[x]).save()
+                        name=x,value=res).save()
 
     ren = redirect ('/admin/company/balance/')
     return ren
@@ -356,9 +361,11 @@ def cash_flow_view(request):
         if i in (7,9,13,14,      10,15,17,27,28,29,36,37):
             datag.append(('g%s'%i,True,bal_dict.get('g%s'%i,'')))
         elif i in (6,8,11,12,16,18,19,20,34,35):
-            datad.append(('g%s'%i,get_other_data('g%s'%i)))
+            datag.append(('g%s'%i,get_other_data('g%s'%i)))
         else:
             datag.append(('g%s'%i,False))
+    print('----------changdu----------')
+    print(len(datab),len(datad),len(datae),len(datag))
     data = zip(datab,datad,datae,datag)
 
 
@@ -585,5 +592,4 @@ cash_flow_stre='''1、将净利润调节为经营活动现金流量：
 　　减：现金的期初余额
 　　加：现金等价物的期末余额
 　　减：现金等价物的期初余额
-　　现金及现金等价物净增加额
-'''
+　　现金及现金等价物净增加额'''

@@ -6,6 +6,7 @@ from django.contrib import admin
 urlpatterns = [
     # url(r'^$', index, name='index'),
     # url(r'^p/(?P<article_id>[0-9]+)/$', detail,name='detail'),
+
     url(r'^companyinfo_opt/$',companyinfo_view, name='companyinfo_view'),
     url(r'^financialsituation/$',financialsituation_view, name='financialsituation_view'),
     url(r'^productsandmarket/$',productsandmarket_view, name='productsandmarket_view'),
@@ -21,5 +22,7 @@ urlpatterns = [
     url(r'^cash_flow/$',cash_flow_view, name='cash_flow_view'),
     url(r'^cash_flow/submit_table/$',cash_flow_submit_table_view, name='cash_flow_submit_table_view'),
     url(r'^independentevaluationofenterprises/(\d+)/',independentevaluationofenterprises_view, name='independentevaluationofenterprises_view'),
+
+    
     # url(r'^independentevaluationofenterprises_change/(\d+)/',IndependentEvaluationOfEnterprisesAdmin.change_view, name='independentevaluationofenterprises_change_view'),
 ]

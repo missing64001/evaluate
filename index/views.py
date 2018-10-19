@@ -45,7 +45,7 @@ def my_register(request):
         userlogin = auth.authenticate(username = account,password = password)
         auth.login(request,userlogin)
 
-        if True: # request.POST['type'] == '1':
+        if request.POST['type'] == '1':
             image = request.FILES['business_license_pic']
 
             # set user
@@ -65,41 +65,41 @@ def my_register(request):
             ServerRequest.objects.create(companyInfo=com)
             return HttpResponseRedirect('/admin')
 
-        # elif request.POST['type'] == '2':
+        elif request.POST['type'] == '2':
 
-        #     user.is_active = True
-        #     user.is_staff = True
-        #     user.groups.add(Group.objects.get(name='孵化器用户'))
-        #     user.save()
-        #     need_data = ['name','phone']
-        #     dic = {  da:request.POST[da]    for da in request.POST if da in need_data}
-        #     inc = Incubator.objects.create(user=user,**dic)
-        #     return HttpResponseRedirect('/admin')
+            user.is_active = True
+            user.is_staff = True
+            user.groups.add(Group.objects.get(name='孵化器用户'))
+            user.save()
+            need_data = ['name','phone']
+            dic = {  da:request.POST[da]    for da in request.POST if da in need_data}
+            inc = Incubator.objects.create(user=user,**dic)
+            return HttpResponseRedirect('/admin')
 
-        # elif request.POST['type'] == '3':
+        elif request.POST['type'] == '3':
 
-        #     user.is_active = True
-        #     user.is_staff = True
-        #     user.groups.add(Group.objects.get(name='机构用户'))
-        #     user.save()
-        #     need_data = ['name','phone']
-        #     dic = {  da:request.POST[da]    for da in request.POST if da in need_data}
-        #     inc = Incubator.objects.create(user=user,type=1,**dic)
-        #     return HttpResponseRedirect('/admin')
+            user.is_active = True
+            user.is_staff = True
+            user.groups.add(Group.objects.get(name='机构用户'))
+            user.save()
+            need_data = ['name','phone']
+            dic = {  da:request.POST[da]    for da in request.POST if da in need_data}
+            inc = Institution.objects.create(user=user,type=1,**dic)
+            return HttpResponseRedirect('/admin')
 
-        # elif request.POST['type'] == '4':
+        elif request.POST['type'] == '4':
 
-        #     user.is_active = True
-        #     user.is_staff = True
-        #     user.groups.add(Group.objects.get(name='机构用户'))
-        #     user.save()
-        #     need_data = ['name','phone']
-        #     dic = {  da:request.POST[da]    for da in request.POST if da in need_data}
-        #     inc = Incubator.objects.create(user=user,type=2,**dic)
-        #     return HttpResponseRedirect('/admin')
+            user.is_active = True
+            user.is_staff = True
+            user.groups.add(Group.objects.get(name='机构用户'))
+            user.save()
+            need_data = ['name','phone']
+            dic = {  da:request.POST[da]    for da in request.POST if da in need_data}
+            inc = Institution.objects.create(user=user,type=2,**dic)
+            return HttpResponseRedirect('/admin')
         
-
-    return render(request,'res.html',{'errors':errors})
+    incubators = Incubator.objects.all()
+    return render(request,'res.html',{'errors':errors,'incubators':incubators})
 
 
 @csrf_exempt
@@ -147,7 +147,10 @@ def register(request):
             inital_data(user)
             return HttpResponseRedirect('/admin')
 
-    return render(request,'register.html', {'errors': errors})
+    incubators = Incubator.objects.all()
+    print(incubators)
+    print(len(incubators))
+    return render(request,'register.html', {'errors': errors,'incubators':incubators})
 
 def inital_data(user):
     user.is_active = True
@@ -180,28 +183,29 @@ def inital_company_data(user):
 # 用户登录
 @csrf_exempt
 def my_login(request):
+    print(1111111111)
     errors =[]
-    account = None
+    username = None
     password = None
     if request.method == "POST":
-        if not request.POST.get('account'):
+        if not request.POST.get('username'):
             errors.append('用户名不能为空')
         else:
-            account = request.POST.get('account')
+            username = request.POST.get('username')
 
         if not request.POST.get('password'):
             errors = request.POST.get('密码不能为空')
         else:
             password = request.POST.get('password')
 
-        if account is not None and password is not None:
-            user = auth.authenticate(username=account,password=password)
+        if username is not None and password is not None:
+            user = auth.authenticate(username=username,password=password)
             if user is not None:
                 if user.is_active:
                     auth.login(request,user)
-                    return HttpResponseRedirect('/blog')
+                    return HttpResponseRedirect('/admin')
                 else:
-                    errors.append('用户名错误')
+                    errors.append('用户未激活')
             else:
                 errors.append('用户名或密码错误')
     return render(request,'login.html', {'errors': errors})

@@ -1,4 +1,4 @@
-"""evaluate URL Configuration
+"""evaluateg URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/1.11/topics/http/urls/
@@ -19,5 +19,6 @@ from django.contrib import admin
 urlpatterns = [
     url(r'', include('index.urls', namespace='index')),
     url(r'^admin/company/', include('company.urls', namespace='company')),
+    url(r'^admin/institution/', include('institution.urls', namespace='institution')),
     url(r'^admin/', admin.site.urls),
 ]

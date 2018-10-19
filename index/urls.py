@@ -7,9 +7,9 @@ urlpatterns = [
     # url(r'^p/(?P<article_id>[0-9]+)/$', detail,name='detail'),
     
 
+    url(r'^admin/login/$',my_login, name='login'),
     url(r'',admin.site.urls),
     url(r'^register/$',register, name='register'),
-    url(r'^login/$',my_login, name='my_login'),
     url(r'^logout/$',my_logout, name='my_logout'),
     url(r'^res/$',my_register, name='my_register'),
 

@@ -62,18 +62,22 @@
                 <div class="form-row control-group">
                     <label for="id_password" class="control-label required">密码:</label> <input type="password" name="password" id="id_password" required />
                     <label for="id_password" class="control-label required">确认密码:</label> <input type="password" name="password2"  required />
-<!--                     <label for="id_password" class="control-label required">用户类型:</label> 
+                    <label for="id_password" class="control-label required">用户类型:</label> 
                     <select class='s1' name="type" style="width: 292px">
                         <option value="1">企业用户</option>
                         <option value="2">孵化器用户</option>
                         <option value="3">投资类机构用户</option>
                         <option value="4">银行类机构用户</option>
-                    </select> -->
+                    </select>
                 </div>
                 <div class="option">
-
                     <label for="id_password" class="control-label required">企业名称:</label> <input type="text" name="name" required />
-                    <label for="id_password" class="control-label required">所属孵化器:</label> <input type="text" name="incubator" required />
+                    <label for="id_password" class="control-label required">所属孵化器:
+                    <select name="incubator" style="width: 292px">
+                        {% for incubator in incubators %}
+                        <option value="{{incubator.id}}">{{incubator.name}}</option>
+                        {%  endfor  %}
+                    </select>
                     <label for="id_password" class="control-label required">统一社会信用代码:</label> <input type="text" name="credit_code" required />
                     <label for="id_password" class="control-label required">企业电话:</label> <input type="text" name="phone" required />
                     <label for="id_password" class="control-label required">上传营业执照:<input type="file" name="business_license_pic" required>
@@ -82,7 +86,8 @@
                 
                 
                 <div class="submit-row">
-                    <input type="submit" value="登录" class="btn btn-info"/>
+                    <input type="submit" value="注册" class="btn btn-info" style="margin-right: 170px" />
+                    <a href="/admin"> 直接登陆 </a>
                 </div>
             </form>
 
