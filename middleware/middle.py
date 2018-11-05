@@ -16,7 +16,10 @@ class m1(MiddlewareMixin):
 
                             {'label': '用户管理', 'url': '/admin/auth/user/'},
 
-                            'Incubator','index.Bonus','index.Subtraction',
+                            'Incubator',
+                            {'label': '校正评价', 'url': '/admin/company/independentevaluationofenterprises/'},
+
+                            'index.Bonus','index.Subtraction',
 
                             {'label': '企业评估报告', 'url': '/admin/institution/report'},
                             'institution.ReportBack',
@@ -40,11 +43,11 @@ class m1(MiddlewareMixin):
                   'app': 'company',
                   'models': (
                             {'label': '企业基本信息', 'url': '/admin/company/companyinfo_opt'},
-                            'IndependentEvaluationOfEnterprises',
                             # 'FinancialSituation','ProductsAndMarket','TechnologyRD','ServerRequest',
                             {'label': '资产负债表', 'url': '/admin/company/balance'},
                             {'label': '利润表', 'url': '/admin/company/profit'},
                             {'label': '现金流量表', 'url': '/admin/company/cash_flow'},
+                            'IndependentEvaluationOfEnterprises',
                             'institution.ReportBack',
 
                 )},
@@ -58,6 +61,7 @@ class m1(MiddlewareMixin):
                   'models': (
                             {'label': '企业基本信息', 'url': '/admin/company/companyinfo_opt'},
                             {'label': '校正评价', 'model': 'IndependentEvaluationOfEnterprises'},
+                            'RejectReason',
                             # 'FinancialSituation','ProductsAndMarket','TechnologyRD','ServerRequest',
                             'institution.ReportBack',
 

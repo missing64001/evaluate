@@ -1,24 +1,44 @@
 from django.contrib import admin
 from .models import *
 from company.models import *
+from index.models import Bonus,Subtraction
 from django.utils.html import format_html
 
 # Register your models here.
 
+
 @admin.register(Institution)
 class InstitutionAdmin(admin.ModelAdmin):
-    pass
-
+    fields = ['type','name','phone']
+    readonly_fields = ('type','name')
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        if get_user_group(request,'机构用户'):
+            return qs.filter(user=request.user)
 @admin.register(InvestReport)
 class InvestReportAdmin(admin.ModelAdmin):
-    readonly_fields = ('companyInfo','i1','i2','i3','i4','i5','i6','i7','i8','i9','i10','i11','i12','i13','i14','i15','i16','i17','i18','totle')
+    readonly_fields = ('companyInfo','i1','i2','i3','i4','i5','i6','i7','i8','i9','i10','i11','i12','i13','i14','i15','i16','i17','i18','bonus','subtraction','totle')
     list_display=['companyInfo','totle','create_date']
     def totle(self,obj):
-        return (obj.i1 + obj.i2 + obj.i3 + obj.i4 *2) * 2 * 0.35 + (
+        data = (obj.i1 + obj.i2 + obj.i3 + obj.i4 *2) * 2 * 0.35 + (
             obj.i5 *10 +obj.i6 *7 +obj.i7 *8 +obj.i8 *10 +obj.i9 *5 +obj.i10 *10 +
             obj.i11 *10 +obj.i12 *5 +obj.i13 *5 +obj.i14 *5 +obj.i15 *5 +obj.i16 *5 +
             obj.i17 *5 +obj.i18 *10) * 0.65
-    totle.short_description = '总分数：'
+        data = round(data + self.bonus(obj) + self.subtraction(obj),2)
+        return data 
+    totle.short_description = '总分数'
+
+    def bonus(self,obj):
+        bonus = Bonus.objects.filter(companyInfo=obj.companyInfo).values('value')
+        bonus = sum([ int(b['value']) for b in bonus])
+        return bonus
+    bonus.short_description = '加分'
+
+    def subtraction(self,obj):
+        subtraction = Subtraction.objects.filter(companyInfo=obj.companyInfo).values('value')
+        subtraction = sum([ -abs(int(b['value'])) for b in subtraction])
+        return subtraction
+    subtraction.short_description = '减分'
 
     def get_user_group_1(self,obj):
         return format_html('''<span class="get_user_group">机构用户</span> <script type="text/javascript" src="/static/js/set_head.js"></script>''')
@@ -50,19 +70,35 @@ class InvestReportAdmin(admin.ModelAdmin):
             kwargs["queryset"] = Institution.objects.filter(type=1)
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
+    def save_model(self, request, obj, form, change):
+        obj.companyInfo.status = 8
+        obj.companyInfo.save()
+        obj.save()
 
 
 @admin.register(BankReport)
 class BankReportAdmin(admin.ModelAdmin):
-    readonly_fields = ('companyInfo','i1','i2','i3','i4','i5','i6','i7','i8','i9','i10','i11','i12','i13','i14','i15','i16','i17','i18','totle')
+    readonly_fields = ('companyInfo','i1','i2','i3','i4','i5','i6','i7','i8','i9','i10','i11','i12','i13','i14','i15','i16','i17','i18','bonus','subtraction','totle')
     list_display=['companyInfo','totle','create_date']
     def totle(self,obj):
         return (obj.i1 + obj.i2 + obj.i3 + obj.i4 *2) * 2 * 0.35 + (
             obj.i5 *10 +obj.i6 *7 +obj.i7 *8 +obj.i8 *10 +obj.i9 *5 +obj.i10 *10 +
             obj.i11 *10 +obj.i12 *5 +obj.i13 *5 +obj.i14 *5 +obj.i15 *5 +obj.i16 *5 +
             obj.i17 *5 +obj.i18 *10) * 0.65
-    totle.short_description = '总分数：'
+    totle.short_description = '总分数'
 
+    def bonus(self,obj):
+        bonus = Bonus.objects.filter(companyInfo=obj.companyInfo).values('value')
+        bonus = sum([ int(b['value']) for b in bonus])
+        return bonus
+    bonus.short_description = '加分'
+
+    def subtraction(self,obj):
+        subtraction = Subtraction.objects.filter(companyInfo=obj.companyInfo).values('value')
+        subtraction = sum([ -abs(int(b['value'])) for b in subtraction])
+        return subtraction
+    subtraction.short_description = '减分'
+    
     def get_user_group_1(self,obj):
         return format_html('''<span class="get_user_group">机构用户</span> <script type="text/javascript" src="/static/js/set_head.js"></script>''')
     
@@ -91,6 +127,11 @@ class BankReportAdmin(admin.ModelAdmin):
         if db_field.name == "institution":
             kwargs["queryset"] = Institution.objects.filter(type=2)
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
+    def save_model(self, request, obj, form, change):
+        obj.companyInfo.status = 8
+        obj.companyInfo.save()
+        obj.save()
 
 class CompanyInfoReportAdmin(admin.ModelAdmin):
     list_display=['name','incubator','i_evaluate_status','balance_status','profit_status',
@@ -211,6 +252,13 @@ class CompanyInfoReportAdmin(admin.ModelAdmin):
 @admin.register(ReportBack)
 class ReportBackAdmin(admin.ModelAdmin):
     exclude = ['investreport','bankreport',]
+
+    def get_list_display(self, request, obj=None):
+        if get_user_group(request,'super'):
+            return ['institution','will','type','iscompanyview','isinstitutionview']
+        else:
+            return ['institution','will','type']
+
     def get_exclude(self, request, obj=None):
         qs = super().get_queryset(request)
         if request.user.is_superuser:
@@ -229,18 +277,23 @@ class ReportBackAdmin(admin.ModelAdmin):
             return exclude
 
     def save_model(self, request, obj, form, change):
-        if 'report_id' in request.POST:
-            _id = request.POST['report_id']
-            if request.POST['report_type'] == 'investreport':
-                obj.investreport = InvestReport.objects.get(id=_id)
-            elif request.POST['report_type'] == 'bankreport':
-                obj.bankreport = BankReport.objects.get(id=_id)
-            else:
-                raise ValueError('错误的数据')
+
 
         if get_user_group(request,'机构用户'):
             obj.institution = Institution.objects.get(user=request.user)
+            if 'report_id' in request.POST:
+                _id = request.POST['report_id']
+                if request.POST['report_type'] == 'investreport':
+                    obj.investreport = InvestReport.objects.get(id=_id)
+                elif request.POST['report_type'] == 'bankreport':
+                    obj.bankreport = BankReport.objects.get(id=_id)
+                else:
+                    raise ValueError('错误的数据')
         obj.save()
+        robj = obj.investreport or obj.investreport
+        if obj.iscompanyview == 2:
+            robj.companyInfo.status = 10
+            robj.companyInfo.save()
 
     def get_readonly_fields(self, request,obj=None):
         if get_user_group(request,'super'):

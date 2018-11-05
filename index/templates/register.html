@@ -3,6 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script language="JavaScript" type="text/javascript">
+        function submit() {
+            console.log('111111111')
+            str=getElementById('password').value
+            if(str.length<6){
+            return false;
+            alert('对不起，您的密码小于六位');
+            }
+        }
+
+
+    </script>
 </head>
 <body>
 
@@ -17,7 +29,7 @@
         </li>
 {% endif %}
 <table>
-    <form action="" method="post">{% csrf_token %}
+    <form action="" method="post" onsubmit="submit()">{% csrf_token %}
 
         <tr>
             <td>
@@ -32,7 +44,7 @@
                 <label >密码:</label>
             </td>
             <td>
-              <input type = 'password' placeholder="输入密码" name = 'password'>
+              <input type = 'password' placeholder="输入密码" name = 'password' maxlength="15">
             </td>
         </tr>
          <tr>
@@ -55,7 +67,7 @@
           <tr>
 
               <td>
-                   <input type = 'submit' placeholder="Login" value="登录">
+                   <input type = 'submit' placeholder="Login" value="登录"  >
               </td>
           </tr>
     </form>

@@ -11,8 +11,8 @@ from datetime import timedelta
 class Institution(models.Model):
     user = models.OneToOneField(User)
     type = models.SmallIntegerField(choices=((1 ,'投资'),  (2 ,'银行')),verbose_name='机构类型',blank=True,null=True)
-    name = models.CharField(max_length=50,verbose_name='机构名称',blank=True,null=True)
-    phone = models.BigIntegerField(verbose_name='联系电话',blank=True,null=True)
+    name = models.CharField(max_length=50,unique=True,verbose_name='机构名称',blank=True,null=True)
+    phone = models.CharField(verbose_name='联系电话',max_length=20,blank=True,null=True)
     
     def __str__(self):
         if self.name:
@@ -132,9 +132,11 @@ class ReportBack(models.Model):
     type = models.SmallIntegerField(choices=((1 ,'对企业进一步了解'),  (2 ,'与孵化器进一步协调')),verbose_name='选择反馈类别',blank=True,null=True)
     note = models.TextField(verbose_name='反馈内容',blank=True,null=True)
     iscompanyview = models.SmallIntegerField(choices=((1 ,'不可见'),  (2 ,'可见')),verbose_name='对企业是否可见',default=1)
-    isinstitutionview = models.SmallIntegerField(choices=((1 ,'不可见'),  (2 ,'可见')),verbose_name='对机构是否可见',default=1)
+    isinstitutionview = models.SmallIntegerField(choices=((1 ,'不可见'),  (2 ,'可见')),verbose_name='对孵化器是否可见',default=1)
 
 
+
+        
     class Meta:
         verbose_name='反馈信息'
         verbose_name_plural=verbose_name

@@ -37,14 +37,15 @@
 <form class='file' action="/excel" method="post">
     <input type="file" name="excel" accept=".xls" defaultValue="导入" onchange="importf(this)">
     <!-- <input type="submit" value="上传文件"> -->
+    <a href="/static/baobiao.xls">excel模板下载</a>
 </form>
+
 <form class='mtable' action="submit_table/" method="post" enctype="multipart/form-data" >
+    
+    {% if status%}
     {% csrf_token %}
-
-
-
-
     <input class='upload' type="submit" value="提交数据">
+    {% endif%}
 
     <div class="select">
         <select name="year">

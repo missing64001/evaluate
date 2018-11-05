@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from company.models import CompanyInfo,Balance,Profit,CashFlow,FinancialSituation,EvaluationOfEnterprises,IndependentEvaluationOfEnterprises
 from company.admin import CompanyInfoAdmin
-from django.db.models import Max,Min
+from django.db.models import Max,Min,Count
 from .models import *
 from django.http import HttpResponseRedirect
 from .admin import CompanyInfoReportAdmin,ReportBackAdmin
@@ -190,11 +190,36 @@ def save_reportback_view(request):
     _id = request.POST['report_id']
     if request.POST['report_type'] == 'investreport':
         obj.investreport = InvestReport.objects.get(id=_id)
+        obj.investreport.companyInfo.status = 9
+        obj.investreport.companyInfo.save()
     elif request.POST['report_type'] == 'bankreport':
         obj.bankreport = BankReport.objects.get(id=_id)
+        obj.bankreport.companyInfo.status = 9
+        obj.investreport.companyInfo.save()
     else:
         raise ValueError('错误的数据:' + request.POST['report_type'])
 
     obj.institution = Institution.objects.get(user=request.user)
     obj.save()
     return ReportBackAdmin(ReportBack,admin.AdminSite()).change_view(request,str(obj.id))
+
+
+
+
+
+
+
+
+
+
+
+# def test():
+#     from django.utils.timezone import now, timedelta
+#     date = now().date() + timedelta(days=-5) #今天
+#     obj = BankReport.objects.filter(create_date__gte=date).values('create_date','companyInfo').annotate(conc = Count('create_date'))
+#     print(obj)
+#     for o in obj:
+#         print(o.conc)
+#     print(1111111111111111)
+
+# test()

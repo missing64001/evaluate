@@ -15,6 +15,34 @@ from .admin import IndependentEvaluationOfEnterprisesAdmin,EvaluationOfEnterpris
 # 
 
 
+def confirm_view(request):
+
+    cobj = CompanyInfo.objects.get(user=request.user)
+    if cobj.status == 3 or cobj.status == 5:          
+        cobj.status = 4
+        cobj.save()
+
+    RejectReason.objects.filter(companyInfo=cobj,is_alive=True).update(is_alive=False)
+
+    ren = redirect ('/admin')
+    return ren
+
+
+def reject_view(request):
+    _id = request.GET['id']
+    reason = request.GET['reason']
+
+    cobj = CompanyInfo.objects.get(id=_id)
+    if cobj.status == 4:          
+        cobj.status = 5
+        cobj.save()
+
+    RejectReason.objects.create(companyInfo=cobj,text=reason)
+
+    ren = redirect ('/admin/company/companyinfo/')
+    return ren
+    
+
 def companyinfo_view(request):
     #  render
     group_name = None
@@ -26,6 +54,7 @@ def companyinfo_view(request):
         return ren
     ren = redirect ('/admin/company/companyinfo/')
     return ren
+
 def financialsituation_view(request):
     _id = FinancialSituation.objects.get(companyInfo=CompanyInfo.objects.get(user=request.user)).id
     return HttpResponseRedirect('/admin/company/financialsituation/%s'%_id)
@@ -76,7 +105,15 @@ def balance_view(request):
 
 
     data = zip(datab,datad,datae,dataf,datah,datai)
-    return render(request,'balance.html',{'data':data})
+
+    cobj = CompanyInfo.objects.get(user=request.user)
+    status = cobj.status
+    if status == 5 or status < 4:
+        status = True
+    else:
+        status = False
+
+    return render(request,'balance.html',{'data':data,'status':status})
 
 
 def balance_submit_table_view(request):
@@ -90,12 +127,22 @@ def balance_submit_table_view(request):
                 res = request.POST[x]
 
             try:
-                bal = Balance.objects.get(companyInfo=CompanyInfo.objects.get(user=request.user),year=year,name=x)
-                bal.value=res
-                bal.save()
-            except Balance.DoesNotExist as e:
-                Balance(companyInfo=CompanyInfo.objects.get(user=request.user),year=year,
-                        name=x,value=res).save()
+                try:
+                    bal = Balance.objects.get(companyInfo=CompanyInfo.objects.get(user=request.user),year=year,name=x)
+                    bal.value=res
+                    bal.save()
+                except Balance.DoesNotExist as e:
+                    Balance(companyInfo=CompanyInfo.objects.get(user=request.user),year=year,
+                            name=x,value=res).save()
+            except ValueError as e:
+                pass
+
+    cobj = CompanyInfo.objects.get(user=request.user)
+    if cobj.status == 1:          
+        if Balance.objects.filter(companyInfo=cobj) and Profit.objects.filter(companyInfo=cobj) and\
+            CashFlow.objects.filter(companyInfo=cobj):
+                cobj.status = 2
+                cobj.save()
 
     ren = redirect ('/admin/company/balance/')
     return ren
@@ -153,9 +200,15 @@ def profit_view(request):
 
     data = zip(dataa,datac)
 
+    cobj = CompanyInfo.objects.get(user=request.user)
+    status = cobj.status
+    if status == 5 or status < 4:
+        status = True
+    else:
+        status = False
 
 
-    return render(request,'profit.html',{'data':data})
+    return render(request,'profit.html',{'data':data,'status':status})
 
 
 
@@ -166,12 +219,22 @@ def profit_submit_table_view(request):
     for x in request.POST:
         if len(x)<6 and request.POST[x]:
             try:
-                bal = Profit.objects.get(companyInfo=CompanyInfo.objects.get(user=request.user),year=year,name=x)
-                bal.value=request.POST[x]
-                bal.save()
-            except Profit.DoesNotExist as e:
-                Profit(companyInfo=CompanyInfo.objects.get(user=request.user),year=year,
-                        name=x,value=request.POST[x]).save()
+                try:
+                    bal = Profit.objects.get(companyInfo=CompanyInfo.objects.get(user=request.user),year=year,name=x)
+                    bal.value=request.POST[x]
+                    bal.save()
+                except Profit.DoesNotExist as e:
+                    Profit(companyInfo=CompanyInfo.objects.get(user=request.user),year=year,
+                            name=x,value=request.POST[x]).save()
+            except ValueError as e:
+                pass
+
+    cobj = CompanyInfo.objects.get(user=request.user)
+    if cobj.status == 1:          
+        if Balance.objects.filter(companyInfo=cobj) and Profit.objects.filter(companyInfo=cobj) and\
+            CashFlow.objects.filter(companyInfo=cobj):
+                cobj.status = 2
+                cobj.save()
 
     ren = redirect ('/admin/company/profit/')
     return ren
@@ -364,15 +427,19 @@ def cash_flow_view(request):
             datag.append(('g%s'%i,get_other_data('g%s'%i)))
         else:
             datag.append(('g%s'%i,False))
-    print('----------changdu----------')
-    print(len(datab),len(datad),len(datae),len(datag))
+    # print('----------changdu----------')
+    # print(len(datab),len(datad),len(datae),len(datag))
     data = zip(datab,datad,datae,datag)
 
 
 
-
-
-    return render(request,'cash_flow.html',{'data':data})
+    cobj = CompanyInfo.objects.get(user=request.user)
+    status = cobj.status
+    if status == 5 or status < 4:
+        status = True
+    else:
+        status = False
+    return render(request,'cash_flow.html',{'data':data,'status':status})
 
     
 
@@ -385,13 +452,23 @@ def cash_flow_submit_table_view(request):
     for x in request.POST:
         if len(x)<6 and request.POST[x]:
             try:
-                bal = CashFlow.objects.get(companyInfo=CompanyInfo.objects.get(user=request.user),year=year,name=x)
-                bal.value=request.POST[x]
-                bal.save()
-            except CashFlow.DoesNotExist as e:
-                CashFlow(companyInfo=CompanyInfo.objects.get(user=request.user),year=year,
-                        name=x,value=request.POST[x]).save()
+                try:
+                    bal = CashFlow.objects.get(companyInfo=CompanyInfo.objects.get(user=request.user),year=year,name=x)
+                    bal.value=request.POST[x]
+                    bal.save()
+                except CashFlow.DoesNotExist as e:
+                    CashFlow(companyInfo=CompanyInfo.objects.get(user=request.user),year=year,
+                            name=x,value=request.POST[x]).save()
+            except ValueError as e:
+                pass
 
+
+    cobj = CompanyInfo.objects.get(user=request.user)
+    if cobj.status == 1:          
+        if Balance.objects.filter(companyInfo=cobj) and Profit.objects.filter(companyInfo=cobj) and\
+            CashFlow.objects.filter(companyInfo=cobj):
+                cobj.status = 2
+                cobj.save()
     ren = redirect ('/admin/company/cash_flow/')
     return ren
 
@@ -411,10 +488,34 @@ def independentevaluationofenterprises_view(request,arg1):
             eobj = EvaluationOfEnterprises.objects.get(companyInfo=iobj.companyInfo)
         except EvaluationOfEnterprises.DoesNotExist as e:
             eobj = EvaluationOfEnterprises.objects.create(companyInfo=iobj.companyInfo)
-        print(eobj.id)
-        return EvaluationOfEnterprisesAdmin(EvaluationOfEnterprises,admin.AdminSite()).change_view(request,str(eobj.id))
+        data = {'isocre1':iobj.external_environment,
+                'isocre2':iobj.products_and_market,
+                'isocre3':iobj.technology_R_D,
+                'isocre4':iobj.team,
+                }
+        return EvaluationOfEnterprisesAdmin(EvaluationOfEnterprises,admin.AdminSite()).change_view(request,str(eobj.id),extra_context=data)
+
+        
+
+def evaluationofenterprises_to_independentevaluationofenterprises_view(request):
+    return redirect ('/admin/company/independentevaluationofenterprises/')
 
 
+
+
+
+
+
+
+
+# class ConfigView(generic.TemplateView):
+#     template_name = 'admin/company/independentevaluationofenterprises/change_form.html'
+
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         print(kwargs)
+#         print(context)
+#         return context
 
 
 

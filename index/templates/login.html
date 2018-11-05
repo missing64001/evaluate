@@ -25,7 +25,8 @@
 </head>
 
 
-<body class="login">
+<body class="login" style="background: #4a8df2">
+  <img src="/static/img/background.png" alt="" style="position: absolute;margin:130px 0px 0px 190px;width:932px;height: 784px;">
 
 
 {% for error in errors%}
@@ -45,10 +46,11 @@
 
         
 
-        <div id="content-main">
-            <h1><i class="icon-lock icon-white"></i> evaluate</h1>
+        <div id="content-main" style="top:40%;left: 80%">
+            <h1 style="background: #F6F7F8;font-size: 25px;height: 60px; line-height: 60px;color: #000">用户登陆</h1>
 
-            <form action="/admin/login/?next=/admin/" method="post" id="login-form"><div class="hide"><input type='hidden' name='csrfmiddlewaretoken' value='uYGl9qyVYniFcWknPZGYpwBl3QLYKmqkhvbbE9KtLQxhggwZ8Hxjb9V4vnaBV8kS' /></div>
+            <form action="/admin/login/?next=/admin/" method="post" id="login-form">
+                {% csrf_token %}
                 <div class="form-row control-group">
                     <label for="id_username" class="control-label required">用户名:</label> <input type="text" name="username" required id="id_username" autofocus maxlength="254" />
                   
@@ -60,9 +62,8 @@
                     <input type="hidden" name="next" value="/admin/"/>
                 </div>
                 
-                
                 <div class="submit-row">
-                    <input type="submit" value="登录" class="btn btn-info" style="margin-right: 170px" />
+                    <input type="submit" value="登录" class="btn btn-info" style="margin-right: 170px;background: #4a8df2;" />
                     <a href="/res"> 立刻注册 </a>
                 </div>
             </form>
@@ -82,31 +83,11 @@
 </div>
 
 
-  
-  <div id="footer" class="footer">
-    <div class="content">
-      <div class="tools">
-        
-          <a href="http://djangosuit.com/support/" target="_blank" class="icon"><i class="icon-question-sign"></i>Support</a>
-          <a href="http://djangosuit.com/pricing/" target="_blank" class="icon"><i class="icon-bookmark"></i>Licence</a>
-          <a href="http://github.com/darklow/django-suit/issues" target="_blank" class="icon"><i class="icon-comment"></i>Report a bug</a>
-        
-      </div>
-
-      <div class="copyright">
-        
-          Copyright &copy; 2013-2018 DjangoSuit.com<br>Developed by <a href="http://djangosuit.com" target="_blank">DjangoSuit.com</a>
-        
-      </div>
-
-      <div class="branding">
-        
-          evaluate
-          
-        
-      </div>
-    </div>
-  </div>
+  <div class="footer">
+    <a href="https://embway.com" class="icons">
+        <img src="/static/img/embway_logo.png" alt="" style="margin:14px auto 14px 30px;width:150px;">
+    </a>
+</div>
   
 
 

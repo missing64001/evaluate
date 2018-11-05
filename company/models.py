@@ -5,13 +5,39 @@ from datetime import timedelta
 # Create your models here.
 
 x1_d = ((1 ,'集成电路布图'),  (2 ,'其他'))
+status_choices = ((-2,'无效'),
+                (-1,'完成'),
+                (0,'未填写'),
+                (1,'填写企业信息'),
+                (2,'上传财务报表'),
+                (3,'企业自我评价'),
+                (4,'已提交'),
+
+                (5,'孵化器驳回信息'), #修改后确认提交
+                (6,'孵化器审核信息'),
+                (7,'孵化器修正评价'),
+
+                (8,'平台发送报告'),
+
+                (9,'机构反馈报告'),
+
+                (10,'用户获得反馈'),
+            )
+
+
+    
+
+
+
+
 class CompanyInfo(models.Model):
     '一、基本信息'
 
-    user = models.OneToOneField(User)
+    user = models.ForeignKey(User,blank=True,null=True)
+    status = models.SmallIntegerField(choices=status_choices,verbose_name='状态',default=0)
     incubator = models.ForeignKey(Incubator,verbose_name='所属孵化器',blank=True,null=True)
 
-    name = models.CharField(max_length=50,verbose_name='企业名称',blank=True,null=True)
+    name = models.CharField(max_length=50,unique=True,verbose_name='企业名称',blank=True,null=True)
     create_date = models.DateField(verbose_name='成立时间',blank=True,null=True)
     registered_capital = models.IntegerField(verbose_name='注册资本（万元）',blank=True,null=True)
     paid_in_capital = models.IntegerField(verbose_name='实收资本（万元）',blank=True,null=True)
@@ -41,7 +67,7 @@ class CompanyInfo(models.Model):
 
 
     credit_code = models.CharField(max_length=50,verbose_name='统一社会信用代码',blank=True,null=True)
-    phone = models.BigIntegerField(verbose_name='联系电话',blank=True,null=True)
+    phone = models.CharField(verbose_name='联系电话',max_length=20,blank=True,null=True)
     business_license_pic = models.ImageField(upload_to='static/upload/company',blank=True,null=True)
 
 
@@ -55,7 +81,21 @@ class CompanyInfo(models.Model):
         verbose_name='一、基本信息'
         verbose_name_plural=verbose_name
 
+class RejectReason(models.Model):
+    companyInfo = models.ForeignKey(CompanyInfo,verbose_name='企业',blank=True,null=True)
+    text = models.TextField(verbose_name='拒绝原因',blank=True,null=True)
+    is_alive = models.BooleanField(verbose_name='是否有效',default=True)    
+    create_date = models.DateTimeField(verbose_name='生成时间',auto_now=True,blank=True,null=True)
 
+    def __str__(self):
+        if len(self.text) < 10:
+            return self.text
+        else:
+            return self.text[:8] + '...'
+
+    class Meta:
+        verbose_name='驳回理由'
+        verbose_name_plural=verbose_name
 
 class Shareholder(models.Model):
     '主要股东及股权比例（前五名）'

@@ -2,24 +2,25 @@
 
 
 table{
-    border:3px solid black;
+    border:3px solid #e5e5e5;
     font-size: 14px;
     float: left;
 }
 
 td,th{
-    border:2px solid black;
-    background: #aaa;
+    border:2px solid #e5e5e5;
+    background: #fff;
     height:30px;
     padding: 0px;
 }
 
 td.input input{
     border: none;
-    background:none;
+    background:#f5f5f5;
     margin: 0px;
     height: 20px;
     width: 120px;
+    outline:none;
 }
 
 
