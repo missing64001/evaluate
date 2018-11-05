@@ -257,11 +257,13 @@ class CompanyInfoAdmin(admin.ModelAdmin):
         return qs.filter(user=request.user)
 
     def save_model(self, request, obj, form, change):
-        
-        if obj.status == 0:
-            if obj.financialsituation_set and obj.productsandmarket and obj.technologyrd and obj.serverrequest:
-                obj.status = 1
-        obj.save()
+        try:
+            if obj.status == 0:
+                if obj.financialsituation_set and obj.productsandmarket and obj.technologyrd and obj.serverrequest:
+                    obj.status = 1
+            obj.save()
+        except Exception:
+            obj.save()
 
     def new_status(self,obj):
         status_choices = ((-2,'无效'),

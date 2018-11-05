@@ -386,19 +386,20 @@ def save_permission():
         print('读取了权限')
         with open(filename,'r',encoding='utf-8') as f:
             data = f.read()
-        permissions = data.split()
+        permissions = data.split('\n')
         for permission in permissions:
             group_name,codename = permission.strip().split(',')
             try:
                 gobj = Group.objects.get(name=group_name)
-            except:
+            except Group.DoesNotExist:
                 gobj = Group.objects.create(name=group_name)
+            print(group_name,gobj.name)
             gobj.permissions.add(Permission.objects.get(codename=codename))
             gobj.save()
 
 
 
-# save_permission()
+save_permission()
 # 
 # 
 # 
