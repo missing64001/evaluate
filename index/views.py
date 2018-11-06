@@ -373,7 +373,9 @@ def my_login(request):
 def save_permission():
     gobjs = Group.objects.all()
     filename = 'permissionsmy.txt'
-    if gobjs:
+
+    issave = 1
+    if issave == 1:
         print('保存了权限')
         datalst = []
         for gobj in gobjs:
@@ -382,7 +384,7 @@ def save_permission():
                 datalst.append(gobj.name+','+da['codename'])
         with open(filename,'w',encoding='utf-8') as f:
             f.write('\n'.join(datalst))
-    else:
+    elif issave == 2:
         print('读取了权限')
         with open(filename,'r',encoding='utf-8') as f:
             data = f.read()
@@ -399,7 +401,7 @@ def save_permission():
 
 
 
-# save_permission()
+save_permission()
 # 
 # 
 # 

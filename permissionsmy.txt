@@ -28,6 +28,9 @@
 企业用户,add_mirc
 企业用户,change_mirc
 企业用户,delete_mirc
+企业用户,add_otherm
+企业用户,change_otherm
+企业用户,delete_otherm
 企业用户,add_patent
 企业用户,change_patent
 企业用户,delete_patent
@@ -72,6 +75,7 @@
 孵化器用户,change_financialsituation
 孵化器用户,change_independentevaluationofenterprises
 孵化器用户,change_mirc
+孵化器用户,change_otherm
 孵化器用户,change_patent
 孵化器用户,change_personalawards
 孵化器用户,change_productsandmarket
@@ -101,6 +105,7 @@
 机构用户,change_financialsituation
 机构用户,change_independentevaluationofenterprises
 机构用户,change_mirc
+机构用户,change_otherm
 机构用户,change_patent
 机构用户,change_personalawards
 机构用户,change_productsandmarket
