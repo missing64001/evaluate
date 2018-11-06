@@ -7,7 +7,7 @@
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
- SET NAMES utf8mb4 ;
+ SET NAMES utf8 ;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -21,13 +21,13 @@
 
 DROP TABLE IF EXISTS `auth_group`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+ SET character_set_client = utf8 ;
 CREATE TABLE `auth_group` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(80) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -46,7 +46,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `auth_group_permissions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+ SET character_set_client = utf8 ;
 CREATE TABLE `auth_group_permissions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `group_id` int(11) NOT NULL,
@@ -56,7 +56,7 @@ CREATE TABLE `auth_group_permissions` (
   KEY `auth_group_permissio_permission_id_84c5c92e_fk_auth_perm` (`permission_id`),
   CONSTRAINT `auth_group_permissio_permission_id_84c5c92e_fk_auth_perm` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`),
   CONSTRAINT `auth_group_permissions_group_id_b120cbf9_fk_auth_group_id` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=135 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=135 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -75,7 +75,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `auth_permission`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+ SET character_set_client = utf8 ;
 CREATE TABLE `auth_permission` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -84,7 +84,7 @@ CREATE TABLE `auth_permission` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `auth_permission_content_type_id_codename_01ab375a_uniq` (`content_type_id`,`codename`),
   CONSTRAINT `auth_permission_content_type_id_2f476e4b_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=112 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=112 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -103,7 +103,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `auth_user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+ SET character_set_client = utf8 ;
 CREATE TABLE `auth_user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `password` varchar(128) NOT NULL,
@@ -118,7 +118,7 @@ CREATE TABLE `auth_user` (
   `date_joined` datetime(6) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -137,7 +137,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `auth_user_groups`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+ SET character_set_client = utf8 ;
 CREATE TABLE `auth_user_groups` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
@@ -147,7 +147,7 @@ CREATE TABLE `auth_user_groups` (
   KEY `auth_user_groups_group_id_97559544_fk_auth_group_id` (`group_id`),
   CONSTRAINT `auth_user_groups_group_id_97559544_fk_auth_group_id` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`),
   CONSTRAINT `auth_user_groups_user_id_6a12ed8b_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -166,7 +166,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `auth_user_user_permissions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+ SET character_set_client = utf8 ;
 CREATE TABLE `auth_user_user_permissions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
@@ -176,7 +176,7 @@ CREATE TABLE `auth_user_user_permissions` (
   KEY `auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm` (`permission_id`),
   CONSTRAINT `auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`),
   CONSTRAINT `auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -194,7 +194,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `company_balance`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+ SET character_set_client = utf8 ;
 CREATE TABLE `company_balance` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `year` smallint(6) DEFAULT NULL,
@@ -204,7 +204,7 @@ CREATE TABLE `company_balance` (
   PRIMARY KEY (`id`),
   KEY `company_balance_companyInfo_id_1740a10c_fk_company_c` (`companyInfo_id`),
   CONSTRAINT `company_balance_companyInfo_id_1740a10c_fk_company_c` FOREIGN KEY (`companyInfo_id`) REFERENCES `company_companyinfo` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=722 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=722 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -223,7 +223,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `company_cashflow`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+ SET character_set_client = utf8 ;
 CREATE TABLE `company_cashflow` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `year` smallint(6) DEFAULT NULL,
@@ -233,7 +233,7 @@ CREATE TABLE `company_cashflow` (
   PRIMARY KEY (`id`),
   KEY `company_cashflow_companyInfo_id_84f5fc8e_fk_company_c` (`companyInfo_id`),
   CONSTRAINT `company_cashflow_companyInfo_id_84f5fc8e_fk_company_c` FOREIGN KEY (`companyInfo_id`) REFERENCES `company_companyinfo` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -252,7 +252,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `company_companyinfo`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+ SET character_set_client = utf8 ;
 CREATE TABLE `company_companyinfo` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) DEFAULT NULL,
@@ -279,7 +279,7 @@ CREATE TABLE `company_companyinfo` (
   KEY `company_companyinfo_user_id_e4d0d778_fk_auth_user_id` (`user_id`),
   CONSTRAINT `company_companyinfo_incubator_id_4ba91699_fk_incubator` FOREIGN KEY (`incubator_id`) REFERENCES `incubator_incubator` (`id`),
   CONSTRAINT `company_companyinfo_user_id_e4d0d778_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -298,7 +298,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `company_coremember`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+ SET character_set_client = utf8 ;
 CREATE TABLE `company_coremember` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) DEFAULT NULL,
@@ -312,7 +312,7 @@ CREATE TABLE `company_coremember` (
   PRIMARY KEY (`id`),
   KEY `company_coremember_companyInfo_id_c881a2da_fk_company_c` (`companyInfo_id`),
   CONSTRAINT `company_coremember_companyInfo_id_c881a2da_fk_company_c` FOREIGN KEY (`companyInfo_id`) REFERENCES `company_companyinfo` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -330,7 +330,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `company_drugapproval`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+ SET character_set_client = utf8 ;
 CREATE TABLE `company_drugapproval` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(50) DEFAULT NULL,
@@ -342,7 +342,7 @@ CREATE TABLE `company_drugapproval` (
   PRIMARY KEY (`id`),
   KEY `company_drugapproval_companyInfo_id_e33a90e9_fk_company_c` (`companyInfo_id`),
   CONSTRAINT `company_drugapproval_companyInfo_id_e33a90e9_fk_company_c` FOREIGN KEY (`companyInfo_id`) REFERENCES `company_companyinfo` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -360,7 +360,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `company_educationexperience`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+ SET character_set_client = utf8 ;
 CREATE TABLE `company_educationexperience` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `education` varchar(50) DEFAULT NULL,
@@ -370,7 +370,7 @@ CREATE TABLE `company_educationexperience` (
   PRIMARY KEY (`id`),
   KEY `company_educationexp_core_member_id_ae620ffa_fk_company_c` (`core_member_id`),
   CONSTRAINT `company_educationexp_core_member_id_ae620ffa_fk_company_c` FOREIGN KEY (`core_member_id`) REFERENCES `company_coremember` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -388,7 +388,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `company_enterpriseawards`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+ SET character_set_client = utf8 ;
 CREATE TABLE `company_enterpriseawards` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `level` varchar(10) DEFAULT NULL,
@@ -398,7 +398,7 @@ CREATE TABLE `company_enterpriseawards` (
   PRIMARY KEY (`id`),
   KEY `company_enterpriseaw_companyInfo_id_5f1670fa_fk_company_c` (`companyInfo_id`),
   CONSTRAINT `company_enterpriseaw_companyInfo_id_5f1670fa_fk_company_c` FOREIGN KEY (`companyInfo_id`) REFERENCES `company_companyinfo` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -417,7 +417,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `company_evaluationofenterprises`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+ SET character_set_client = utf8 ;
 CREATE TABLE `company_evaluationofenterprises` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `external_environment` smallint(6) DEFAULT NULL,
@@ -429,7 +429,7 @@ CREATE TABLE `company_evaluationofenterprises` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `companyInfo_id` (`companyInfo_id`),
   CONSTRAINT `company_evaluationof_companyInfo_id_446e2046_fk_company_c` FOREIGN KEY (`companyInfo_id`) REFERENCES `company_companyinfo` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -448,7 +448,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `company_financialsituation`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+ SET character_set_client = utf8 ;
 CREATE TABLE `company_financialsituation` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `year` smallint(6) DEFAULT NULL,
@@ -460,7 +460,7 @@ CREATE TABLE `company_financialsituation` (
   PRIMARY KEY (`id`),
   KEY `company_financialsit_companyInfo_id_222ea973_fk_company_c` (`companyInfo_id`),
   CONSTRAINT `company_financialsit_companyInfo_id_222ea973_fk_company_c` FOREIGN KEY (`companyInfo_id`) REFERENCES `company_companyinfo` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -479,7 +479,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `company_independentevaluationofenterprises`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+ SET character_set_client = utf8 ;
 CREATE TABLE `company_independentevaluationofenterprises` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `external_environment` smallint(6) DEFAULT NULL,
@@ -491,7 +491,7 @@ CREATE TABLE `company_independentevaluationofenterprises` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `companyInfo_id` (`companyInfo_id`),
   CONSTRAINT `company_independente_companyInfo_id_c8cbcd0e_fk_company_c` FOREIGN KEY (`companyInfo_id`) REFERENCES `company_companyinfo` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -510,7 +510,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `company_mirc`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+ SET character_set_client = utf8 ;
 CREATE TABLE `company_mirc` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(50) DEFAULT NULL,
@@ -520,7 +520,7 @@ CREATE TABLE `company_mirc` (
   PRIMARY KEY (`id`),
   KEY `company_mirc_companyInfo_id_b23cd250_fk_company_companyinfo_id` (`companyInfo_id`),
   CONSTRAINT `company_mirc_companyInfo_id_b23cd250_fk_company_companyinfo_id` FOREIGN KEY (`companyInfo_id`) REFERENCES `company_companyinfo` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -538,7 +538,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `company_otherm`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+ SET character_set_client = utf8 ;
 CREATE TABLE `company_otherm` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `x1` smallint(6) DEFAULT NULL,
@@ -548,7 +548,7 @@ CREATE TABLE `company_otherm` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `companyInfo_id` (`companyInfo_id`),
   CONSTRAINT `company_otherm_companyInfo_id_53c8b1b9_fk_company_companyinfo_id` FOREIGN KEY (`companyInfo_id`) REFERENCES `company_companyinfo` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -567,7 +567,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `company_patent`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+ SET character_set_client = utf8 ;
 CREATE TABLE `company_patent` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(50) DEFAULT NULL,
@@ -578,7 +578,7 @@ CREATE TABLE `company_patent` (
   PRIMARY KEY (`id`),
   KEY `company_patent_companyInfo_id_ae9bc17c_fk_company_companyinfo_id` (`companyInfo_id`),
   CONSTRAINT `company_patent_companyInfo_id_ae9bc17c_fk_company_companyinfo_id` FOREIGN KEY (`companyInfo_id`) REFERENCES `company_companyinfo` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -597,7 +597,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `company_personalawards`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+ SET character_set_client = utf8 ;
 CREATE TABLE `company_personalawards` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(10) DEFAULT NULL,
@@ -607,7 +607,7 @@ CREATE TABLE `company_personalawards` (
   PRIMARY KEY (`id`),
   KEY `company_personalawar_companyInfo_id_d63b1736_fk_company_c` (`companyInfo_id`),
   CONSTRAINT `company_personalawar_companyInfo_id_d63b1736_fk_company_c` FOREIGN KEY (`companyInfo_id`) REFERENCES `company_companyinfo` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -626,7 +626,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `company_productsandmarket`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+ SET character_set_client = utf8 ;
 CREATE TABLE `company_productsandmarket` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `product` longtext,
@@ -636,7 +636,7 @@ CREATE TABLE `company_productsandmarket` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `companyInfo_id` (`companyInfo_id`),
   CONSTRAINT `company_productsandm_companyInfo_id_f940e9f4_fk_company_c` FOREIGN KEY (`companyInfo_id`) REFERENCES `company_companyinfo` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -655,7 +655,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `company_profit`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+ SET character_set_client = utf8 ;
 CREATE TABLE `company_profit` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `year` smallint(6) DEFAULT NULL,
@@ -665,7 +665,7 @@ CREATE TABLE `company_profit` (
   PRIMARY KEY (`id`),
   KEY `company_profit_companyInfo_id_528daf88_fk_company_companyinfo_id` (`companyInfo_id`),
   CONSTRAINT `company_profit_companyInfo_id_528daf88_fk_company_companyinfo_id` FOREIGN KEY (`companyInfo_id`) REFERENCES `company_companyinfo` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=128 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=128 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -684,7 +684,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `company_project`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+ SET character_set_client = utf8 ;
 CREATE TABLE `company_project` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `_type` varchar(10) DEFAULT NULL,
@@ -696,7 +696,7 @@ CREATE TABLE `company_project` (
   PRIMARY KEY (`id`),
   KEY `company_project_companyInfo_id_235f7a33_fk_company_c` (`companyInfo_id`),
   CONSTRAINT `company_project_companyInfo_id_235f7a33_fk_company_c` FOREIGN KEY (`companyInfo_id`) REFERENCES `company_companyinfo` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -715,7 +715,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `company_rejectreason`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+ SET character_set_client = utf8 ;
 CREATE TABLE `company_rejectreason` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `text` longtext,
@@ -725,7 +725,7 @@ CREATE TABLE `company_rejectreason` (
   PRIMARY KEY (`id`),
   KEY `company_reject_reaso_companyInfo_id_6b93a46a_fk_company_c` (`companyInfo_id`),
   CONSTRAINT `company_reject_reaso_companyInfo_id_6b93a46a_fk_company_c` FOREIGN KEY (`companyInfo_id`) REFERENCES `company_companyinfo` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -744,7 +744,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `company_serverrequest`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+ SET character_set_client = utf8 ;
 CREATE TABLE `company_serverrequest` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `amount` int(11) DEFAULT NULL,
@@ -760,7 +760,7 @@ CREATE TABLE `company_serverrequest` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `companyInfo_id` (`companyInfo_id`),
   CONSTRAINT `company_serverreques_companyInfo_id_bbcdc638_fk_company_c` FOREIGN KEY (`companyInfo_id`) REFERENCES `company_companyinfo` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -779,7 +779,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `company_shareholder`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+ SET character_set_client = utf8 ;
 CREATE TABLE `company_shareholder` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) DEFAULT NULL,
@@ -789,7 +789,7 @@ CREATE TABLE `company_shareholder` (
   PRIMARY KEY (`id`),
   KEY `company_shareholder_companyInfo_id_29b72b99_fk_company_c` (`companyInfo_id`),
   CONSTRAINT `company_shareholder_companyInfo_id_29b72b99_fk_company_c` FOREIGN KEY (`companyInfo_id`) REFERENCES `company_companyinfo` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -808,7 +808,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `company_standardsetting`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+ SET character_set_client = utf8 ;
 CREATE TABLE `company_standardsetting` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(50) DEFAULT NULL,
@@ -819,7 +819,7 @@ CREATE TABLE `company_standardsetting` (
   PRIMARY KEY (`id`),
   KEY `company_standardsett_companyInfo_id_a73978b0_fk_company_c` (`companyInfo_id`),
   CONSTRAINT `company_standardsett_companyInfo_id_a73978b0_fk_company_c` FOREIGN KEY (`companyInfo_id`) REFERENCES `company_companyinfo` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -837,7 +837,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `company_technologyrd`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+ SET character_set_client = utf8 ;
 CREATE TABLE `company_technologyrd` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `status` longtext,
@@ -845,7 +845,7 @@ CREATE TABLE `company_technologyrd` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `companyInfo_id` (`companyInfo_id`),
   CONSTRAINT `company_technologyrd_companyInfo_id_18ee93e7_fk_company_c` FOREIGN KEY (`companyInfo_id`) REFERENCES `company_companyinfo` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -864,7 +864,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `company_workexperience`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+ SET character_set_client = utf8 ;
 CREATE TABLE `company_workexperience` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `company` varchar(50) DEFAULT NULL,
@@ -875,7 +875,7 @@ CREATE TABLE `company_workexperience` (
   PRIMARY KEY (`id`),
   KEY `company_workexperien_core_member_id_a3194aa2_fk_company_c` (`core_member_id`),
   CONSTRAINT `company_workexperien_core_member_id_a3194aa2_fk_company_c` FOREIGN KEY (`core_member_id`) REFERENCES `company_coremember` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -893,7 +893,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `django_admin_log`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+ SET character_set_client = utf8 ;
 CREATE TABLE `django_admin_log` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `action_time` datetime(6) NOT NULL,
@@ -908,7 +908,7 @@ CREATE TABLE `django_admin_log` (
   KEY `django_admin_log_user_id_c564eba6_fk` (`user_id`),
   CONSTRAINT `django_admin_log_content_type_id_c4bce8eb_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`),
   CONSTRAINT `django_admin_log_user_id_c564eba6_fk` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=116 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=116 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -927,14 +927,14 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `django_content_type`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+ SET character_set_client = utf8 ;
 CREATE TABLE `django_content_type` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `app_label` varchar(100) NOT NULL,
   `model` varchar(100) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `django_content_type_app_label_model_76bd3d3b_uniq` (`app_label`,`model`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -953,14 +953,14 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `django_migrations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+ SET character_set_client = utf8 ;
 CREATE TABLE `django_migrations` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `app` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
   `applied` datetime(6) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -979,14 +979,14 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `django_session`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+ SET character_set_client = utf8 ;
 CREATE TABLE `django_session` (
   `session_key` varchar(40) NOT NULL,
   `session_data` longtext NOT NULL,
   `expire_date` datetime(6) NOT NULL,
   PRIMARY KEY (`session_key`),
   KEY `django_session_expire_date_a5c62663` (`expire_date`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1005,7 +1005,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `incubator_incubator`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+ SET character_set_client = utf8 ;
 CREATE TABLE `incubator_incubator` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) DEFAULT NULL,
@@ -1016,7 +1016,7 @@ CREATE TABLE `incubator_incubator` (
   UNIQUE KEY `user_id` (`user_id`),
   UNIQUE KEY `incubator_incubator_name_ed12c7a4_uniq` (`name`),
   CONSTRAINT `incubator_incubator_user_id_bf7d94d1_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1035,7 +1035,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `index_bonus`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+ SET character_set_client = utf8 ;
 CREATE TABLE `index_bonus` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `item` smallint(6) NOT NULL,
@@ -1045,7 +1045,7 @@ CREATE TABLE `index_bonus` (
   PRIMARY KEY (`id`),
   KEY `index_bonus_companyInfo_id_06a1f375_fk_company_companyinfo_id` (`companyInfo_id`),
   CONSTRAINT `index_bonus_companyInfo_id_06a1f375_fk_company_companyinfo_id` FOREIGN KEY (`companyInfo_id`) REFERENCES `company_companyinfo` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1064,7 +1064,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `index_subtraction`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+ SET character_set_client = utf8 ;
 CREATE TABLE `index_subtraction` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `item` smallint(6) DEFAULT NULL,
@@ -1074,7 +1074,7 @@ CREATE TABLE `index_subtraction` (
   PRIMARY KEY (`id`),
   KEY `index_subtraction_companyInfo_id_23ff605a_fk_company_c` (`companyInfo_id`),
   CONSTRAINT `index_subtraction_companyInfo_id_23ff605a_fk_company_c` FOREIGN KEY (`companyInfo_id`) REFERENCES `company_companyinfo` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1093,7 +1093,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `institution_bankreport`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+ SET character_set_client = utf8 ;
 CREATE TABLE `institution_bankreport` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `i1` smallint(6),
@@ -1119,7 +1119,7 @@ CREATE TABLE `institution_bankreport` (
   PRIMARY KEY (`id`),
   KEY `institution_bankrepo_companyInfo_id_f19fe783_fk_company_c` (`companyInfo_id`),
   CONSTRAINT `institution_bankrepo_companyInfo_id_f19fe783_fk_company_c` FOREIGN KEY (`companyInfo_id`) REFERENCES `company_companyinfo` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1138,7 +1138,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `institution_bankreport_institution`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+ SET character_set_client = utf8 ;
 CREATE TABLE `institution_bankreport_institution` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `bankreport_id` int(11) NOT NULL,
@@ -1148,7 +1148,7 @@ CREATE TABLE `institution_bankreport_institution` (
   KEY `institution_bankrepo_institution_id_f6ae4cd0_fk_instituti` (`institution_id`),
   CONSTRAINT `institution_bankrepo_bankreport_id_b4c1209b_fk_instituti` FOREIGN KEY (`bankreport_id`) REFERENCES `institution_bankreport` (`id`),
   CONSTRAINT `institution_bankrepo_institution_id_f6ae4cd0_fk_instituti` FOREIGN KEY (`institution_id`) REFERENCES `institution_institution` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1167,7 +1167,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `institution_institution`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+ SET character_set_client = utf8 ;
 CREATE TABLE `institution_institution` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `type` smallint(6) DEFAULT NULL,
@@ -1178,7 +1178,7 @@ CREATE TABLE `institution_institution` (
   UNIQUE KEY `user_id` (`user_id`),
   UNIQUE KEY `institution_institution_name_56c61d5e_uniq` (`name`),
   CONSTRAINT `institution_institution_user_id_114f795c_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1197,7 +1197,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `institution_investreport`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+ SET character_set_client = utf8 ;
 CREATE TABLE `institution_investreport` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `i5` tinyint(1) NOT NULL,
@@ -1223,7 +1223,7 @@ CREATE TABLE `institution_investreport` (
   PRIMARY KEY (`id`),
   KEY `institution_investre_companyInfo_id_f0e8ce27_fk_company_c` (`companyInfo_id`),
   CONSTRAINT `institution_investre_companyInfo_id_f0e8ce27_fk_company_c` FOREIGN KEY (`companyInfo_id`) REFERENCES `company_companyinfo` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1242,7 +1242,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `institution_investreport_institution`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+ SET character_set_client = utf8 ;
 CREATE TABLE `institution_investreport_institution` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `investreport_id` int(11) NOT NULL,
@@ -1252,7 +1252,7 @@ CREATE TABLE `institution_investreport_institution` (
   KEY `institution_investre_institution_id_c006bdac_fk_instituti` (`institution_id`),
   CONSTRAINT `institution_investre_institution_id_c006bdac_fk_instituti` FOREIGN KEY (`institution_id`) REFERENCES `institution_institution` (`id`),
   CONSTRAINT `institution_investre_investreport_id_0dfd221b_fk_instituti` FOREIGN KEY (`investreport_id`) REFERENCES `institution_investreport` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1271,7 +1271,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `institution_reportback`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+ SET character_set_client = utf8 ;
 CREATE TABLE `institution_reportback` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `will` smallint(6) DEFAULT NULL,
@@ -1289,7 +1289,7 @@ CREATE TABLE `institution_reportback` (
   CONSTRAINT `institution_reportba_bankreport_id_170c33df_fk_instituti` FOREIGN KEY (`bankreport_id`) REFERENCES `institution_bankreport` (`id`),
   CONSTRAINT `institution_reportba_institution_id_aebc6cf1_fk_instituti` FOREIGN KEY (`institution_id`) REFERENCES `institution_institution` (`id`),
   CONSTRAINT `institution_reportba_investreport_id_03a548cf_fk_instituti` FOREIGN KEY (`investreport_id`) REFERENCES `institution_investreport` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
