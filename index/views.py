@@ -395,10 +395,11 @@ def save_permission():
                 gobj = Group.objects.get(name=group_name)
             except Group.DoesNotExist:
                 gobj = Group.objects.create(name=group_name)
-            print(group_name,gobj.name)
-            gobj.permissions.add(Permission.objects.get(codename=codename))
-            gobj.save()
-
+            try:
+                gobj.permissions.add(Permission.objects.get(codename=codename))
+                gobj.save()
+            except Exception:
+                pass
 
 
 save_permission()
