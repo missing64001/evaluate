@@ -230,6 +230,10 @@ def profit_submit_table_view(request):
                 pass
 
     cobj = CompanyInfo.objects.get(user=request.user)
+    # print(cobj.status)
+    # print(Balance.objects.filter(companyInfo=cobj).count())
+    # print(Profit.objects.filter(companyInfo=cobj).count())
+    # print(CashFlow.objects.filter(companyInfo=cobj).count())
     if cobj.status == 1:          
         if Balance.objects.filter(companyInfo=cobj) and Profit.objects.filter(companyInfo=cobj) and\
             CashFlow.objects.filter(companyInfo=cobj):

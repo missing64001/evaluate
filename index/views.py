@@ -399,7 +399,7 @@ def save_permission():
 
 
 
-save_permission()
+# save_permission()
 # 
 # 
 # 

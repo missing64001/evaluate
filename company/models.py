@@ -24,12 +24,9 @@ status_choices = ((-2,'无效'),
                 (10,'用户获得反馈'),
             )
 
-
-    
-
-
-
-
+field_1_choices = ((1 ,'电子信息'),  (2 ,'互联网及移动互联网'), (3 ,'生物医药'), (4 ,'先进制造'), (5 ,'新能源及节能环保'), (6 ,'新材料'), (7 ,'其他'))
+technical_source_choices = ((1,'独立知识产权'), (2,'合作研发'), (3,'购买技术'), (4,'其他'))
+SOAT_choices = ((1,'高校/科研院所'), (2,'相关科技计划'), (3,'自行研发'), (4,'其他'))
 class CompanyInfo(models.Model):
     '一、基本信息'
 
@@ -48,22 +45,14 @@ class CompanyInfo(models.Model):
 
 
     is_high_tech_enterprise = models.BooleanField(verbose_name='是否是高新技术企业',default=False)
-    abouts = models.CharField(max_length=500,verbose_name='企业简介',blank=True,null=True)
+    abouts = models.TextField(verbose_name='企业简介',blank=True,null=True)
 
-    # {1 :'电子信息',  2 :'互联网及移动互联网', 3 :'生物医药', 4 :'先进制造', 5 :'新能源及节能环保', 6 :'新材料', 7 :'其他',}
-    field_1 = models.SmallIntegerField(verbose_name='行业领域1',blank=True,null=True)
-    field_2 = models.CharField(max_length=20,verbose_name='行业领域2',blank=True,null=True)
+    # 
+    field_1 = models.SmallIntegerField(choices=field_1_choices,verbose_name='行业领域',blank=True,null=True)
+    field_2 = models.CharField(max_length=20,verbose_name='二级领域',blank=True,null=True)
 
     # ???
     # 
-    x1 = models.SmallIntegerField(choices=x1_d,verbose_name='',blank=True,null=True)
-
-    # {1:'独立知识产权', 2:'合作研发', 3:'购买技术', 4:'其他'}
-    technical_source = models.SmallIntegerField(verbose_name='技术来源',blank=True,null=True)
-    
-    # Source of achievement transformation
-    # {1:'高校/科研院所', 2:'相关科技计划', 3:'自行研发', 4:'其他'}
-    SOAT = models.SmallIntegerField(verbose_name='成果转化来源',blank=True,null=True)
 
 
     credit_code = models.CharField(max_length=50,verbose_name='统一社会信用代码',blank=True,null=True)
@@ -97,14 +86,15 @@ class RejectReason(models.Model):
         verbose_name='驳回理由'
         verbose_name_plural=verbose_name
 
+form_of_contribution_choices = ((1,'货币出资'), (2,'实物'), (3,'知识产权'), (4,'土地使用权') ,(5,'其他'))
 class Shareholder(models.Model):
     '主要股东及股权比例（前五名）'
     companyInfo = models.ForeignKey(CompanyInfo,verbose_name='企业',blank=True,null=True)
     name = models.CharField(max_length=50,verbose_name='股东名称',blank=True,null=True)
-    share_ratio = models.FloatField(verbose_name='股权比例',blank=True,null=True)
+    share_ratio = models.FloatField(verbose_name='股权比例(%)',blank=True,null=True)
 
     # {1:'货币出资', 2:'实物', 3:'知识产权', 4:'土地使用权' ,5:'其他'}
-    form_of_contribution = models.SmallIntegerField(verbose_name='出资形式',blank=True,null=True)
+    form_of_contribution = models.SmallIntegerField(choices=form_of_contribution_choices,verbose_name='出资形式',blank=True,null=True)
 
     class Meta:
         verbose_name='主要股东及股权比例（前五名）'
@@ -138,7 +128,8 @@ class Project(models.Model):
     _type = models.CharField(max_length=10,verbose_name='计划类别',blank=True,null=True)
     title = models.CharField(max_length=50,verbose_name='立项名称',blank=True,null=True)
     create_date = models.DateField(verbose_name='立项时间',blank=True,null=True)
-    finished_date_and_conclusion = models.CharField(max_length=50,verbose_name='结项时间/结论',blank=True,null=True)
+    finished_date = models.DateField(verbose_name='立项时间',blank=True,null=True)
+    conclusion = models.TextField(verbose_name='结项时间/结论',blank=True,null=True)
     
     class Meta:
         verbose_name='企业曾经承担或正在承担的科技计划项目'
@@ -196,6 +187,20 @@ class StandardSetting(models.Model):
         verbose_name='标准制定情况'
         verbose_name_plural=verbose_name
 
+class Otherm(models.Model):
+    companyInfo = models.OneToOneField(CompanyInfo,verbose_name='企业',blank=True,null=True)
+    x1 = models.SmallIntegerField(choices=x1_d,verbose_name='',blank=True,null=True)
+
+    # {1:'独立知识产权', 2:'合作研发', 3:'购买技术', 4:'其他'}
+    technical_source = models.SmallIntegerField(choices=technical_source_choices,verbose_name='技术来源',blank=True,null=True)
+    
+    # Source of achievement transformation
+    # {1:'高校/科研院所', 2:'相关科技计划', 3:'自行研发', 4:'其他'}
+    SOAT = models.SmallIntegerField(choices=SOAT_choices,verbose_name='成果转化来源',blank=True,null=True)
+    class Meta:
+        verbose_name='其他'
+        verbose_name_plural=verbose_name
+
 class CoreMember(models.Model):
     '  核心团队（至少填三人）'
     companyInfo = models.ForeignKey(CompanyInfo,verbose_name='企业',blank=True,null=True)
@@ -241,7 +246,6 @@ class WorkExperience(models.Model):
 
 
 
-
 class FinancialSituation(models.Model):
     '二、财务状况'
     companyInfo = models.ForeignKey(CompanyInfo,verbose_name='企业',blank=True,null=True)
@@ -258,9 +262,9 @@ class FinancialSituation(models.Model):
 class ProductsAndMarket(models.Model):
     '三、产品与市场'
     companyInfo = models.OneToOneField(CompanyInfo,verbose_name='企业',blank=True,null=True)
-    product = models.CharField(max_length=500,verbose_name='主营产品（或服务）',blank=True,null=True)
-    model = models.CharField(max_length=500,verbose_name='商业模式',blank=True,null=True)
-    analysis_forecast = models.CharField(max_length=500,verbose_name='市场分析及前景预测',blank=True,null=True)
+    product = models.TextField(verbose_name='主营产品（或服务）',blank=True,null=True)
+    model = models.TextField(verbose_name='商业模式',blank=True,null=True)
+    analysis_forecast = models.TextField(verbose_name='市场分析及前景预测',blank=True,null=True)
 
     class Meta:
         verbose_name='三、产品与市场'
@@ -269,26 +273,29 @@ class ProductsAndMarket(models.Model):
 class TechnologyRD(models.Model):
     '四、技术与研发'
     companyInfo = models.OneToOneField(CompanyInfo,verbose_name='企业',blank=True,null=True)
-    status = models.CharField(max_length=500,verbose_name='核心技术及研发情况',blank=True,null=True)
+    status = models.TextField(verbose_name='核心技术及研发情况',blank=True,null=True)
 
     class Meta:
         verbose_name='四、技术与研发'
         verbose_name_plural=verbose_name
 
+
+share_model_choices = ((1,'主板'),(2,'中小板'),(3,'创业板'),(4,'新三板'),(5,'上海股权托管交易中心'),(6,'培训辅导'),(7,'上市路演需求'))
 class ServerRequest(models.Model):
     '五、服务需求'
     companyInfo = models.OneToOneField(CompanyInfo,verbose_name='企业')
     amount = models.IntegerField(verbose_name='融资金额（万元）',blank=True,null=True)
-    duration = models.SmallIntegerField(verbose_name='融资时间',blank=True,null=True)
+    duration = models.SmallIntegerField(verbose_name='融资时间（天）',blank=True,null=True)
     # 股权融资
-    ratio = models.FloatField(verbose_name='拟出让股权比例',blank=True,null=True)
+    ratio = models.FloatField(verbose_name='拟出让股权比例（%）',blank=True,null=True)
     # 债权融资
-    interest_rate = models.FloatField(verbose_name='可以接受的最高年利率%',blank=True,null=True)
-    plan = models.CharField(max_length=500,verbose_name='资金使用计划',blank=True,null=True)
+    interest_rate = models.FloatField(verbose_name='可以接受的最高年利率（%）',blank=True,null=True)
+    plan = models.TextField(verbose_name='资金使用计划',blank=True,null=True)
     small_loan = models.SmallIntegerField(verbose_name='小额贷款',blank=True,null=True)
-    # ((1,'主板'),(2,'中小板'),(3,'创业板'),(4,'新三板'),(5,'上海股权托管交易中心'),(6,'培训辅导'),(7,'上市路演需求'))
-    share_model = models.SmallIntegerField(verbose_name='股改、挂牌、上市',blank=True,null=True)
-    request = models.CharField(max_length=20,verbose_name='金融服务需求',blank=True,null=True)
+    # 
+    share_model = models.SmallIntegerField(choices=share_model_choices,verbose_name='股改、挂牌、上市',blank=True,null=True)
+    request = models.TextField(verbose_name='科技金融服务需求',blank=True,null=True)
+    otherrequest = models.TextField(verbose_name='其他科技服务需求',blank=True,null=True)
     # img = models.ImageField(upload_to='static/img/',blank=True,null=True)
     class Meta:
         verbose_name='五、服务需求'

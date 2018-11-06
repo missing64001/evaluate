@@ -52,7 +52,7 @@ class ProjectInl(admin.StackedInline):
             status = CompanyInfo.objects.get(user=request.user).status
             if status == 5 or status < 4:
                 return []
-        return ('_type','title','create_date','finished_date_and_conclusion')
+        return ('_type','title','create_date','finished_date','conclusion')
     
 class PatentInl(admin.StackedInline):
     model = Patent
@@ -161,10 +161,21 @@ class ServerRequestInl(admin.StackedInline):
             status = CompanyInfo.objects.get(user=request.user).status
             if status == 5 or status < 4:
                 return []
-        return ('amount','duration','ratio','interest_rate','plan','small_loan','share_model','request')
-    
+        return ('amount','duration','ratio','interest_rate','plan','small_loan','share_model','request','otherrequest')
 
-    
+
+class OthermInl(admin.StackedInline):
+    model = Otherm
+    extra = 1
+    # max_num = 5
+    def get_readonly_fields(self, request,obj=None):
+        if get_user_group(request,'企业用户'):
+            status = CompanyInfo.objects.get(user=request.user).status
+            if status == 5 or status < 4:
+                return []
+        return ('x1','technical_source','SOAT')
+
+
 
 
 @admin.register(CoreMember)
@@ -190,8 +201,31 @@ class CompanyInfoAdmin(admin.ModelAdmin):
     list_display=['name','phone','incubator','credit_code','new_status']
     search_fields = ('name','incubator__name')
     inlines = [ShareholderInl, EnterpriseAwardsInl,PersonalAwardsInl,ProjectInl,PatentInl,
-                DrugApprovalInl,MIRCInl,StandardSettingInl,FinancialSituationInl,ProductsAndMarketInl,TechnologyRDInl,ServerRequestInl] #CoreMemberInl,
+                DrugApprovalInl,MIRCInl,StandardSettingInl,OthermInl,FinancialSituationInl
+                ,ProductsAndMarketInl,TechnologyRDInl,ServerRequestInl] #CoreMemberInl,
     exclude = ('user','credit_code','phone','business_license_pic','status')
+
+    # fieldsets = (
+
+    #     (   
+
+    #         '基本选项',{
+    #             'fields':('incubator',('name','create_date'),('registered_capital','paid_in_capital'),
+    #                 ('major_business','work_force'),('junior_college_number','developer_number'),
+    #                 'is_high_tech_enterprise','abouts','field_1','field_2','x1','technical_source','SOAT'),
+    #         }
+    #     ),
+    # )
+
+    # fieldsets = (
+
+    #     (   
+
+    #         '基本选项',{
+    #             'fields':('ShareholderInl','EnterpriseAwardsInl'),
+    #         }
+    #     ),
+    # )
 
     # def get_inline_instances(self, request, obj=None):
     #     inline_instances = []
@@ -236,11 +270,11 @@ class CompanyInfoAdmin(admin.ModelAdmin):
         if get_user_group(request,'孵化器用户') or status == 4 or status > 5:
             return ('incubator','name','create_date','registered_capital','paid_in_capital',
                 'major_business','work_force','junior_college_number','developer_number','is_high_tech_enterprise'
-                ,'abouts','field_1','field_2','x1','technical_source','SOAT')
+                ,'abouts','field_1','field_2') # ,'x1','technical_source','SOAT'
         if get_user_group(request,'机构用户'):
             return ('incubator','name','create_date','registered_capital','paid_in_capital',
                 'major_business','work_force','junior_college_number','developer_number','is_high_tech_enterprise'
-                ,'abouts','field_1','field_2','x1','technical_source','SOAT','get_user_group_1')
+                ,'abouts','field_1','field_2','get_user_group_1') # ,'x1','technical_source','SOAT'
         return []
 
     def get_queryset(self, request):

@@ -255,9 +255,10 @@ class ReportBackAdmin(admin.ModelAdmin):
 
     def get_list_display(self, request, obj=None):
         if get_user_group(request,'super'):
-            return ['institution','will','type','iscompanyview','isinstitutionview']
+            return ['institution','mget_company','will','type','iscompanyview','isinstitutionview']
         else:
-            return ['institution','will','type']
+            return ['institution','mget_company','will','type']
+
 
     def get_exclude(self, request, obj=None):
         qs = super().get_queryset(request)
