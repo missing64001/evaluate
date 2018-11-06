@@ -27,7 +27,7 @@ CREATE TABLE `auth_group` (
   `name` varchar(80) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -56,7 +56,7 @@ CREATE TABLE `auth_group_permissions` (
   KEY `auth_group_permissio_permission_id_84c5c92e_fk_auth_perm` (`permission_id`),
   CONSTRAINT `auth_group_permissio_permission_id_84c5c92e_fk_auth_perm` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`),
   CONSTRAINT `auth_group_permissions_group_id_b120cbf9_fk_auth_group_id` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=135 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=135 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -84,7 +84,7 @@ CREATE TABLE `auth_permission` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `auth_permission_content_type_id_codename_01ab375a_uniq` (`content_type_id`,`codename`),
   CONSTRAINT `auth_permission_content_type_id_2f476e4b_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=112 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=112 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -118,7 +118,7 @@ CREATE TABLE `auth_user` (
   `date_joined` datetime(6) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -147,7 +147,7 @@ CREATE TABLE `auth_user_groups` (
   KEY `auth_user_groups_group_id_97559544_fk_auth_group_id` (`group_id`),
   CONSTRAINT `auth_user_groups_group_id_97559544_fk_auth_group_id` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`),
   CONSTRAINT `auth_user_groups_user_id_6a12ed8b_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -176,7 +176,7 @@ CREATE TABLE `auth_user_user_permissions` (
   KEY `auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm` (`permission_id`),
   CONSTRAINT `auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`),
   CONSTRAINT `auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -204,7 +204,7 @@ CREATE TABLE `company_balance` (
   PRIMARY KEY (`id`),
   KEY `company_balance_companyInfo_id_1740a10c_fk_company_c` (`companyInfo_id`),
   CONSTRAINT `company_balance_companyInfo_id_1740a10c_fk_company_c` FOREIGN KEY (`companyInfo_id`) REFERENCES `company_companyinfo` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=722 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=722 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -233,7 +233,7 @@ CREATE TABLE `company_cashflow` (
   PRIMARY KEY (`id`),
   KEY `company_cashflow_companyInfo_id_84f5fc8e_fk_company_c` (`companyInfo_id`),
   CONSTRAINT `company_cashflow_companyInfo_id_84f5fc8e_fk_company_c` FOREIGN KEY (`companyInfo_id`) REFERENCES `company_companyinfo` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -279,7 +279,7 @@ CREATE TABLE `company_companyinfo` (
   KEY `company_companyinfo_user_id_e4d0d778_fk_auth_user_id` (`user_id`),
   CONSTRAINT `company_companyinfo_incubator_id_4ba91699_fk_incubator` FOREIGN KEY (`incubator_id`) REFERENCES `incubator_incubator` (`id`),
   CONSTRAINT `company_companyinfo_user_id_e4d0d778_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -312,7 +312,7 @@ CREATE TABLE `company_coremember` (
   PRIMARY KEY (`id`),
   KEY `company_coremember_companyInfo_id_c881a2da_fk_company_c` (`companyInfo_id`),
   CONSTRAINT `company_coremember_companyInfo_id_c881a2da_fk_company_c` FOREIGN KEY (`companyInfo_id`) REFERENCES `company_companyinfo` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -342,7 +342,7 @@ CREATE TABLE `company_drugapproval` (
   PRIMARY KEY (`id`),
   KEY `company_drugapproval_companyInfo_id_e33a90e9_fk_company_c` (`companyInfo_id`),
   CONSTRAINT `company_drugapproval_companyInfo_id_e33a90e9_fk_company_c` FOREIGN KEY (`companyInfo_id`) REFERENCES `company_companyinfo` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -370,7 +370,7 @@ CREATE TABLE `company_educationexperience` (
   PRIMARY KEY (`id`),
   KEY `company_educationexp_core_member_id_ae620ffa_fk_company_c` (`core_member_id`),
   CONSTRAINT `company_educationexp_core_member_id_ae620ffa_fk_company_c` FOREIGN KEY (`core_member_id`) REFERENCES `company_coremember` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -398,7 +398,7 @@ CREATE TABLE `company_enterpriseawards` (
   PRIMARY KEY (`id`),
   KEY `company_enterpriseaw_companyInfo_id_5f1670fa_fk_company_c` (`companyInfo_id`),
   CONSTRAINT `company_enterpriseaw_companyInfo_id_5f1670fa_fk_company_c` FOREIGN KEY (`companyInfo_id`) REFERENCES `company_companyinfo` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -429,7 +429,7 @@ CREATE TABLE `company_evaluationofenterprises` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `companyInfo_id` (`companyInfo_id`),
   CONSTRAINT `company_evaluationof_companyInfo_id_446e2046_fk_company_c` FOREIGN KEY (`companyInfo_id`) REFERENCES `company_companyinfo` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -460,7 +460,7 @@ CREATE TABLE `company_financialsituation` (
   PRIMARY KEY (`id`),
   KEY `company_financialsit_companyInfo_id_222ea973_fk_company_c` (`companyInfo_id`),
   CONSTRAINT `company_financialsit_companyInfo_id_222ea973_fk_company_c` FOREIGN KEY (`companyInfo_id`) REFERENCES `company_companyinfo` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -491,7 +491,7 @@ CREATE TABLE `company_independentevaluationofenterprises` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `companyInfo_id` (`companyInfo_id`),
   CONSTRAINT `company_independente_companyInfo_id_c8cbcd0e_fk_company_c` FOREIGN KEY (`companyInfo_id`) REFERENCES `company_companyinfo` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -520,7 +520,7 @@ CREATE TABLE `company_mirc` (
   PRIMARY KEY (`id`),
   KEY `company_mirc_companyInfo_id_b23cd250_fk_company_companyinfo_id` (`companyInfo_id`),
   CONSTRAINT `company_mirc_companyInfo_id_b23cd250_fk_company_companyinfo_id` FOREIGN KEY (`companyInfo_id`) REFERENCES `company_companyinfo` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -548,7 +548,7 @@ CREATE TABLE `company_otherm` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `companyInfo_id` (`companyInfo_id`),
   CONSTRAINT `company_otherm_companyInfo_id_53c8b1b9_fk_company_companyinfo_id` FOREIGN KEY (`companyInfo_id`) REFERENCES `company_companyinfo` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -578,7 +578,7 @@ CREATE TABLE `company_patent` (
   PRIMARY KEY (`id`),
   KEY `company_patent_companyInfo_id_ae9bc17c_fk_company_companyinfo_id` (`companyInfo_id`),
   CONSTRAINT `company_patent_companyInfo_id_ae9bc17c_fk_company_companyinfo_id` FOREIGN KEY (`companyInfo_id`) REFERENCES `company_companyinfo` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -607,7 +607,7 @@ CREATE TABLE `company_personalawards` (
   PRIMARY KEY (`id`),
   KEY `company_personalawar_companyInfo_id_d63b1736_fk_company_c` (`companyInfo_id`),
   CONSTRAINT `company_personalawar_companyInfo_id_d63b1736_fk_company_c` FOREIGN KEY (`companyInfo_id`) REFERENCES `company_companyinfo` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -636,7 +636,7 @@ CREATE TABLE `company_productsandmarket` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `companyInfo_id` (`companyInfo_id`),
   CONSTRAINT `company_productsandm_companyInfo_id_f940e9f4_fk_company_c` FOREIGN KEY (`companyInfo_id`) REFERENCES `company_companyinfo` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -665,7 +665,7 @@ CREATE TABLE `company_profit` (
   PRIMARY KEY (`id`),
   KEY `company_profit_companyInfo_id_528daf88_fk_company_companyinfo_id` (`companyInfo_id`),
   CONSTRAINT `company_profit_companyInfo_id_528daf88_fk_company_companyinfo_id` FOREIGN KEY (`companyInfo_id`) REFERENCES `company_companyinfo` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=128 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=128 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -696,7 +696,7 @@ CREATE TABLE `company_project` (
   PRIMARY KEY (`id`),
   KEY `company_project_companyInfo_id_235f7a33_fk_company_c` (`companyInfo_id`),
   CONSTRAINT `company_project_companyInfo_id_235f7a33_fk_company_c` FOREIGN KEY (`companyInfo_id`) REFERENCES `company_companyinfo` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -725,7 +725,7 @@ CREATE TABLE `company_rejectreason` (
   PRIMARY KEY (`id`),
   KEY `company_reject_reaso_companyInfo_id_6b93a46a_fk_company_c` (`companyInfo_id`),
   CONSTRAINT `company_reject_reaso_companyInfo_id_6b93a46a_fk_company_c` FOREIGN KEY (`companyInfo_id`) REFERENCES `company_companyinfo` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -760,7 +760,7 @@ CREATE TABLE `company_serverrequest` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `companyInfo_id` (`companyInfo_id`),
   CONSTRAINT `company_serverreques_companyInfo_id_bbcdc638_fk_company_c` FOREIGN KEY (`companyInfo_id`) REFERENCES `company_companyinfo` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -789,7 +789,7 @@ CREATE TABLE `company_shareholder` (
   PRIMARY KEY (`id`),
   KEY `company_shareholder_companyInfo_id_29b72b99_fk_company_c` (`companyInfo_id`),
   CONSTRAINT `company_shareholder_companyInfo_id_29b72b99_fk_company_c` FOREIGN KEY (`companyInfo_id`) REFERENCES `company_companyinfo` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -819,7 +819,7 @@ CREATE TABLE `company_standardsetting` (
   PRIMARY KEY (`id`),
   KEY `company_standardsett_companyInfo_id_a73978b0_fk_company_c` (`companyInfo_id`),
   CONSTRAINT `company_standardsett_companyInfo_id_a73978b0_fk_company_c` FOREIGN KEY (`companyInfo_id`) REFERENCES `company_companyinfo` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -845,7 +845,7 @@ CREATE TABLE `company_technologyrd` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `companyInfo_id` (`companyInfo_id`),
   CONSTRAINT `company_technologyrd_companyInfo_id_18ee93e7_fk_company_c` FOREIGN KEY (`companyInfo_id`) REFERENCES `company_companyinfo` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -875,7 +875,7 @@ CREATE TABLE `company_workexperience` (
   PRIMARY KEY (`id`),
   KEY `company_workexperien_core_member_id_a3194aa2_fk_company_c` (`core_member_id`),
   CONSTRAINT `company_workexperien_core_member_id_a3194aa2_fk_company_c` FOREIGN KEY (`core_member_id`) REFERENCES `company_coremember` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -908,7 +908,7 @@ CREATE TABLE `django_admin_log` (
   KEY `django_admin_log_user_id_c564eba6_fk` (`user_id`),
   CONSTRAINT `django_admin_log_content_type_id_c4bce8eb_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`),
   CONSTRAINT `django_admin_log_user_id_c564eba6_fk` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=116 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=116 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -934,7 +934,7 @@ CREATE TABLE `django_content_type` (
   `model` varchar(100) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `django_content_type_app_label_model_76bd3d3b_uniq` (`app_label`,`model`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -960,7 +960,7 @@ CREATE TABLE `django_migrations` (
   `name` varchar(255) NOT NULL,
   `applied` datetime(6) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -986,7 +986,7 @@ CREATE TABLE `django_session` (
   `expire_date` datetime(6) NOT NULL,
   PRIMARY KEY (`session_key`),
   KEY `django_session_expire_date_a5c62663` (`expire_date`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1016,7 +1016,7 @@ CREATE TABLE `incubator_incubator` (
   UNIQUE KEY `user_id` (`user_id`),
   UNIQUE KEY `incubator_incubator_name_ed12c7a4_uniq` (`name`),
   CONSTRAINT `incubator_incubator_user_id_bf7d94d1_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1045,7 +1045,7 @@ CREATE TABLE `index_bonus` (
   PRIMARY KEY (`id`),
   KEY `index_bonus_companyInfo_id_06a1f375_fk_company_companyinfo_id` (`companyInfo_id`),
   CONSTRAINT `index_bonus_companyInfo_id_06a1f375_fk_company_companyinfo_id` FOREIGN KEY (`companyInfo_id`) REFERENCES `company_companyinfo` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1074,7 +1074,7 @@ CREATE TABLE `index_subtraction` (
   PRIMARY KEY (`id`),
   KEY `index_subtraction_companyInfo_id_23ff605a_fk_company_c` (`companyInfo_id`),
   CONSTRAINT `index_subtraction_companyInfo_id_23ff605a_fk_company_c` FOREIGN KEY (`companyInfo_id`) REFERENCES `company_companyinfo` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1119,7 +1119,7 @@ CREATE TABLE `institution_bankreport` (
   PRIMARY KEY (`id`),
   KEY `institution_bankrepo_companyInfo_id_f19fe783_fk_company_c` (`companyInfo_id`),
   CONSTRAINT `institution_bankrepo_companyInfo_id_f19fe783_fk_company_c` FOREIGN KEY (`companyInfo_id`) REFERENCES `company_companyinfo` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1148,7 +1148,7 @@ CREATE TABLE `institution_bankreport_institution` (
   KEY `institution_bankrepo_institution_id_f6ae4cd0_fk_instituti` (`institution_id`),
   CONSTRAINT `institution_bankrepo_bankreport_id_b4c1209b_fk_instituti` FOREIGN KEY (`bankreport_id`) REFERENCES `institution_bankreport` (`id`),
   CONSTRAINT `institution_bankrepo_institution_id_f6ae4cd0_fk_instituti` FOREIGN KEY (`institution_id`) REFERENCES `institution_institution` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1178,7 +1178,7 @@ CREATE TABLE `institution_institution` (
   UNIQUE KEY `user_id` (`user_id`),
   UNIQUE KEY `institution_institution_name_56c61d5e_uniq` (`name`),
   CONSTRAINT `institution_institution_user_id_114f795c_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1223,7 +1223,7 @@ CREATE TABLE `institution_investreport` (
   PRIMARY KEY (`id`),
   KEY `institution_investre_companyInfo_id_f0e8ce27_fk_company_c` (`companyInfo_id`),
   CONSTRAINT `institution_investre_companyInfo_id_f0e8ce27_fk_company_c` FOREIGN KEY (`companyInfo_id`) REFERENCES `company_companyinfo` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1252,7 +1252,7 @@ CREATE TABLE `institution_investreport_institution` (
   KEY `institution_investre_institution_id_c006bdac_fk_instituti` (`institution_id`),
   CONSTRAINT `institution_investre_institution_id_c006bdac_fk_instituti` FOREIGN KEY (`institution_id`) REFERENCES `institution_institution` (`id`),
   CONSTRAINT `institution_investre_investreport_id_0dfd221b_fk_instituti` FOREIGN KEY (`investreport_id`) REFERENCES `institution_investreport` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1289,7 +1289,7 @@ CREATE TABLE `institution_reportback` (
   CONSTRAINT `institution_reportba_bankreport_id_170c33df_fk_instituti` FOREIGN KEY (`bankreport_id`) REFERENCES `institution_bankreport` (`id`),
   CONSTRAINT `institution_reportba_institution_id_aebc6cf1_fk_instituti` FOREIGN KEY (`institution_id`) REFERENCES `institution_institution` (`id`),
   CONSTRAINT `institution_reportba_investreport_id_03a548cf_fk_instituti` FOREIGN KEY (`investreport_id`) REFERENCES `institution_investreport` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
