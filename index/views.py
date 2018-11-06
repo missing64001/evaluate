@@ -400,7 +400,10 @@ def save_permission():
                 gobj.save()
             except Exception:
                 pass
+<<<<<<< HEAD
 
+=======
+>>>>>>> f88fcb5a246bf6af0cde20a8dc33b9195338eaec
 
 
 save_permission()
