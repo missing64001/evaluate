@@ -359,7 +359,10 @@ class CompanyInfoAdmin(admin.ModelAdmin):
     #     js = ('/static/js/balance.js',)
 
     def business_license_pic_show(self,obj):
-        path = 'static/' + str(obj.business_license_pic)
+
+        path = str(obj.business_license_pic)
+        if not path.startswith('static/'):
+            path = 'static/' + path
         return format_html('<div style="height: 50px;overflow: hidden;"><a href="/' + path + '" width=30 height=50 data-lightbox="' + path + '"><img src="/' + path + '" width=30 height=50" /></a></div>')
     business_license_pic_show.short_description = '营业执照'
 
