@@ -74,7 +74,7 @@ class RejectReason(models.Model):
     companyInfo = models.ForeignKey(CompanyInfo,verbose_name='企业',blank=True,null=True)
     text = models.TextField(verbose_name='拒绝原因',blank=True,null=True)
     is_alive = models.BooleanField(verbose_name='是否有效',default=True)    
-    create_date = models.DateTimeField(verbose_name='生成时间',auto_now=True,blank=True,null=True)
+    create_date = models.DateTimeField(verbose_name='生成时间',auto_now_add=True,blank=True,null=True)
 
     def __str__(self):
         if len(self.text) < 10:
@@ -327,7 +327,7 @@ class ServerRequest(models.Model):
     # 债权融资
     interest_rate = models.FloatField(verbose_name='可以接受的最高年利率（%）',blank=True,null=True)
     plan = models.TextField(verbose_name='资金使用计划',blank=True,null=True)
-    small_loan = models.SmallIntegerField(verbose_name='小额贷款',blank=True,null=True)
+    small_loan = models.SmallIntegerField(verbose_name='小额贷款（万元）',blank=True,null=True)
     # 
     share_model = models.SmallIntegerField(choices=share_model_choices,verbose_name='股改、挂牌、上市',blank=True,null=True)
     request = models.TextField(verbose_name='科技金融服务需求',blank=True,null=True)
@@ -355,7 +355,7 @@ class IndependentEvaluationOfEnterprises(models.Model):
     products_and_market = models.SmallIntegerField(choices=external_environment_choices,verbose_name='企业主营产品及市场开拓（权重：2）',default=1,blank=True,null=True)
     technology_R_D = models.SmallIntegerField(choices=external_environment_choices,verbose_name='企业核心技术及研发实力（权重：2）',default=1,blank=True,null=True)
     team = models.SmallIntegerField(choices=external_environment_choices,verbose_name='企业经营及管理团队（权重：4）',default=1,blank=True,null=True)
-    create_date = models.DateTimeField(verbose_name='生成时间',auto_now=True,blank=True,null=True)
+    create_date = models.DateTimeField(verbose_name='生成时间',auto_now_add=True,blank=True,null=True)
 
     # def tname(self):
     #     print(type(self.create_date))
@@ -377,7 +377,7 @@ class EvaluationOfEnterprises(models.Model):
     products_and_market = models.SmallIntegerField(choices=external_environment_choices,verbose_name='企业主营产品及市场开拓（权重：2）',blank=True,null=True)
     technology_R_D = models.SmallIntegerField(choices=external_environment_choices,verbose_name='企业核心技术及研发实力（权重：2）',blank=True,null=True)
     team = models.SmallIntegerField(choices=external_environment_choices,verbose_name='企业经营及管理团队（权重：4）',blank=True,null=True)
-    create_date = models.DateTimeField(verbose_name='生成时间',auto_now=True,blank=True,null=True)
+    create_date = models.DateTimeField(verbose_name='生成时间',auto_now_add=True,blank=True,null=True)
     def __str__(self):
         return '校正评价'
 

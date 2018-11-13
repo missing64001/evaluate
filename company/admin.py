@@ -10,7 +10,7 @@ from django.db.models import Max
 
 class ShareholderInl(admin.StackedInline):
     model = Shareholder
-    extra = 1
+    extra = 0
     max_num = 5
     def get_readonly_fields(self, request,obj=None):
         
@@ -98,11 +98,11 @@ class StandardSettingInl(admin.StackedInline):
                 return []
         return ('title','level','num','status')
 
-class CoreMemberInl(admin.StackedInline):
-    model = CoreMember
-    extra = 1
-    max_num = 5
-    readonly_fields = ('title','level','num','status')
+# class CoreMemberInl(admin.StackedInline):
+#     model = CoreMember
+#     extra = 0
+#     max_num = 5
+#     readonly_fields = ('title','level','num','status')
 
 class EducationExperienceInl(admin.StackedInline):
     model = EducationExperience
@@ -121,7 +121,7 @@ class WorkExperienceInl(admin.StackedInline):
 
 class FinancialSituationInl(admin.StackedInline):
     model = FinancialSituation
-    extra = 1
+    extra = 0
     max_num = 5
     def get_readonly_fields(self, request,obj=None):
         if get_user_group(request,'企业用户'):
@@ -177,7 +177,7 @@ class OthermInl(admin.StackedInline):
 
 class CoreMemberInl(admin.StackedInline):
     model = CoreMember
-    extra = 1
+    extra = 0
     # max_num = 5
     fields =('name','gender','age','position','is_study_abroad','entrepreneurial_times','experience',
         ('xxtemp1','education1','university1','major1'),
@@ -188,30 +188,33 @@ class CoreMemberInl(admin.StackedInline):
         ('xxtempgz3','company3','position3','date_s3','date_e3'),
         )
 
-
-
-
-
     def get_readonly_fields(self, request,obj=None):
         if get_user_group(request,'企业用户'):
             status = CompanyInfo.objects.get(user=request.user).status
             if status == 5 or status < 4:
                 return []
-        return ('name','gender','age','position','is_study_abroad','entrepreneurial_times','experience')
+        return ('name','gender','age','position','is_study_abroad','entrepreneurial_times','experience',
+                'xxtemp1','education1','university1','major1',
+                'xxtemp2','education2','university2','major2',
+                'xxtemp3','education3','university3','major3',
+                'company1','position1','date_s1','date_e1',
+                'company2','position2','date_s2','date_e2',
+                'company3','position3','date_s3','date_e3',
+                )
 
 
-@admin.register(CoreMember)
-class CoreMemberAdmin(admin.ModelAdmin):
-    inlines = [EducationExperienceInl,WorkExperienceInl]
-    exclude = ('companyInfo',)
+# @admin.register(CoreMember)
+# class CoreMemberAdmin(admin.ModelAdmin):
+#     inlines = [EducationExperienceInl,WorkExperienceInl]
+#     exclude = ('companyInfo',)
 
-    def get_queryset(self, request):
-        qs = super().get_queryset(request)
-        if request.user.is_superuser:
-            return qs
-        companyInfo = CompanyInfo.objects.filter(user=request.user)
-        print(companyInfo.count())
-        return qs.filter(companyInfo=companyInfo)
+#     def get_queryset(self, request):
+#         qs = super().get_queryset(request)
+#         if request.user.is_superuser:
+#             return qs
+#         companyInfo = CompanyInfo.objects.filter(user=request.user)
+#         print(companyInfo.count())
+#         return qs.filter(companyInfo=companyInfo)
 
 
 

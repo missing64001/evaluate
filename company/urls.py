@@ -7,7 +7,7 @@ urlpatterns = [
     # url(r'^$', index, name='index'),
     # url(r'^p/(?P<article_id>[0-9]+)/$', detail,name='detail'),
 
-    url(r'^companyinfo_opt/$',companyinfo_view, name='companyinfo_view'),
+    url(r'^companyinfo/$',companyinfo_view, name='companyinfo_view'),
     url(r'^financialsituation/$',financialsituation_view, name='financialsituation_view'),
     url(r'^productsandmarket/$',productsandmarket_view, name='productsandmarket_view'),
     url(r'^technologyrd/$',technologyrd_view, name='technologyrd_view'),

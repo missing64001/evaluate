@@ -9,7 +9,7 @@ from .models import *
 from pprint import pprint
 from django.db.models import F,Count
 from django.contrib import admin
-from .admin import IndependentEvaluationOfEnterprisesAdmin,EvaluationOfEnterprisesAdmin
+from .admin import IndependentEvaluationOfEnterprisesAdmin,EvaluationOfEnterprisesAdmin,CompanyInfoAdmin
 from django.contrib import messages
 
 # 用户注册
@@ -73,13 +73,18 @@ def deldata_view(request):
 def companyinfo_view(request):
     #  render
     group_name = None
+    from django.contrib import messages
+    messages.add_message(request, messages.INFO, "Your Message")
+
+
     if not request.user.is_superuser:
         group_name = request.user.groups.all()[0].name
     if group_name == '企业用户':
         _id = CompanyInfo.objects.get(user=request.user).id
         ren = redirect ('/admin/company/companyinfo/%s'%_id)
         return ren
-    ren = redirect ('/admin/company/companyinfo/')
+    # ren = redirect ('/admin/company/companyinfo/')
+    ren = CompanyInfoAdmin(CompanyInfo,admin.AdminSite()).changelist_view(request)
     return ren
 
 def financialsituation_view(request):
