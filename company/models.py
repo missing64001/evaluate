@@ -7,7 +7,7 @@ from datetime import timedelta
 x1_d = ((1 ,'集成电路布图'),  (2 ,'其他'))
 status_choices = ((-2,'无效'),
                 (-1,'完成'),
-                (0,'未填写'),
+                (0,'通过申请'),
                 (1,'填写企业信息'),
                 (2,'上传财务报表'),
                 (3,'企业自我评价'),
@@ -57,7 +57,7 @@ class CompanyInfo(models.Model):
 
     credit_code = models.CharField(max_length=50,verbose_name='统一社会信用代码',blank=True,null=True)
     phone = models.CharField(verbose_name='联系电话',max_length=20,blank=True,null=True)
-    business_license_pic = models.ImageField(upload_to='static/upload/company',blank=True,null=True)
+    business_license_pic = models.ImageField(upload_to='upload',blank=True,null=True)
 
 
     def __str__(self):
@@ -206,16 +206,52 @@ class CoreMember(models.Model):
     companyInfo = models.ForeignKey(CompanyInfo,verbose_name='企业',blank=True,null=True)
     name = models.CharField(max_length=50,verbose_name='姓名',blank=True,null=True)
     # 1 男 2 女
-    gender = models.SmallIntegerField(verbose_name='性别',blank=True,null=True)
+    gender = models.SmallIntegerField(choices=((1,'男'),(2,'女')),verbose_name='性别',blank=True,null=True)
     age = models.SmallIntegerField(verbose_name='年龄',blank=True,null=True)
     position = models.CharField(max_length=50,verbose_name='职位',blank=True,null=True)
     is_study_abroad = models.BooleanField(verbose_name='留学经历',default=False)
     entrepreneurial_times = models.SmallIntegerField(verbose_name='创业次数',blank=True,null=True)
+    experience = models.TextField(max_length=500,verbose_name='谈对自己创业最重要的一个经历',blank=True,null=True)
 
-    experience = models.CharField(max_length=500,verbose_name='谈对自己创业最重要的一个经历',blank=True,null=True)
-    
+
+    xxtemp1 = models.BooleanField(verbose_name='教育经历1',default=False)
+    education1 = models.CharField(max_length=50,verbose_name='学历',blank=True,null=True)
+    university1 = models.CharField(max_length=50,verbose_name='毕业院校',blank=True,null=True)
+    major1 = models.CharField(max_length=50,verbose_name='专业',blank=True,null=True)
+
+    xxtemp2 = models.BooleanField(verbose_name='教育经历2',default=False)
+    education2 = models.CharField(max_length=50,verbose_name='学历',blank=True,null=True)
+    university2 = models.CharField(max_length=50,verbose_name='毕业院校',blank=True,null=True)
+    major2 = models.CharField(max_length=50,verbose_name='专业',blank=True,null=True)
+
+    xxtemp3 = models.BooleanField(verbose_name='教育经历3',default=False)
+    education3 = models.CharField(max_length=50,verbose_name='学历',blank=True,null=True)
+    university3 = models.CharField(max_length=50,verbose_name='毕业院校',blank=True,null=True)
+    major3 = models.CharField(max_length=50,verbose_name='专业',blank=True,null=True)
+
+
+    xxtempgz1 = models.BooleanField(verbose_name='工作经历1',default=False)
+    company1 = models.CharField(max_length=50,verbose_name='工作单位',blank=True,null=True)
+    position1 = models.CharField(max_length=50,verbose_name='职位',blank=True,null=True)
+    date_s1 = models.DateField(verbose_name='工作时间_开始',blank=True,null=True)
+    date_e1 = models.DateField(verbose_name='工作时间_结束',blank=True,null=True)
+
+    xxtempgz2 = models.BooleanField(verbose_name='工作经历2',default=False)
+    company2 = models.CharField(max_length=50,verbose_name='工作单位',blank=True,null=True)
+    position2 = models.CharField(max_length=50,verbose_name='职位',blank=True,null=True)
+    date_s2 = models.DateField(verbose_name='工作时间_开始',blank=True,null=True)
+    date_e2 = models.DateField(verbose_name='工作时间_结束',blank=True,null=True)
+
+    xxtempgz3 = models.BooleanField(verbose_name='工作经历3',default=False)
+    company3 = models.CharField(max_length=50,verbose_name='工作单位',blank=True,null=True)
+    position3 = models.CharField(max_length=50,verbose_name='职位',blank=True,null=True)
+    date_s3 = models.DateField(verbose_name='工作时间_开始',blank=True,null=True)
+    date_e3 = models.DateField(verbose_name='工作时间_结束',blank=True,null=True)
+
     def __str__(self):
-        return self.name
+        if self.name:
+            return self.name
+        return ''
 
     class Meta:
         verbose_name='  核心团队(至少三人)'

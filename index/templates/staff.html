@@ -1,0 +1,76 @@
+
+<!DOCTYPE html>
+<html lang="en-us" >
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>等待审核 | evaluate</title>
+  
+  <link rel="stylesheet" type="text/css" href=""/>
+  <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css" media="all"/>
+  <link rel="stylesheet" type="text/css" href="/static/suit/css/suit.css" media="all">
+  
+    
+
+  
+  <script type="text/javascript">window.__admin_media_prefix__ = "/static/admin/";</script>
+  <script src="/static/suit/js/jquery-2.2.4.min.js"></script>
+  <script type="text/javascript">var Suit = { $: $.noConflict() }; if (!$) $ = Suit.$; </script>
+  <script src="/static/suit/bootstrap/js/bootstrap.min.js"></script>
+  
+  <style type="text/css">.required:after { content: '*'; margin: 0 0 0 5px; position: absolute; color: #ccc;}</style>
+  
+  
+  
+    <meta name="robots" content="NONE,NOARCHIVE"/>
+</head>
+
+
+<body class="login" style="background: #4a8df2">
+  <img src="/static/img/background.png" alt="" style="position: absolute;margin:130px 0px 0px 190px;width:732px;height: 604px;">
+
+
+{% for error in errors%}
+<p class="errornote alert alert-error">
+                        {{error}}
+                    </p>
+{% endfor %}
+<!-- Sticky footer wrap -->
+<div id="wrap">
+
+  <!-- Container -->
+  
+
+    
+
+        
+
+        
+
+        <div id="content-main" style="top:50%;left: 45%">
+            <h1 style="background: #F6F7F8;font-size: 25px;height: 60px; width: 550px; line-height: 60px;color: #000;border-radius: 5px;">您的信息孵化器正在审核中_请耐心等待　　　<a href="/logout/" style="font-size: 15px; font-weight: 600; text-shadow: none;">注销</a></h1>
+
+        </div>
+        
+
+
+  
+  <!-- Sticky footer push -->
+  <div id="push"></div>
+  
+
+</div>
+
+
+  <div class="footer">
+    <a href="https://embway.com" class="icons">
+        <img src="/static/img/embway_logo.png" alt="" style="margin:14px auto 14px 30px;width:150px;">
+    </a>
+</div>
+  
+
+
+  <script src="/static/suit/js/suit.js"></script>
+  
+
+</body>
+</html>

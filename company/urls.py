@@ -20,6 +20,7 @@ urlpatterns = [
     url(r'^profit/$',profit_view, name='profit_view'),
     url(r'^profit/submit_table/$',profit_submit_table_view, name='profit_submit_table_view'),
     url(r'^cash_flow/$',cash_flow_view, name='cash_flow_view'),
+    url(r'^deldata/$',deldata_view, name='deldata_view'),
     url(r'^cash_flow/submit_table/$',cash_flow_submit_table_view, name='cash_flow_submit_table_view'),
     url(r'^independentevaluationofenterprises/(\d+)/',independentevaluationofenterprises_view, name='independentevaluationofenterprises_view'),
     url(r'^evaluationofenterprises/',evaluationofenterprises_to_independentevaluationofenterprises_view, name='evaluationofenterprises_to_independentevaluationofenterprises_view'),
@@ -28,5 +29,6 @@ urlpatterns = [
     
     url(r'^confirm/$',confirm_view, name='confirm_view'),
     url(r'^reject/$',reject_view, name='reject_view'),
+    url(r'^verify/$',verify_view, name='verify_view'),
     # url(r'^independentevaluationofenterprises_change/(\d+)/',IndependentEvaluationOfEnterprisesAdmin.change_view, name='independentevaluationofenterprises_change_view'),
 ]

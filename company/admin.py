@@ -175,7 +175,29 @@ class OthermInl(admin.StackedInline):
                 return []
         return ('x1','technical_source','SOAT')
 
+class CoreMemberInl(admin.StackedInline):
+    model = CoreMember
+    extra = 1
+    # max_num = 5
+    fields =('name','gender','age','position','is_study_abroad','entrepreneurial_times','experience',
+        ('xxtemp1','education1','university1','major1'),
+        ('xxtemp2','education2','university2','major2'),
+        ('xxtemp3','education3','university3','major3'),
+        ('xxtempgz1','company1','position1','date_s1','date_e1'),
+        ('xxtempgz2','company2','position2','date_s2','date_e2'),
+        ('xxtempgz3','company3','position3','date_s3','date_e3'),
+        )
 
+
+
+
+
+    def get_readonly_fields(self, request,obj=None):
+        if get_user_group(request,'企业用户'):
+            status = CompanyInfo.objects.get(user=request.user).status
+            if status == 5 or status < 4:
+                return []
+        return ('name','gender','age','position','is_study_abroad','entrepreneurial_times','experience')
 
 
 @admin.register(CoreMember)
@@ -198,10 +220,10 @@ class CoreMemberAdmin(admin.ModelAdmin):
 
 @admin.register(CompanyInfo)
 class CompanyInfoAdmin(admin.ModelAdmin):
-    list_display=['name','phone','incubator','credit_code','new_status']
+    list_display=['name','phone','incubator','credit_code','business_license_pic_show','new_status']
     search_fields = ('name','incubator__name')
     inlines = [ShareholderInl, EnterpriseAwardsInl,PersonalAwardsInl,ProjectInl,PatentInl,
-                DrugApprovalInl,MIRCInl,StandardSettingInl,OthermInl,FinancialSituationInl
+                DrugApprovalInl,MIRCInl,StandardSettingInl,OthermInl,CoreMemberInl,FinancialSituationInl
                 ,ProductsAndMarketInl,TechnologyRDInl,ServerRequestInl] #CoreMemberInl,
     exclude = ('user','credit_code','phone','business_license_pic','status')
 
@@ -302,10 +324,10 @@ class CompanyInfoAdmin(admin.ModelAdmin):
     def new_status(self,obj):
         status_choices = ((-2,'无效'),
                         (-1,'完成'),
-                        (0,'未填写'),
-                        (1,'填写企业信息'),
-                        (2,'上传财务报表'),
-                        (3,'企业自我评价'),
+                        (0,'通过申请'),
+                        (1,'填写企业信息完成'),
+                        (2,'上传财务报表完成'),
+                        (3,'企业自我评价完成'),
                         (4,'已提交'),
 
                         (5,'孵化器驳回信息'), #修改后确认提交
@@ -320,20 +342,27 @@ class CompanyInfoAdmin(admin.ModelAdmin):
                     )
         status_choices = dict(status_choices)
         report = status_choices[obj.status]
+
         if obj.status == 4:
             report = format_html("<a style='font-weight:bold;' onclick='reject_company({})'>{}（如有问题点击驳回）</a>",obj.id,report)
         elif obj.status == 5:
             report = format_html("<a style='color:red;' onclick='reject_company({})'>已被驳回（如有问题可点击添加驳回原因）</a>",obj.id)
-
+        if not obj.user.is_staff:
+            report = format_html("<a style='color:red;' onclick='verify_company({})'>审核中（点击通过审核）</a>",obj.id)
         return report
     
     new_status.short_description = '状态'
     # class Media:        
     #     js = ('/static/js/balance.js',)
 
+    def business_license_pic_show(self,obj):
+        path = 'static/' + str(obj.business_license_pic)
+        return format_html('<div style="height: 50px;overflow: hidden;"><a href="/' + path + '" width=30 height=50 data-lightbox="' + path + '"><img src="/' + path + '" width=30 height=50" /></a></div>')
+    business_license_pic_show.short_description = '营业执照'
 
     class Media:
-        js = ('/static/js/company_fhq_prompt.js',)
+        css = {'all': ('css/myadmin.css', 'lightbox/css/lightbox.min.css',)}
+        js = ('/static/js/company_fhq_prompt.js','lightbox/js/lightbox-plus-jquery.js')
 
 
     

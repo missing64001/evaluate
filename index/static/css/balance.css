@@ -38,7 +38,7 @@ form.file{
     position: absolute;
 }
 
-input.upload,div.select{
+button,input.upload,div.select{
     float: right;
     margin: 0px 10px 20px 0px;
 }

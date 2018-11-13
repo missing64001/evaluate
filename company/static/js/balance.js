@@ -1,6 +1,20 @@
 
 
-console.log('aaaz')
+
+function yearchange() {
+    var input = $('#inputbrowsers')
+    var year = input.val()
+    window.location.href="/admin/company/balance/?year=" + year
+    // console.log(year)
+}
+
+function deldata() {
+    var input = $('#inputbrowsers')
+    var year = input.val()
+    window.location.href="/admin/company/deldata/?year=" + year + '&model=balance' 
+    // console.log(year)
+}
+
 
 window.onload=function(){
     var input = $('input');

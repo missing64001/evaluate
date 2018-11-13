@@ -52,7 +52,7 @@ class InstitutionInl(admin.StackedInline):
 admin.site.unregister(User)
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
-    list_display = ('username','phone','email','group','owned_enterprise','owned_incubator','date_joined')
+    list_display = ('username','phone','email','group','owned_enterprise','owned_incubator','date_joined','is_staff')
     fields = ('username','email','is_staff','is_active','groups')
     inlines = [IncubatorInl,InstitutionInl]
     # readonly_fields = ('groups',)

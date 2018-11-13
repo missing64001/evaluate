@@ -21,4 +21,5 @@ urlpatterns = [
     url(r'^admin/company/', include('company.urls', namespace='company')),
     url(r'^admin/institution/', include('institution.urls', namespace='institution')),
     url(r'^admin/', admin.site.urls),
+    # url(r'^static/(?P<path>.*)', 'django.views.static.serve', {'document_root': 'static'}), 
 ]

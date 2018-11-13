@@ -20,17 +20,39 @@
 <form class='mtable' action="submit_table/" method="post" enctype="multipart/form-data" >
     {% if status%}
     {% csrf_token %}
+    <button onclick="deldata()" type="button">删除数据</button>
     <input class='upload' type="submit" value="提交数据">
     {% endif%}
 
     <div class="select">
-        <select name="year">
-            <option value="2018">2018</option>
-            <option value="2017">2017</option>
-            <option value="2016">2016</option>
-            <option value="2015">2015</option>
-        </select>
+        <input id="inputbrowsers" 
+        {% if year%}
+        value="{{year}}" 
+        {% endif %}
+
+        list="browsers" autocomplete="off" name="year" onchange="yearchange()" style="width: 100px">
+        <datalist id="browsers" style="width: 100px">
+
+        {% for ye in years %}
+        <option value="{{ye}}"></option>
+        {% endfor %}
+        </datalist>
     </div>
+
+
+
+
+
+
+
+<!--     {% for incubator in incubators %}
+    <option value="{{incubator.name}}"></option>
+    {%  endfor  %} -->
+
+
+
+
+
 
     <div class="nf"> 年份： </div>
 

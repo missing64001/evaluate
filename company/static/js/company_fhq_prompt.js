@@ -5,3 +5,19 @@ function reject_company(_id) {
     }
 
 }
+
+function verify_company(_id) {
+    window.location.href="/admin/company/verify?id=" + _id
+}
+
+window.onload=function(){
+    var cores = $('.controls')
+    console.log(cores.length)
+    for (var i=0;i<cores.length;i++){
+        if ($(cores[i]).children().length == 4 | $(cores[i]).children().length == 5)
+        {
+            // $(cores[i]).append($($(cores[i]).children()[0]))
+            $($(cores[i]).children()[0]).remove()
+        }
+    }
+}

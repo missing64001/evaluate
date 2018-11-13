@@ -46,8 +46,18 @@ from django.template.response import TemplateResponse
                 # (9,'机构反馈报告'),
 
                 # (10,'用户获得反馈'),
+def my_staff(request):
+    if request.user.is_authenticated() and not request.user.is_staff:
+        return render(request,'staff.html')
+    else:
+        return HttpResponseRedirect('/admin/')
+
 
 def MyAdminIndex(request):
+
+    if request.user.is_authenticated() and not request.user.is_staff:
+        return HttpResponseRedirect('/admin/staff/')
+
     self = admin.site
 
     app_list = self.get_app_list(request)
@@ -69,6 +79,10 @@ def MyAdminIndex(request):
     if get_user_group(request,'企业用户'):
         com = CompanyInfo.objects.get(status__gte = 0,user=request.user)
         status = com.status
+
+        
+
+
         company_status_main_un = ['数据已提交','孵化器进度','平台进度','机构进度']
         company_status = [
         ['数据已提交','2',[['填写企业信息','2'],['上传财务报表','2'],['企业自我评价','2'],['数据已提交','2']]],
@@ -137,7 +151,6 @@ def MyAdminIndex(request):
             company_status[0][2][0][1] = '1'
             company_status[0][2][1][1] = '4'
 
-
         context['company_status']=company_status
 
     # context.update(extra_context or {})
@@ -191,7 +204,7 @@ def my_register(request):
 
             # set user
             user.is_active = True
-            user.is_staff = True
+            user.is_staff = False
             user.groups.add(Group.objects.get(name='企业用户'))
             user.save()
 
@@ -365,9 +378,9 @@ def my_login(request):
     return render(request,'login.html', {'errors': errors})
 
 # 用户退出
-# def my_logout(request):
-#     auth.logout(request)
-#     return HttpResponseRedirect('/blog')
+def my_logout(request):
+    auth.logout(request)
+    return HttpResponseRedirect('/admin')
 
 
 def save_permission():
@@ -400,10 +413,6 @@ def save_permission():
                 gobj.save()
             except Exception:
                 pass
-<<<<<<< HEAD
-
-=======
->>>>>>> f88fcb5a246bf6af0cde20a8dc33b9195338eaec
 
 
 save_permission()

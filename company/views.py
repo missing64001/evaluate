@@ -7,14 +7,16 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponseRedirect
 from .models import *
 from pprint import pprint
-from django.db.models import F
+from django.db.models import F,Count
 from django.contrib import admin
 from .admin import IndependentEvaluationOfEnterprisesAdmin,EvaluationOfEnterprisesAdmin
+from django.contrib import messages
+
 # 用户注册
 # 
 # 
 
-
+# 企业确认提交信息
 def confirm_view(request):
 
     cobj = CompanyInfo.objects.get(user=request.user)
@@ -27,7 +29,7 @@ def confirm_view(request):
     ren = redirect ('/admin')
     return ren
 
-
+# 孵化器驳回信息
 def reject_view(request):
     _id = request.GET['id']
     reason = request.GET['reason']
@@ -42,6 +44,31 @@ def reject_view(request):
     ren = redirect ('/admin/company/companyinfo/')
     return ren
     
+# 孵化器审核 企业通过申请
+def verify_view(request):
+    _id = request.GET['id']
+    cobj = CompanyInfo.objects.get(id=_id)
+
+    if cobj.incubator.user == request.user:
+        cobj.user.is_staff = True
+        cobj.user.save()
+    ren = redirect ('/admin/company/companyinfo/')
+    return ren
+    
+def deldata_view(request):
+    year = request.GET['year']
+    model = request.GET['model']
+    if model == 'cash_flow':
+        M = CashFlow
+    elif model == 'balance':
+        M = Balance
+    elif model == 'profit':
+        M = Profit
+
+    M.objects.filter(companyInfo__user=request.user,year=year).delete()
+    ren = redirect ('/admin/company/'+model)
+    return ren
+
 
 def companyinfo_view(request):
     #  render
@@ -73,7 +100,18 @@ def serverrequest_view(request):
 
 def balance_view(request):
 
-    year = 2018
+    year = request.GET.get('year')
+
+    yearlist = Balance.objects.filter(companyInfo=CompanyInfo.objects.get(user=request.user)).values('year').annotate(yearNum=Count("year"))
+    years = set()
+    for yea in yearlist:
+        years.add(yea['year'])
+    years = sorted(years,key=lambda x: int(x))
+
+
+    if not year and years:
+        year = max(years)
+
     bal_data = Balance.objects.all().filter(companyInfo=CompanyInfo.objects.get(user=request.user),year=year)
     bal_dict = { da.name:  da.value if da.value != 0 else '' for da in bal_data}
 
@@ -113,14 +151,18 @@ def balance_view(request):
     else:
         status = False
 
-    return render(request,'balance.html',{'data':data,'status':status})
+    return render(request,'balance.html',{'data':data,'status':status,'year':year,'years':years})
 
 
 def balance_submit_table_view(request):
-    year = 2018
-    # data = { x:request.POST[x]    for x in request.POST if len(x)<6 and request.POST[x]}
+
+
+
+    year = request.POST['year']
     for x in request.POST:
-        if len(x)<6:
+        if x == 'year':
+            pass
+        elif len(x)<6:
             if not request.POST[x]:
                 res = 0
             else:
@@ -137,12 +179,17 @@ def balance_submit_table_view(request):
             except ValueError as e:
                 pass
 
+
+
+
     cobj = CompanyInfo.objects.get(user=request.user)
     if cobj.status == 1:          
         if Balance.objects.filter(companyInfo=cobj) and Profit.objects.filter(companyInfo=cobj) and\
             CashFlow.objects.filter(companyInfo=cobj):
                 cobj.status = 2
                 cobj.save()
+
+    messages.success(request, '数据提交成功')
 
     ren = redirect ('/admin/company/balance/')
     return ren
@@ -186,7 +233,16 @@ def balance_submit_table_view(request):
 #     return ren
 
 def profit_view(request):
-    year = 2018
+    
+    year = request.GET.get('year')
+    yearlist = Profit.objects.filter(companyInfo=CompanyInfo.objects.get(user=request.user)).values('year').annotate(yearNum=Count("year"))
+    years = set()
+    for yea in yearlist:
+        years.add(yea['year'])
+    years = sorted(years,key=lambda x: int(x))
+    if not year and years:
+        year = max(years)
+
     bal_data = Profit.objects.all().filter(companyInfo=CompanyInfo.objects.get(user=request.user),year=year)
     bal_dict = { da.name:da.value for da in bal_data}
 
@@ -208,13 +264,13 @@ def profit_view(request):
         status = False
 
 
-    return render(request,'profit.html',{'data':data,'status':status})
+    return render(request,'profit.html',{'data':data,'status':status,'year':year,'years':years})
 
 
 
 
 def profit_submit_table_view(request):
-    year = 2018
+    year = request.POST['year']
     # data = { x:request.POST[x]    for x in request.POST if len(x)<6 and request.POST[x]}
     for x in request.POST:
         if len(x)<6 and request.POST[x]:
@@ -240,6 +296,7 @@ def profit_submit_table_view(request):
                 cobj.status = 2
                 cobj.save()
 
+    messages.success(request, '数据提交成功')
     ren = redirect ('/admin/company/profit/')
     return ren
 
@@ -405,9 +462,25 @@ def cash_flow_view(request):
             return round(resda,2)
         return resda
 
-    year = 2018
-    bal_data = CashFlow.objects.all().filter(companyInfo=CompanyInfo.objects.get(user=request.user),year=year)
-    bal_dict = { da.name:da.value for da in bal_data}
+
+
+    year = request.GET.get('year')
+
+    yearlist = CashFlow.objects.filter(companyInfo=CompanyInfo.objects.get(user=request.user)).values('year').annotate(yearNum=Count("year"))
+    years = set()
+    for yea in yearlist:
+        years.add(yea['year'])
+    years = sorted(years,key=lambda x: int(x))
+    if not year and years:
+        year = max(years)
+
+
+
+    if year:
+        bal_data = CashFlow.objects.filter(companyInfo=CompanyInfo.objects.get(user=request.user),year=year)
+        bal_dict = { da.name:da.value for da in bal_data}
+    else:
+        bal_dict = {}
 
     datab = [   ('b%s'%i ,s.strip('\n'))      for i,s in enumerate(cash_flow_strb.split('\n'),5)   ]
     datae = [   ('e%s'%i ,s.strip('\n'))      for i,s in enumerate(cash_flow_stre.split('\n'),5)   ]
@@ -443,7 +516,8 @@ def cash_flow_view(request):
         status = True
     else:
         status = False
-    return render(request,'cash_flow.html',{'data':data,'status':status})
+    # print(year)
+    return render(request,'cash_flow.html',{'data':data,'status':status,'year':year,'years':years})
 
     
 
@@ -451,10 +525,12 @@ def cash_flow_view(request):
 
 
 def cash_flow_submit_table_view(request):
-    year = 2018
     # data = { x:request.POST[x]    for x in request.POST if len(x)<6 and request.POST[x]}
+    year = request.POST['year']
     for x in request.POST:
-        if len(x)<6 and request.POST[x]:
+        if x == 'year':
+            pass
+        elif len(x)<6 and request.POST[x]:
             try:
                 try:
                     bal = CashFlow.objects.get(companyInfo=CompanyInfo.objects.get(user=request.user),year=year,name=x)
@@ -473,7 +549,8 @@ def cash_flow_submit_table_view(request):
             CashFlow.objects.filter(companyInfo=cobj):
                 cobj.status = 2
                 cobj.save()
-    ren = redirect ('/admin/company/cash_flow/')
+    messages.success(request, '数据提交成功')
+    ren = redirect ('/admin/company/cash_flow/?year=%s' % year)
     return ren
 
 def independentevaluationofenterprises_view(request,arg1):
