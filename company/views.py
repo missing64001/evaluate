@@ -73,9 +73,6 @@ def deldata_view(request):
 def companyinfo_view(request):
     #  render
     group_name = None
-    from django.contrib import messages
-    messages.add_message(request, messages.INFO, "Your Message")
-
 
     if not request.user.is_superuser:
         group_name = request.user.groups.all()[0].name

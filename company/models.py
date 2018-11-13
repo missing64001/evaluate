@@ -128,8 +128,8 @@ class Project(models.Model):
     _type = models.CharField(max_length=10,verbose_name='计划类别',blank=True,null=True)
     title = models.CharField(max_length=50,verbose_name='立项名称',blank=True,null=True)
     create_date = models.DateField(verbose_name='立项时间',blank=True,null=True)
-    finished_date = models.DateField(verbose_name='立项时间',blank=True,null=True)
-    conclusion = models.TextField(verbose_name='结项时间/结论',blank=True,null=True)
+    finished_date = models.DateField(verbose_name='结项时间',blank=True,null=True)
+    conclusion = models.TextField(verbose_name='结论',blank=True,null=True)
     
     class Meta:
         verbose_name='企业曾经承担或正在承担的科技计划项目'
@@ -233,20 +233,20 @@ class CoreMember(models.Model):
     xxtempgz1 = models.BooleanField(verbose_name='工作经历1',default=False)
     company1 = models.CharField(max_length=50,verbose_name='工作单位',blank=True,null=True)
     position1 = models.CharField(max_length=50,verbose_name='职位',blank=True,null=True)
-    date_s1 = models.DateField(verbose_name='工作时间_开始',blank=True,null=True)
-    date_e1 = models.DateField(verbose_name='工作时间_结束',blank=True,null=True)
+    date_s1 = models.DateField(verbose_name='开始',blank=True,null=True)
+    date_e1 = models.DateField(verbose_name='结束',blank=True,null=True)
 
     xxtempgz2 = models.BooleanField(verbose_name='工作经历2',default=False)
     company2 = models.CharField(max_length=50,verbose_name='工作单位',blank=True,null=True)
     position2 = models.CharField(max_length=50,verbose_name='职位',blank=True,null=True)
-    date_s2 = models.DateField(verbose_name='工作时间_开始',blank=True,null=True)
-    date_e2 = models.DateField(verbose_name='工作时间_结束',blank=True,null=True)
+    date_s2 = models.DateField(verbose_name='开始',blank=True,null=True)
+    date_e2 = models.DateField(verbose_name='结束',blank=True,null=True)
 
     xxtempgz3 = models.BooleanField(verbose_name='工作经历3',default=False)
     company3 = models.CharField(max_length=50,verbose_name='工作单位',blank=True,null=True)
     position3 = models.CharField(max_length=50,verbose_name='职位',blank=True,null=True)
-    date_s3 = models.DateField(verbose_name='工作时间_开始',blank=True,null=True)
-    date_e3 = models.DateField(verbose_name='工作时间_结束',blank=True,null=True)
+    date_s3 = models.DateField(verbose_name='开始',blank=True,null=True)
+    date_e3 = models.DateField(verbose_name='结束',blank=True,null=True)
 
     def __str__(self):
         if self.name:
@@ -273,8 +273,8 @@ class WorkExperience(models.Model):
     core_member = models.ForeignKey(CoreMember,verbose_name='核心团队',blank=True,null=True)
     company = models.CharField(max_length=50,verbose_name='工作单位',blank=True,null=True)
     position = models.CharField(max_length=50,verbose_name='职位',blank=True,null=True)
-    date_s = models.DateField(verbose_name='工作时间_开始',blank=True,null=True)
-    date_e = models.DateField(verbose_name='工作时间_结束',blank=True,null=True)
+    date_s = models.DateField(verbose_name='开始',blank=True,null=True)
+    date_e = models.DateField(verbose_name='结束',blank=True,null=True)
     
     class Meta:
         verbose_name='工作经历（可增加）'

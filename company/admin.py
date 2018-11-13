@@ -364,7 +364,7 @@ class CompanyInfoAdmin(admin.ModelAdmin):
     business_license_pic_show.short_description = '营业执照'
 
     class Media:
-        css = {'all': ('css/myadmin.css', 'lightbox/css/lightbox.min.css',)}
+        css = {'all': ('lightbox/css/lightbox.min.css',)}
         js = ('/static/js/company_fhq_prompt.js','lightbox/js/lightbox-plus-jquery.js')
 
 
