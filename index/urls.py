@@ -6,6 +6,7 @@ urlpatterns = [
     # url(r'^$', index, name='index'),
     # url(r'^p/(?P<article_id>[0-9]+)/$', detail,name='detail'),
 
+    url(r'^$',MyAdminIndex, name='index'),
     url(r'^admin/$',MyAdminIndex, name='index'),
     url(r'^admin/login/$',my_login, name='login'),
     url(r'^admin/staff/$',my_staff, name='my_staff'),

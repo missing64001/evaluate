@@ -24,7 +24,7 @@ window.onload=function(){
 
 
 
-      input.append($('<input type="hidden" name="csrfmiddlewaretoken" value="'+ $("input:first").val()+'">'))
+      input.append($('<input type="hidden" name="csrfmiddlewaretoken" value="'+ $("[name='csrfmiddlewaretoken']").val()+'">'))
       input.append($('<input type="hidden" name="report_type" value="'+type+'">'))
       input.append($('<input type="hidden" name="report_id" value="'+num+'">'))
 
