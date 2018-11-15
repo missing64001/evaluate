@@ -61,8 +61,8 @@ class m1(MiddlewareMixin):
                   'app': 'company',
                   'models': (
                             {'label': '企业基本信息', 'url': '/admin/company/companyinfo'},
-                            {'label': '校正评价', 'model': 'IndependentEvaluationOfEnterprises'},
                             'RejectReason',
+                            {'label': '校正评价', 'model': 'IndependentEvaluationOfEnterprises'},
                             # 'FinancialSituation','ProductsAndMarket','TechnologyRD','ServerRequest',
                             'institution.ReportBack',
 
