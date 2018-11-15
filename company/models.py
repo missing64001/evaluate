@@ -96,6 +96,12 @@ class Shareholder(models.Model):
     # {1:'货币出资', 2:'实物', 3:'知识产权', 4:'土地使用权' ,5:'其他'}
     form_of_contribution = models.SmallIntegerField(choices=form_of_contribution_choices,verbose_name='出资形式',blank=True,null=True)
 
+    def __str__(self):
+        if self.name:
+            return self.name
+        else:
+            return '-'
+
     class Meta:
         verbose_name='主要股东及股权比例（前五名）'
         verbose_name_plural=verbose_name
@@ -107,6 +113,12 @@ class EnterpriseAwards(models.Model):
     title = models.CharField(max_length=50,verbose_name='获奖名称',blank=True,null=True)
     date = models.DateField(verbose_name='获奖时间',blank=True,null=True)
     
+    def __str__(self):
+        if self.title:
+            return self.title
+        else:
+            return '-'
+
     class Meta:
         verbose_name='企业获奖情况'
         verbose_name_plural=verbose_name
@@ -118,6 +130,12 @@ class PersonalAwards(models.Model):
     level_title = models.CharField(max_length=50,verbose_name='获奖级别/名称',blank=True,null=True)
     date = models.DateField(verbose_name='获奖时间',blank=True,null=True)
     
+    def __str__(self):
+        if self.name:
+            return self.name
+        else:
+            return '-'
+
     class Meta:
         verbose_name='核心团队个人获奖情况'
         verbose_name_plural=verbose_name
@@ -131,6 +149,12 @@ class Project(models.Model):
     finished_date = models.DateField(verbose_name='结项时间',blank=True,null=True)
     conclusion = models.TextField(verbose_name='结论',blank=True,null=True)
     
+    def __str__(self):
+        if self.title:
+            return self.title
+        else:
+            return '-'
+
     class Meta:
         verbose_name='企业曾经承担或正在承担的科技计划项目'
         verbose_name_plural=verbose_name
@@ -143,6 +167,12 @@ class Patent(models.Model):
     _type = models.CharField(max_length=50,verbose_name='专利类型',blank=True,null=True)
     num = models.CharField(max_length=50,verbose_name='专利号',blank=True,null=True)
     date = models.DateField(verbose_name='获得时间',blank=True,null=True)
+
+    def __str__(self):
+        if self.title:
+            return self.title
+        else:
+            return '-'
 
     class Meta:
         verbose_name='专利'
@@ -157,6 +187,12 @@ class DrugApproval(models.Model):
     num = models.CharField(max_length=50,verbose_name='  药品批准文号 ',blank=True,null=True)
     effective_date = models.DateField(verbose_name='有效日期',blank=True,null=True)
     
+    def __str__(self):
+        if self.title:
+            return self.title
+        else:
+            return '-'
+
     class Meta:
         verbose_name='药品批文'
         verbose_name_plural=verbose_name
@@ -169,6 +205,12 @@ class MIRC(models.Model):
     num = models.CharField(max_length=50,verbose_name='  医疗器械注册号 ',blank=True,null=True)
     effective_date = models.DateField(verbose_name='有效日期',blank=True,null=True)
     
+    def __str__(self):
+        if self.title:
+            return self.title
+        else:
+            return '-'
+
     class Meta:
         verbose_name='医疗器械注册证'
         verbose_name_plural=verbose_name
@@ -183,6 +225,12 @@ class StandardSetting(models.Model):
     # 1 牵头 2 参与
     status = models.SmallIntegerField(verbose_name='起草单位中的地位',blank=True,null=True)
     
+    def __str__(self):
+        if self.title:
+            return self.title
+        else:
+            return '-'
+
     class Meta:
         verbose_name='标准制定情况'
         verbose_name_plural=verbose_name
@@ -291,6 +339,13 @@ class FinancialSituation(models.Model):
     total = models.IntegerField(verbose_name='期末总资产',blank=True,null=True)
     r_d_cost = models.IntegerField(verbose_name='研发费用总额',blank=True,null=True)
 
+    def __str__(self):
+        if self.year:
+            return str(self.year)
+        else:
+            return '-'
+   
+        
     class Meta:
         verbose_name='二、财务状况'
         verbose_name_plural=verbose_name
@@ -301,7 +356,10 @@ class ProductsAndMarket(models.Model):
     product = models.TextField(verbose_name='主营产品（或服务）',blank=True,null=True)
     model = models.TextField(verbose_name='商业模式',blank=True,null=True)
     analysis_forecast = models.TextField(verbose_name='市场分析及前景预测',blank=True,null=True)
-
+   
+    def __str__(self):
+        return '产品与市场'
+        
     class Meta:
         verbose_name='三、产品与市场'
         verbose_name_plural=verbose_name
@@ -310,6 +368,9 @@ class TechnologyRD(models.Model):
     '四、技术与研发'
     companyInfo = models.OneToOneField(CompanyInfo,verbose_name='企业',blank=True,null=True)
     status = models.TextField(verbose_name='核心技术及研发情况',blank=True,null=True)
+   
+    def __str__(self):
+        return '技术与研发'
 
     class Meta:
         verbose_name='四、技术与研发'
@@ -333,6 +394,10 @@ class ServerRequest(models.Model):
     request = models.TextField(verbose_name='科技金融服务需求',blank=True,null=True)
     otherrequest = models.TextField(verbose_name='其他科技服务需求',blank=True,null=True)
     # img = models.ImageField(upload_to='static/img/',blank=True,null=True)
+    
+    def __str__(self):
+        return '服务需求'
+
     class Meta:
         verbose_name='五、服务需求'
         verbose_name_plural=verbose_name
