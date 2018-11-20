@@ -12,12 +12,12 @@
 
 {% block content %}
 
-
+<div style="height: auto; float:left; padding: 50px; background-color: #F5F5F5;">
 <form class='file' action="/excel" method="post">
     <input type="file" name="excel" accept=".xls" defaultValue="导入" onchange="importf(this)">
     <!-- <input type="submit" value="上传文件"> -->
 </form>
-<form class='mtable' action="submit_table/" method="post" enctype="multipart/form-data" >
+<form class='mtable' action="/admin/company/cash_flow/submit_table/" method="post" enctype="multipart/form-data"  onsubmit="return verify()">
     {% if status%}
     {% csrf_token %}
     <button onclick="deldata()" type="button">删除数据</button>
@@ -83,4 +83,5 @@
     </table>
 
 </form>
+</div>
 {% endblock content %}

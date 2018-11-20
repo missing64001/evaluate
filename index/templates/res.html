@@ -38,7 +38,11 @@
 
 
 <body class="login" style="background: #4a8df2">
-  <img src="/static/img/background.png" alt="" style="position: absolute;margin:130px 0px 0px 190px;width:732px;height: 604px;">
+
+<body class="login" style="background: #4a8df2">
+  <div style="z-index: -2;position: absolute;margin:10% 0px 0px 15%;width: 50% ;height: 70%; background:url(/static/img/background.png) no-repeat;background-size:100%" >
+    <!-- <img src="/static/img/background.png" alt="" style="position: absolute;margin:130px 0px 0px 190px;width:732px;height: 604px;"> -->
+  </div>
 
 {% for error in errors%}
 <p class="errornote alert alert-error">
@@ -57,7 +61,7 @@
 
         
     
-        <div id="content-main" style="top:20%">
+        <div id="content-main" style="top:25%;left: 80%">
           <h1 style="background: #F6F7F8;font-size: 25px;height: 60px; line-height: 60px;color: #000">用户注册</h1>
 <!--             {% if errors %}
                     <li>
@@ -142,7 +146,7 @@
   
 <div class="footer">
     <a href="https://embway.com" class="icons">
-        <img src="/static/img/embway_logo.png" alt="" style="margin:14px auto 14px 30px;width:150px;">
+        <img src="/static/img/embway_logo.png" alt="" style="margin:14px auto 14px 30px;width:150px; z-index: 100">
     </a>
 </div>
   

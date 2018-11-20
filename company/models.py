@@ -443,6 +443,7 @@ class EvaluationOfEnterprises(models.Model):
     technology_R_D = models.SmallIntegerField(choices=external_environment_choices,verbose_name='企业核心技术及研发实力（权重：2）',blank=True,null=True)
     team = models.SmallIntegerField(choices=external_environment_choices,verbose_name='企业经营及管理团队（权重：4）',blank=True,null=True)
     create_date = models.DateTimeField(verbose_name='生成时间',auto_now_add=True,blank=True,null=True)
+    
     def __str__(self):
         return '校正评价'
 
@@ -456,17 +457,44 @@ class Balance(models.Model):
     name = models.CharField(max_length=4)
     value = models.FloatField()
 
+    def __str__(self):
+        if self.year:
+            return str(self.year)
+        return ''
+
+    class Meta:
+        verbose_name='资产负债表'
+        verbose_name_plural=verbose_name
+
 class Profit(models.Model):
     companyInfo = models.ForeignKey(CompanyInfo,verbose_name='企业',blank=True,null=True)
     year = models.SmallIntegerField(verbose_name='年份',blank=True,null=True)
     name = models.CharField(max_length=4)
     value = models.FloatField()
 
+    def __str__(self):
+        if self.year:
+            return str(self.year)
+        return ''
+
+    class Meta:
+        verbose_name='利润表'
+        verbose_name_plural=verbose_name
+
 class CashFlow(models.Model):
     companyInfo = models.ForeignKey(CompanyInfo,verbose_name='企业',blank=True,null=True)
     year = models.SmallIntegerField(verbose_name='年份',blank=True,null=True)
     name = models.CharField(max_length=4)
     value = models.FloatField()
+
+    def __str__(self):
+        if self.year:
+            return str(self.year)
+        return ''
+
+    class Meta:
+        verbose_name='现金流量表'
+        verbose_name_plural=verbose_name
 
 
 

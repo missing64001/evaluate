@@ -10,35 +10,35 @@ class m1(MiddlewareMixin):
             settings.SUIT_CONFIG['MENU'] = (
                 'sites',
 
-                {'label': 'ç”¨æˆ·æ•°æ®ç®¡ç†',
+                {'label': 'ÓÃ»§Êı¾İ¹ÜÀí',
                   'app': 'incubator',
                   'models': (
 
-                            {'label': 'å­µåŒ–å™¨æ•°æ®ç»Ÿè®¡', 'model': 'Incubator'},
+                            {'label': '·õ»¯Æ÷Êı¾İÍ³¼Æ', 'model': 'Incubator'},
 
-                            {'label': 'ä¼ä¸šæ•°æ®ç»Ÿè®¡', 'url': '/admin/institution/report'},
+                            {'label': 'ÆóÒµÊı¾İÍ³¼Æ', 'url': '/admin/institution/report'},
 
                 )},
 
-                {'label': 'è¯„åˆ†ç®¡ç†',
+                {'label': 'ÆÀ·Ö¹ÜÀí',
                   'app': 'incubator',
                   'models': (
 
-                             {'label': 'æ ¡æ­£è¯„ä»·', 'url': '/admin/company/independentevaluationofenterprises/'},
+                             {'label': 'Ğ£ÕıÆÀ¼Û', 'url': '/admin/company/independentevaluationofenterprises/'},
 
                             'index.Bonus','index.Subtraction',
                             'institution.investreport',
                 )},
 
-                {'label': 'è´¦å·ç®¡ç†',
+                {'label': 'ÕËºÅ¹ÜÀí',
                   'app': 'incubator',
                   'models': (
 
-                            {'label': 'è´¦å·ç®¡ç†', 'url': '/admin/auth/user/'},
+                            {'label': 'ÕËºÅ¹ÜÀí', 'url': '/admin/auth/user/'},
 
                 )},
 
-                {'label': 'åé¦ˆä¿¡æ¯',
+                {'label': '·´À¡ĞÅÏ¢',
                   'app': 'incubator',
                   'models': (
 
@@ -46,58 +46,61 @@ class m1(MiddlewareMixin):
 
                 )},
                   
-                # {'label': 'åŸºæœ¬ä¿¡æ¯',
+                # {'label': '»ù±¾ĞÅÏ¢',
                 #   'app': 'company',
                 #   'models': (
-                #             {'label': 'ä¼ä¸šåŸºæœ¬ä¿¡æ¯', 'url': '/admin/company/companyinfo'},
-                #             {'label': 'æ ¡æ­£è¯„ä»·', 'model': 'IndependentEvaluationOfEnterprises'},
+                #             {'label': 'ÆóÒµ»ù±¾ĞÅÏ¢', 'url': '/admin/company/companyinfo'},
+                #             {'label': 'Ğ£ÕıÆÀ¼Û', 'model': 'IndependentEvaluationOfEnterprises'},
                 #             # 'FinancialSituation','ProductsAndMarket','TechnologyRD','ServerRequest',
                 #             'institution.ReportBack',
 
                 # )},
              )
             
-        elif get_user_group(request,'ä¼ä¸šç”¨æˆ·'):
+        elif get_user_group(request,'ÆóÒµÓÃ»§'):
             settings.SUIT_CONFIG['MENU'] = (
-                {'label': 'åŸºæœ¬ä¿¡æ¯',
+                {'label': '»ù±¾ĞÅÏ¢',
                   'app': 'company',
                   'models': (
-                            # {'label': 'ä¼ä¸šåŸºæœ¬ä¿¡æ¯', 'url': '/admin/company/companyinfo'},
+                            # {'label': 'ÆóÒµ»ù±¾ĞÅÏ¢', 'url': '/admin/company/companyinfo'},
                             'CompanyInfo',
                             # 'FinancialSituation','ProductsAndMarket','TechnologyRD','ServerRequest',
 
+                            'IndependentEvaluationOfEnterprises',
+                            'institution.ReportBack',
+
                 )},
 
 
-                {'label': 'è´¢åŠ¡æ•°æ®',
+                {'label': '²ÆÎñÊı¾İ',
                   'app': 'company',
                   'models': (
-                            {'label': 'èµ„äº§è´Ÿå€ºè¡¨', 'url': '/admin/company/balance'},
-                            {'label': 'åˆ©æ¶¦è¡¨', 'url': '/admin/company/profit'},
-                            {'label': 'ç°é‡‘æµé‡è¡¨', 'url': '/admin/company/cashflow'},
+                            {'label': '×Ê²ú¸ºÕ®±í', 'url': '/admin/company/balance'},
+                            {'label': 'ÀûÈó±í', 'url': '/admin/company/profit'},
+                            {'label': 'ÏÖ½ğÁ÷Á¿±í', 'url': '/admin/company/cash_flow'},
                 )},
 
-                {'label': 'è‡ªæˆ‘è¯„ä»·',
+                {'label': '×ÔÎÒÆÀ¼Û',
                   'app': 'company',
                   'models': (
                             'IndependentEvaluationOfEnterprises',
                 )},
 
-                {'label': 'åé¦ˆä¿¡æ¯',
+                {'label': '·´À¡ĞÅÏ¢',
                   'app': 'company',
                   'models': (
                             'institution.ReportBack',
                 )},
              )
-        elif get_user_group(request,'å­µåŒ–å™¨ç”¨æˆ·'):
+        elif get_user_group(request,'·õ»¯Æ÷ÓÃ»§'):
             settings.SUIT_CONFIG['MENU'] = (
 
                   
-                {'label': 'å­µåŒ–å™¨',
+                {'label': '·õ»¯Æ÷',
                   'app': 'company',
                   'models': (
-                            {'label': 'ä¼ä¸šåŸºæœ¬ä¿¡æ¯', 'url': '/admin/company/companyinfo'},
-                            {'label': 'æ ¡æ­£è¯„ä»·', 'model': 'IndependentEvaluationOfEnterprises'},
+                            {'label': 'ÆóÒµ»ù±¾ĞÅÏ¢', 'url': '/admin/company/companyinfo'},
+                            {'label': 'Ğ£ÕıÆÀ¼Û', 'model': 'IndependentEvaluationOfEnterprises'},
                             'RejectReason',
                             # 'FinancialSituation','ProductsAndMarket','TechnologyRD','ServerRequest',
                             'institution.ReportBack',
@@ -105,7 +108,7 @@ class m1(MiddlewareMixin):
                 )},
              )
 
-        elif get_user_group(request,'æœºæ„ç”¨æˆ·'):
+        elif get_user_group(request,'»ú¹¹ÓÃ»§'):
 
 
             _type = Institution.objects.get(user=request.user).type
@@ -115,14 +118,14 @@ class m1(MiddlewareMixin):
             elif _type == 2:
                 report = 'institution.BankReport'
             else:
-                raise ValueError('é”™è¯¯çš„typeç±»å‹:' + str(_type))
+                raise ValueError('´íÎóµÄtypeÀàĞÍ:' + str(_type))
             settings.SUIT_CONFIG['MENU'] = (
 
                   
-                {'label': 'åŸºæœ¬ä¿¡æ¯',
+                {'label': '»ù±¾ĞÅÏ¢',
                   'app': 'company',
                   'models': (
-                            # {'label': 'ä¼ä¸šåŸºæœ¬ä¿¡æ¯', 'url': '/admin/company/companyinfo'},
+                            # {'label': 'ÆóÒµ»ù±¾ĞÅÏ¢', 'url': '/admin/company/companyinfo'},
                             report,
                             'institution.ReportBack',
 

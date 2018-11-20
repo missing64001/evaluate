@@ -100,19 +100,28 @@ def serverrequest_view(request):
     _id = ServerRequest.objects.get(companyInfo=CompanyInfo.objects.get(user=request.user)).id
     return HttpResponseRedirect('/admin/company/serverrequest/%s'%_id)
 
-def balance_view(request):
+def balance_add_view(request):
+    return HttpResponseRedirect('/admin/company/balance/n/change/')
 
-    year = request.GET.get('year')
+def balance_view(request,id_):
+    if id_ == 'n':
+        year = None
+    else:
+        year = Balance.objects.get(id=id_).year
 
-    yearlist = Balance.objects.filter(companyInfo=CompanyInfo.objects.get(user=request.user)).values('year').annotate(yearNum=Count("year"))
-    years = set()
-    for yea in yearlist:
-        years.add(yea['year'])
-    years = sorted(years,key=lambda x: int(x))
+    # year = request.GET.get('year')
+
+    # yearlist = Balance.objects.filter(companyInfo=CompanyInfo.objects.get(user=request.user)).values('year').annotate(yearNum=Count("year"))
+    # years = set()
+    # for yea in yearlist:
+    #     years.add(yea['year'])
+    # years = sorted(years,key=lambda x: int(x))
 
 
-    if not year and years:
-        year = max(years)
+    # if not year and years:
+    #     year = max(years)
+
+    
 
     bal_data = Balance.objects.all().filter(companyInfo=CompanyInfo.objects.get(user=request.user),year=year)
     bal_dict = { da.name:  da.value if da.value != 0 else '' for da in bal_data}
@@ -153,7 +162,7 @@ def balance_view(request):
     else:
         status = False
 
-    return render(request,'balance.html',{'data':data,'status':status,'year':year,'years':years})
+    return render(request,'balance.html',{'data':data,'status':status,'year':year})
 
 
 def balance_submit_table_view(request):
@@ -234,16 +243,28 @@ def balance_submit_table_view(request):
 #     ren = redirect ('/admin/company/profit/')
 #     return ren
 
-def profit_view(request):
+
+
+
+def profit_add_view(request):
+    return HttpResponseRedirect('/admin/company/profit/n/change/')
+
+
+
+def profit_view(request,id_):
     
-    year = request.GET.get('year')
-    yearlist = Profit.objects.filter(companyInfo=CompanyInfo.objects.get(user=request.user)).values('year').annotate(yearNum=Count("year"))
-    years = set()
-    for yea in yearlist:
-        years.add(yea['year'])
-    years = sorted(years,key=lambda x: int(x))
-    if not year and years:
-        year = max(years)
+    # year = request.GET.get('year')
+    # yearlist = Profit.objects.filter(companyInfo=CompanyInfo.objects.get(user=request.user)).values('year').annotate(yearNum=Count("year"))
+    # years = set()
+    # for yea in yearlist:
+    #     years.add(yea['year'])
+    # years = sorted(years,key=lambda x: int(x))
+    # if not year and years:
+    #     year = max(years)
+    if id_ == 'n':
+        year = None
+    else:
+        year = Profit.objects.get(id=id_).year
 
     bal_data = Profit.objects.all().filter(companyInfo=CompanyInfo.objects.get(user=request.user),year=year)
     bal_dict = { da.name:da.value for da in bal_data}
@@ -266,7 +287,7 @@ def profit_view(request):
         status = False
 
 
-    return render(request,'profit.html',{'data':data,'status':status,'year':year,'years':years})
+    return render(request,'profit.html',{'data':data,'status':status,'year':year})
 
 
 
@@ -302,7 +323,13 @@ def profit_submit_table_view(request):
     ren = redirect ('/admin/company/profit/')
     return ren
 
-def cash_flow_view(request):
+
+def cash_flow_add_view(request):
+    return HttpResponseRedirect('/admin/company/cashflow/n/change/')
+
+
+
+def cash_flow_view(request,id_):
     getdatadict = {}
     def get_other_data(name):
         def get_data(M,name):
@@ -466,17 +493,20 @@ def cash_flow_view(request):
 
 
 
-    year = request.GET.get('year')
+    # year = request.GET.get('year')
 
-    yearlist = CashFlow.objects.filter(companyInfo=CompanyInfo.objects.get(user=request.user)).values('year').annotate(yearNum=Count("year"))
-    years = set()
-    for yea in yearlist:
-        years.add(yea['year'])
-    years = sorted(years,key=lambda x: int(x))
-    if not year and years:
-        year = max(years)
+    # yearlist = CashFlow.objects.filter(companyInfo=CompanyInfo.objects.get(user=request.user)).values('year').annotate(yearNum=Count("year"))
+    # years = set()
+    # for yea in yearlist:
+    #     years.add(yea['year'])
+    # years = sorted(years,key=lambda x: int(x))
+    # if not year and years:
+    #     year = max(years)
 
-
+    if id_ == 'n':
+        year = None
+    else:
+        year = CashFlow.objects.get(id=id_).year
 
     if year:
         bal_data = CashFlow.objects.filter(companyInfo=CompanyInfo.objects.get(user=request.user),year=year)
@@ -519,7 +549,7 @@ def cash_flow_view(request):
     else:
         status = False
     # print(year)
-    return render(request,'cash_flow.html',{'data':data,'status':status,'year':year,'years':years})
+    return render(request,'cash_flow.html',{'data':data,'status':status,'year':year})
 
     
 

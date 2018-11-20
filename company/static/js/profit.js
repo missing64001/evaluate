@@ -1,12 +1,24 @@
-
-
-
-function yearchange() {
+function verify() {
     var input = $('#inputbrowsers')
-    var year = input.val()
-    window.location.href="/admin/company/profit/?year=" + year
-    // console.log(year)
+    console.log(input.val())
+    if (input.val()){
+
+        return true
+    }
+    else{
+
+        alert('请填写年份')
+        return false
+    }
 }
+
+
+// function yearchange() {
+//     var input = $('#inputbrowsers')
+//     var year = input.val()
+//     window.location.href="/admin/company/profit/?year=" + year
+//     // console.log(year)
+// }
 
 function deldata() {
     var input = $('#inputbrowsers')

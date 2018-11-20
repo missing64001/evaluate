@@ -78,7 +78,14 @@ class UserAdmin(admin.ModelAdmin):
     
     def group(self,user):
         try:
-            return user.groups.all()[0].name
+            gr = user.groups.all()[0].name
+            if gr == '机构用户':
+                if Institution.objects.get(user=user).type == 1:
+                    return '投资机构用户'
+                else:
+                    return '金融机构用户'
+            else:
+                return user.groups.all()[0].name
         except Exception as e:
             return 'superuser'
     group.short_description = '账户类型'

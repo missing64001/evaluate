@@ -1,0 +1,155 @@
+ {% extends "balance.html" %} 
+{% load admin_static %}
+{% block extrahead %}
+<script type="text/javascript" src="{% static 'js/jquery-1.11.3.js' %}"></script>
+
+
+
+{% endblock %}
+{% block content %}
+  <div id="content-main" class="inner-two-columns">
+    <form enctype="multipart/form-data" action="/res/" method="post"
+          id="companyinfo_form" class="form-horizontal" novalidate>
+      
+
+
+      <div class="inner-right-column">
+
+        <div class="box save-box">
+
+          
+
+
+<div class="submit-row clearfix">
+  <button type="submit" class="btn btn-high btn-info" name="_save">保存</button>
+
+  
+</div>
+
+        </div>
+
+        
+
+      
+
+      </div>
+      <div class="inner-center-column">
+        {% csrf_token %}
+        
+          
+        
+        <div class="tab-content tab-content-main">
+          
+          
+
+              
+<fieldset class="module aligned first ">
+    
+  
+    
+
+    
+                  
+      
+    
+      <div class="control-group form-row field-name ">
+        
+          <div><div class="control-label"><label for="id_name">用户名:</label></div><div class="controls"><input AUTOCOMPLETE="off" style="height: 28px;width: 220px;" type="text" name="username" class="vTextField" maxlength="50" id="id_name" required /></div></div>
+        
+      </div>
+    
+      <div class="control-group form-row field-name ">
+        
+          <div><div class="control-label"><label for="id_name">密码:</label></div><div class="controls"><input AUTOCOMPLETE="off" style="height: 28px;width: 220px;" type="password" name="password" class="vTextField" maxlength="50" id="id_name" required /></div></div>
+        
+      </div>
+    
+      <div class="control-group form-row field-name ">
+        
+          <div><div class="control-label"><label for="id_name">确认密码:</label></div><div class="controls"><input AUTOCOMPLETE="off" style="height: 28px;width: 220px;" type="password" name="password2" class="vTextField" maxlength="50" id="id_name" required /></div></div>
+        
+      </div>
+    
+
+
+      <div class="control-group form-row field-incubator ">
+        
+          <div><div class="control-label"><label for="id_incubator">用户类型:</label></div><div class="controls"><div class="related-widget-wrapper"><select name="type" ><option value="2" selected>孵化器用户</option><option value="3" >投资机构用户</option><option value="4" >金融机构用户</option></select></div></div></div>
+        
+
+      </div>
+
+      <div class="control-group form-row field-name ">
+        
+          <div><div class="control-label"><label for="id_name">名称:</label></div><div class="controls"><input AUTOCOMPLETE="off" style="height: 28px;width: 220px;" type="text" name="name" class="vTextField" maxlength="50" id="id_name" required /></div></div>
+        
+      </div>
+
+      <div class="control-group form-row field-name ">
+        
+          <div><div class="control-label"><label for="id_name">电话:</label></div><div class="controls"><input AUTOCOMPLETE="off" style="height: 28px;width: 220px;" type="text" name="phone" class="vTextField" maxlength="50" id="id_name" required /></div></div>
+        
+      </div>
+
+  
+
+
+</fieldset>
+
+
+
+            
+          
+
+          
+
+          
+          
+
+
+            
+              
+
+
+            
+          
+
+        </div>
+
+        
+
+        
+        
+
+
+        
+            <script type="text/javascript">
+                (function($) {
+                    $(document).ready(function() {
+                        $('.add-another').click(function(e) {
+                            e.preventDefault();
+                            showAddAnotherPopup(this);
+                        });
+                        $('.related-lookup').click(function(e) {
+                            e.preventDefault();
+                            showRelatedObjectLookupPopup(this);
+                        });
+                    
+                    });
+                })(django.jQuery);
+            </script>
+        
+
+        
+        
+<script type="text/javascript"
+        id="django-admin-prepopulated-fields-constants"
+        src="/static/admin/js/prepopulate_init.js"
+        data-prepopulated-fields="[]">
+</script>
+
+
+      </div>
+    </form>
+  </div>
+{% endblock content %}

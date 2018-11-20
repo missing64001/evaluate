@@ -5,7 +5,7 @@ from company.models import CompanyInfo
 # Register your models here.
 @admin.register(Incubator)
 class IncubatorAdmin(admin.ModelAdmin):
-    list_display = ['name','phone','credit_code','company_amount']
+    list_display = ['name','phone','company_amount']
     exclude = ['user']
 
     def company_amount(self,obj):

@@ -1,3 +1,17 @@
+
+<div class="tab-content tab-content-main">
+          
+          
+
+          
+        
+
+
+
+
+
+
+
 {% extends "admin/base_site.html" %} 
 
 
@@ -33,6 +47,7 @@
 
 {% block content %}
 
+<div style="height: auto; float:left; padding: 50px; background-color: #FFFFFF;">
 
 <form class='file' action="/excel" method="post">
     <input type="file" name="excel" accept=".xls" defaultValue="导入" onchange="importf(this)">
@@ -40,7 +55,7 @@
     <a href="/static/baobiao.xls">excel模板下载</a>
 </form>
 
-<form class='mtable' action="submit_table/" method="post" enctype="multipart/form-data" >
+<form class='mtable' action="/admin/company/balance/submit_table/" method="post" enctype="multipart/form-data" onsubmit="return verify()">
     
     {% if status%}
     {% csrf_token %}
@@ -107,4 +122,5 @@
 
 
 </form>
+</div>
 {% endblock content %}

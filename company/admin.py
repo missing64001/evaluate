@@ -3,7 +3,7 @@ from .models import *
 from incubator.models import Incubator
 from django.utils.html import format_html
 from institution.models import *
-from django.db.models import Max
+from django.db.models import Max,Count
 
 
 
@@ -538,6 +538,77 @@ class RejectReasonAdmin(admin.ModelAdmin):
     list_display = ['companyInfo','text','is_alive','create_date']
     search_fields = ('companyInfo__name', 'text')
     list_editable = ('is_alive',)
+
+
+@admin.register(Balance)
+class BalanceAdmin(admin.ModelAdmin):
+    list_display = ['year']
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+
+        yearlist = Balance.objects.filter(companyInfo=CompanyInfo.objects.get(user=request.user)).values('year').annotate(yearNum=Count("year"))
+        years = set()
+        for yea in yearlist:
+            years.add(yea['year'])
+
+        bs = qs.filter(id=-133)
+        for year in years:
+            bl = Balance.objects.filter(year=year)[0].id
+            bl = Balance.objects.filter(id=bl)
+            # bs = qs | bl
+            if not bs:
+                bs = bl 
+            else:
+                bs |= bl
+
+        return bs
+
+
+@admin.register(Profit)
+class ProfitAdmin(admin.ModelAdmin):
+    list_display = ['year']
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+
+        yearlist = Profit.objects.filter(companyInfo=CompanyInfo.objects.get(user=request.user)).values('year').annotate(yearNum=Count("year"))
+
+        years = set()
+        for yea in yearlist:
+            years.add(yea['year'])
+
+        bs = qs.filter(id=-133)
+        for year in years:
+            bl = Profit.objects.filter(year=year)[0].id
+            bl = Profit.objects.filter(id=bl)
+            # bs = qs | bl
+            if not bs:
+                bs = bl 
+            else:
+                bs |= bl
+
+        return bs
+
+@admin.register(CashFlow)
+class CashFlowAdmin(admin.ModelAdmin):
+    list_display = ['year']
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+
+        yearlist = CashFlow.objects.filter(companyInfo=CompanyInfo.objects.get(user=request.user)).values('year').annotate(yearNum=Count("year"))
+        years = set()
+        for yea in yearlist:
+            years.add(yea['year'])
+
+        bs = qs.filter(id=-133)
+        for year in years:
+            bl = CashFlow.objects.filter(year=year)[0].id
+            bl = CashFlow.objects.filter(id=bl)
+            # bs = qs | bl
+            if not bs:
+                bs = bl 
+            else:
+                bs |= bl
+        return bs
 
 
 

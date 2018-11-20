@@ -171,6 +171,8 @@ def MyAdminIndex(request):
 # 用户注册
 # 
 
+def my_register_in(request):
+     return render(request,'res_incubator_institution.html') #{'errors':errors}
 
 def my_register(request):
 

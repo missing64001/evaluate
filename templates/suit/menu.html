@@ -18,7 +18,7 @@
         {% if app.separator %}
           <li class="separator"></li>
         {% else %}
-          <li class=active>
+          <li{{ app.is_active|yesno:' class=active,' }}>
             <a href="{{ app.url }}"{{ app.blank|yesno:' target=_blank,' }}><i class="{% firstof app.icon 'icon-chevron-right' %}"></i>{% trans app.label|capfirst %}
             </a>
             {% if app.models %}
