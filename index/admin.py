@@ -108,7 +108,7 @@ class UserAdmin(admin.ModelAdmin):
         else:
             obj=None
         return obj
-    owned_enterprise.short_description = '名称'
+    mname.short_description = '名称'
 
     def owned_incubator(self,user):
 
