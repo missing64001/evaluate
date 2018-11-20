@@ -72,8 +72,14 @@ class UserAdmin(admin.ModelAdmin):
         return []
 
     def phone(self,user):
-        companyInfo=CompanyInfo.objects.get(user=user)
-        return str(companyInfo.phone)
+        if get_user_group(user,'企业用户'):
+            obj=CompanyInfo.objects.get(user=user)
+        elif get_user_group(user,'孵化器用户'):
+            obj=Incubator.objects.get(user=user)
+        elif get_user_group(user,'机构用户'):
+            obj=Institution.objects.get(user=user)
+            
+        return str(obj.phone)
     phone.short_description = '联系电话'
     
     def group(self,user):
