@@ -284,6 +284,14 @@ class CompanyInfoAdmin(admin.ModelAdmin):
 
     def get_user_group_1(self,obj):
         return format_html('''<span class="get_user_group">机构用户</span> <script type="text/javascript" src="/static/js/set_head.js"></script>''')
+    
+    def get_list_display(self, request, obj=None):
+        if get_user_group(request,'super'):
+            return ['name','phone','incubator','credit_code','business_license_pic_show']
+        else:
+            return self.list_display
+
+
 
     def get_readonly_fields(self, request,obj=None):
         status = 0
