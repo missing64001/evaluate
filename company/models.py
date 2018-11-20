@@ -245,6 +245,9 @@ class Otherm(models.Model):
     # Source of achievement transformation
     # {1:'高校/科研院所', 2:'相关科技计划', 3:'自行研发', 4:'其他'}
     SOAT = models.SmallIntegerField(choices=SOAT_choices,verbose_name='成果转化来源',blank=True,null=True)
+    def __str__(self):
+        return '其他'
+
     class Meta:
         verbose_name='其他'
         verbose_name_plural=verbose_name

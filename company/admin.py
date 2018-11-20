@@ -194,9 +194,9 @@ class CoreMemberInl(admin.StackedInline):
             if status == 5 or status < 4:
                 return []
         return ('name','gender','age','position','is_study_abroad','entrepreneurial_times','experience',
-                'xxtemp1','education1','university1','major1',
-                'xxtemp2','education2','university2','major2',
-                'xxtemp3','education3','university3','major3',
+                'education1','university1','major1',
+                'education2','university2','major2',
+                'education3','university3','major3',
                 'company1','position1','date_s1','date_e1',
                 'company2','position2','date_s2','date_e2',
                 'company3','position3','date_s3','date_e3',

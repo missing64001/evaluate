@@ -10,7 +10,7 @@ function verify_company(_id) {
     window.location.href="/admin/company/verify?id=" + _id
 }
 
-window.onload=function(){
+$(function(){
     var cores = $('.controls')
     console.log(cores.length)
     for (var i=0;i<cores.length;i++){
@@ -20,4 +20,4 @@ window.onload=function(){
             $($(cores[i]).children()[0]).remove()
         }
     }
-}
+})
