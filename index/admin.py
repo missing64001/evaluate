@@ -78,7 +78,9 @@ class UserAdmin(admin.ModelAdmin):
             obj=Incubator.objects.get(user=user)
         elif get_user_group(user,'机构用户'):
             obj=Institution.objects.get(user=user)
-            
+        else:
+            obj=Institution.objects.get(user=user)
+
         return str(obj.phone)
     phone.short_description = '联系电话'
     
