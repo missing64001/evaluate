@@ -10,6 +10,14 @@ from django.contrib import admin
 # Create your views here.
 # 
 # 
+# 
+# 
+def investreport_view(request):
+    return HttpResponseRedirect('/admin/institution/report/')
+
+def bankreport_view(request):
+    return HttpResponseRedirect('/admin/institution/report/')
+
 def report_companyinfo_view(request,_type,num):
     num = int(num)
     _id = CompanyInfo.objects.get(**{_type+'__id':num}).id

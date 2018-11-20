@@ -16,7 +16,7 @@ class m1(MiddlewareMixin):
 
                             {'label': '孵化器数据统计', 'model': 'Incubator'},
 
-                            {'label': '企业数据统计', 'url': '/admin/institution/report'},
+                            {'label': '企业数据统计', 'url': '/admin/company/companyinfo'},
 
                 )},
 
@@ -27,7 +27,7 @@ class m1(MiddlewareMixin):
                              {'label': '校正评价', 'url': '/admin/company/independentevaluationofenterprises/'},
 
                             'index.Bonus','index.Subtraction',
-                            'institution.investreport',
+                            {'label': '金融报告', 'url': '/admin/institution/report'},
                 )},
 
                 {'label': '账号管理',
@@ -77,7 +77,7 @@ class m1(MiddlewareMixin):
                             {'label': '现金流量表', 'url': '/admin/company/cashflow'},
                 )},
 
-                {'label': '自我评价',
+                {'label': '自主评价',
                   'app': 'company',
                   'models': (
                             'IndependentEvaluationOfEnterprises',

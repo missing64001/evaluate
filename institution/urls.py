@@ -9,5 +9,8 @@ urlpatterns = [
     url(r'^createcompanyreport/$',createcompanyreport_view, name='createcompanyreport_view'),
     url(r'^companyinfo/(.+)/(.+)/change/$',report_companyinfo_view, name='report_companyinfo_view'),
     url(r'^save_reportback/$',save_reportback_view, name='save_reportback_view'),
+    url(r'^investreport/$',investreport_view, name='investreport_view'),
+    url(r'^bankreport/$',bankreport_view, name='bankreport_view'),
+
     # url(r'^independentevaluationofenterprises_change/(\d+)/',IndependentEvaluationOfEnterprisesAdmin.change_view, name='independentevaluationofenterprises_change_view'),
 ]
