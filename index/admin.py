@@ -52,7 +52,7 @@ class InstitutionInl(admin.StackedInline):
 admin.site.unregister(User)
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
-    list_display = ('username','phone','email','group','owned_enterprise','owned_incubator','date_joined','is_staff')
+    list_display = ('username','mname','phone','email','group','owned_incubator','date_joined','is_staff')
     fields = ('username','email','is_staff','is_active','groups')
     inlines = [IncubatorInl,InstitutionInl]
     # readonly_fields = ('groups',)
@@ -98,10 +98,17 @@ class UserAdmin(admin.ModelAdmin):
             return 'superuser'
     group.short_description = '账户类型'
 
-    def owned_enterprise(self,user):
+    def mname(self,user):
         if get_user_group(user,'企业用户'):
-            return CompanyInfo.objects.get(user=user)
-    owned_enterprise.short_description = '所属企业'
+            obj=CompanyInfo.objects.get(user=user)
+        elif get_user_group(user,'孵化器用户'):
+            obj=Incubator.objects.get(user=user)
+        elif get_user_group(user,'机构用户'):
+            obj=Institution.objects.get(user=user)
+        else:
+            obj=None
+        return obj
+    owned_enterprise.short_description = '名称'
 
     def owned_incubator(self,user):
 
