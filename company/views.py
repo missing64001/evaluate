@@ -582,7 +582,7 @@ def cash_flow_submit_table_view(request):
                 cobj.status = 2
                 cobj.save()
     messages.success(request, '数据提交成功')
-    ren = redirect ('/admin/company/cash_flow/?year=%s' % year)
+    ren = redirect ('/admin/company/cashflow/')
     return ren
 
 def independentevaluationofenterprises_view(request,arg1):
