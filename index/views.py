@@ -385,12 +385,13 @@ def my_logout(request):
     return HttpResponseRedirect('/admin')
 
 
-def save_permission():
+def set_permission(request):
+    if not get_user_group(request.user,'super'):
+        return HttpResponseRedirect('/admin/')
+    type_ = request.GET['type']
     gobjs = Group.objects.all()
     filename = 'permissionsmy.txt'
-
-    issave = 0
-    if issave == 1:
+    if type_ == 'save':
         print('保存了权限')
         datalst = []
         for gobj in gobjs:
@@ -399,7 +400,8 @@ def save_permission():
                 datalst.append(gobj.name+','+da['codename'])
         with open(filename,'w',encoding='utf-8') as f:
             f.write('\n'.join(datalst))
-    elif issave == 2:
+
+    elif type_ == 'load':
         print('读取了权限')
         with open(filename,'r',encoding='utf-8') as f:
             data = f.read()
@@ -415,9 +417,10 @@ def save_permission():
                 gobj.save()
             except Exception:
                 pass
+    return HttpResponseRedirect('/admin')
 
 
-save_permission()
+# save_permission()
 # 
 # 
 # 

@@ -223,7 +223,7 @@ class CoreMemberInl(admin.StackedInline):
 
 @admin.register(CompanyInfo)
 class CompanyInfoAdmin(admin.ModelAdmin):
-    list_display=['name','phone','incubator','credit_code','business_license_pic_show','new_status']
+    list_display=['name','phone','incubator','credit_code','business_license_pic_show']
     search_fields = ('name','incubator__name')
     inlines = [ShareholderInl, EnterpriseAwardsInl,PersonalAwardsInl,ProjectInl,PatentInl,
                 DrugApprovalInl,MIRCInl,StandardSettingInl,OthermInl,CoreMemberInl,FinancialSituationInl
@@ -287,7 +287,7 @@ class CompanyInfoAdmin(admin.ModelAdmin):
     
     def get_list_display(self, request, obj=None):
         if get_user_group(request,'super'):
-            return ['name','phone','incubator','credit_code','business_license_pic_show']
+            return ['name','phone','incubator','credit_code','business_license_pic_show','new_status']
         else:
             return self.list_display
 

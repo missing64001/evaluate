@@ -16,6 +16,7 @@ urlpatterns = [
     url(r'^res/$',my_register, name='my_register'),
     url(r'^res_in/$',my_register_in, name='my_register_in'),
     url(r'^savedata/$',savedata_view, name='savedata_view'),
+    url(r'^setpermission/$',set_permission, name='set_permission'),
 
 
 ]

@@ -46,6 +46,7 @@
 企业用户,add_project
 企业用户,change_project
 企业用户,delete_project
+企业用户,change_reject_reason
 企业用户,change_rejectreason
 企业用户,add_serverrequest
 企业用户,change_serverrequest
@@ -80,7 +81,9 @@
 孵化器用户,change_productsandmarket
 孵化器用户,change_profit
 孵化器用户,change_project
+孵化器用户,add_reject_reason
 孵化器用户,add_rejectreason
+孵化器用户,change_reject_reason
 孵化器用户,change_rejectreason
 孵化器用户,change_serverrequest
 孵化器用户,change_shareholder
