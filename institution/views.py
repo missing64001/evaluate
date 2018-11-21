@@ -1,10 +1,10 @@
 from django.shortcuts import render,redirect
-from company.models import CompanyInfo,Balance,Profit,CashFlow,FinancialSituation,EvaluationOfEnterprises,IndependentEvaluationOfEnterprises
+from company.models import CompanyInfo,Balance,Profit,CashFlow,FinancialSituation,EvaluationOfEnterprises,IndependentEvaluationOfEnterprises,get_user_group
 from company.admin import CompanyInfoAdmin
 from django.db.models import Max,Min,Count
 from .models import *
 from django.http import HttpResponseRedirect
-from .admin import CompanyInfoReportAdmin,ReportBackAdmin
+from .admin import *
 from django.contrib import admin
 
 # Create your views here.
@@ -13,9 +13,16 @@ from django.contrib import admin
 # 
 # 
 def investreport_view(request):
+    if get_user_group(request,'机构用户'):
+        return InvestReportAdmin(InvestReport,admin.AdminSite()).changelist_view(request)
     return HttpResponseRedirect('/admin/institution/report/')
 
+
+
+
 def bankreport_view(request):
+    if get_user_group(request,'机构用户'):
+        return BankReportAdmin(BankReport,admin.AdminSite()).changelist_view(request)
     return HttpResponseRedirect('/admin/institution/report/')
 
 def report_companyinfo_view(request,_type,num):

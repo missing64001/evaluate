@@ -223,6 +223,7 @@ class CoreMemberInl(admin.StackedInline):
 
 @admin.register(CompanyInfo)
 class CompanyInfoAdmin(admin.ModelAdmin):
+
     list_display=['name','phone','incubator','credit_code','business_license_pic_show']
     search_fields = ('name','incubator__name')
     inlines = [ShareholderInl, EnterpriseAwardsInl,PersonalAwardsInl,ProjectInl,PatentInl,
@@ -287,10 +288,18 @@ class CompanyInfoAdmin(admin.ModelAdmin):
     
     def get_list_display(self, request, obj=None):
         if get_user_group(request,'super'):
+            self.list_editable = ('status',)
+            return ['name','phone','incubator','credit_code','business_license_pic_show','status']
+        elif get_user_group(request,'孵化器用户'):
             return ['name','phone','incubator','credit_code','business_license_pic_show','new_status']
         else:
             return self.list_display
 
+    # def get_list_editable(self, request, obj=None):
+    #     print(1111111111)
+    #     if get_user_group(request,'super'):
+    #         return ('status',)
+    #     return self.list_editable
 
 
     def get_readonly_fields(self, request,obj=None):
@@ -304,6 +313,7 @@ class CompanyInfoAdmin(admin.ModelAdmin):
             return ('incubator','name','create_date','registered_capital','paid_in_capital',
                 'major_business','work_force','junior_college_number','developer_number','is_high_tech_enterprise'
                 ,'abouts','field_1','field_2') # ,'x1','technical_source','SOAT'
+
         if get_user_group(request,'机构用户'):
             return ('incubator','name','create_date','registered_capital','paid_in_capital',
                 'major_business','work_force','junior_college_number','developer_number','is_high_tech_enterprise'
@@ -335,7 +345,7 @@ class CompanyInfoAdmin(admin.ModelAdmin):
     def new_status(self,obj):
         status_choices = ((-2,'无效'),
                         (-1,'完成'),
-                        (0,'通过申请'),
+                        (0,'孵化器审核中'),
                         (1,'填写企业信息完成'),
                         (2,'上传财务报表完成'),
                         (3,'企业自我评价完成'),

@@ -135,8 +135,8 @@ class BankReportAdmin(admin.ModelAdmin):
 
 class CompanyInfoReportAdmin(admin.ModelAdmin):
     list_display=['name','incubator','i_evaluate_status','balance_status','profit_status',
-                'cash_flow_status','invest_report','bank_report','status']
-    list_editable = ['status']
+                'cash_flow_status','invest_report','bank_report']
+    # list_editable = ['status']
     
     def get_queryset(self, request):
         # self.myrequest = request

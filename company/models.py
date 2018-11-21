@@ -7,7 +7,7 @@ from datetime import timedelta
 x1_d = ((1 ,'集成电路布图'),  (2 ,'其他'))
 status_choices = ((-2,'无效'),
                 (-1,'完成'),
-                (0,'通过申请'),
+                (0,'孵化器审核中'),
                 (1,'填写企业信息'),
                 (2,'上传财务报表'),
                 (3,'企业自我评价'),
@@ -508,11 +508,14 @@ class CashFlow(models.Model):
 
 
 def get_user_group(request,groupname=None):
+
     try:
         user = request.user
     except Exception:
         user = request
-        
+    if user.is_anonymous:
+        return None
+
     if user.is_superuser:
         if not groupname:
             return 'super'

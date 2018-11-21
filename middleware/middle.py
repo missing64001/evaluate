@@ -120,7 +120,7 @@ class m1(MiddlewareMixin):
 
                   
                 {'label': '基本信息',
-                  'app': 'company',
+                  'app': 'institution',
                   'models': (
                             # {'label': '企业基本信息', 'url': '/admin/company/companyinfo'},
                             report,
