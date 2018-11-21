@@ -1,12 +1,13 @@
 from django.conf.urls import url
 from .views import *
 from django.contrib import admin
+from django.views.generic.base import RedirectView
 
 urlpatterns = [
     # url(r'^$', index, name='index'),
     # url(r'^p/(?P<article_id>[0-9]+)/$', detail,name='detail'),
 
-    url(r'^$',MyAdminIndex, name='index'),
+    url(r'^$', RedirectView.as_view(url='/admin/'), name='index'),
     url(r'^admin/$',MyAdminIndex, name='index'),
     url(r'^admin/login/$',my_login, name='login'),
     url(r'^admin/staff/$',my_staff, name='my_staff'),
