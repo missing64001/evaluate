@@ -184,6 +184,10 @@ def my_register(request):
 
         if len(request.POST['password2']) < 6:
             errors.append('密码小于六位')
+
+        if len(request.POST['credit_code']) != 18:
+            errors.append('请填写正确的统一社会信用代码（18位）')
+            
         # print(len(User.objects.all().filter(username = request.POST['username'])))
         if len(User.objects.all().filter(username = request.POST['username'])) == 1:
             errors.append('用户名已被使用')
