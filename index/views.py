@@ -388,6 +388,8 @@ def my_logout(request):
     auth.logout(request)
     return HttpResponseRedirect('/admin')
 
+def derive_data(request):
+    return HttpResponseRedirect('/admin')
 
 def set_permission(request):
     if not get_user_group(request.user,'super'):
