@@ -178,16 +178,48 @@ class OthermInl(admin.StackedInline):
 class CoreMemberInl(admin.StackedInline):
     model = CoreMember
     extra = 0
+    inl_index = 0
     # max_num = 5
-    fields =('name','gender','age','position','is_study_abroad','entrepreneurial_times','experience',
+    fields =['name','gender','age','position','is_study_abroad','entrepreneurial_times','experience',
         ('xxtemp1','education1','university1','major1'),
         ('xxtemp2','education2','university2','major2'),
         ('xxtemp3','education3','university3','major3'),
         ('xxtempgz1','company1','position1','date_s1','date_e1'),
         ('xxtempgz2','company2','position2','date_s2','date_e2'),
         ('xxtempgz3','company3','position3','date_s3','date_e3'),
-        )
+        ]
 
+    # def get_fields(self, request,obj=None):
+    #     if get_user_group(request,'企业用户'):
+    #         status = CompanyInfo.objects.get(user=request.user).status
+    #         if status == 5 or status < 4:
+    #             return self.fields
+    #     obj = obj.coremember_set.all()[self.inl_index]
+    #     self.inl_index += 1
+    #     if not obj.education1:
+
+    #         fieldsf = self.fields[:-6]
+    #     elif not obj.education2:
+    #         fieldsf = self.fields[:-5]
+    #     elif not obj.education3:
+    #         fieldsf = self.fields[:-4]
+    #     else:
+    #         fieldsf = self.fields[:-3]
+
+    #     if not obj.company1:
+    #         fieldsb = self.fields[-3:-3]
+    #     elif not obj.company2:
+    #         fieldsb = self.fields[-3:-2]
+    #     elif not obj.company3:
+    #         fieldsb = self.fields[-3:-1]
+    #     else:
+    #         fieldsb = self.fields[-3:]
+
+    #     # print(fieldsf)
+    #     # print(fieldsb)
+    #     print(fieldsf + fieldsb)
+    #     return fieldsf + fieldsb
+        
     def get_readonly_fields(self, request,obj=None):
         if get_user_group(request,'企业用户'):
             status = CompanyInfo.objects.get(user=request.user).status
@@ -345,15 +377,15 @@ class CompanyInfoAdmin(admin.ModelAdmin):
     def new_status(self,obj):
         status_choices = ((-2,'无效'),
                         (-1,'完成'),
-                        (0,'孵化器审核中'),
+                        (0,'孵化器审核通过'),
                         (1,'填写企业信息完成'),
                         (2,'上传财务报表完成'),
                         (3,'企业自我评价完成'),
-                        (4,'已提交'),
+                        (4,'企业完成录入提交'),
 
                         (5,'孵化器驳回信息'), #修改后确认提交
-                        (6,'孵化器审核信息'),
-                        (7,'孵化器修正评价'),
+                        (6,'孵化器审核完成'),
+                        (7,'孵化器修正评价完成'),
 
                         (8,'平台发送报告'),
 
@@ -361,6 +393,7 @@ class CompanyInfoAdmin(admin.ModelAdmin):
 
                         (10,'用户获得反馈'),
                     )
+
         status_choices = dict(status_choices)
         report = status_choices[obj.status]
 
