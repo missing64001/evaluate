@@ -24,9 +24,22 @@ $(function(){
     }
 
     var activeliz = $('#left-nav>ul>li.active li.active')
-    console.log($(lis[2]).text())
+    // console.log($(lis[2]).text())
     if (activeliz.children('a').text() == '校正评价' & $(lis[2]).text() == '自主评价'){
         $(lis[2]).text('校正评价')
+    }
+    if (activeliz.children('a').text() == '孵化器数据统计' & $(lis[2]).text() == '孵化器'){
+        $(lis[2]).text('孵化器数据统计')
+
+        var downbutton = $('<button style="margin-bottom:15px;">导出全部数据</button>')
+        downbutton.bind("click",function(event){
+            window.location.href='/download_data'
+        })
+
+        $('#content').before(downbutton)
+    }
+    if (activeliz.children('a').text() == '企业数据统计' & $(lis[2]).text() == '一、基本信息'){
+        $(lis[2]).text('企业数据统计')
     }
 
 })

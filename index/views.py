@@ -5,6 +5,7 @@ from django.contrib import auth,admin
 from django.contrib.auth.models import User,Group,Permission
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponseRedirect
+from django.http import StreamingHttpResponse
 from company.models import *
 from incubator.models import Incubator
 from institution.models import Institution
@@ -388,7 +389,655 @@ def my_logout(request):
     auth.logout(request)
     return HttpResponseRedirect('/admin')
 
-def derive_data(request):
+def derive_data_view(request):
+    if not get_user_group(request,'super'):
+        return HttpResponseRedirect('/admin')
+    print('导出数据')
+
+    import xlwt
+    workbook = xlwt.Workbook(encoding = 'utf-8')
+    worksheet = workbook.add_sheet('企业信息')
+    
+
+
+    cobjs = CompanyInfo.objects.all()
+    str_ = [
+        '状态',
+        '所属孵化器',
+        '企业名称',
+        '成立时间',
+        '注册资本（万元）',
+        '实收资本（万元）',
+        '主营产品（或服务）',
+        '职工总数',
+        '大专以上学历人数',
+        '从事研发人员数',
+        '是否是高新技术企业',
+        '企业简介',
+        '行业领域',
+        '二级领域',
+        '统一社会信用代码',
+        '联系电话',
+        '-',
+        '技术来源',
+        '成果转化来源',
+        '三、产品与市场',
+        '主营产品（或服务）',
+        '商业模式',
+        '市场分析及前景预测',
+        '四、技术与研发',
+        '核心技术及研发情况',
+        '五、服务需求',
+        '融资金额（万元）',
+        '融资时间（天）',
+        '拟出让股权比例（%）',
+        '可以接受的最高年利率（%）',
+        '资金使用计划',
+        '小额贷款（万元）',
+        '股改、挂牌、上市',
+        '科技金融服务需求',
+        '其他科技服务需求',
+        ]
+    for i,s in enumerate(str_):
+        worksheet.write(0, i, label = s)
+
+
+    for i,cobj in enumerate(cobjs,1):
+        try:
+            otherm = Otherm.objects.get(companyInfo=cobj)
+            othermlst = [otherm.get_x1_display(),
+                otherm.get_technical_source_display(),
+                otherm.get_SOAT_display(),]
+        except Exception:
+            othermlst = ['-','-','-',]
+
+        try:
+            productsandmarket = ProductsAndMarket.objects.get(companyInfo=cobj)
+            productsandmarketlst = ['      |',productsandmarket.product,productsandmarket.model,productsandmarket.analysis_forecast,]
+        except Exception:
+            productsandmarketlst = ['      |','-','-','-',]
+
+        try:
+            technologyrd = TechnologyRD.objects.get(companyInfo=cobj)
+            technologyrdlst = ['      |',technologyrd.status]
+        except Exception:
+            technologyrdlst = ['      |','-']
+
+        try:
+            serverrequest = ServerRequest.objects.get(companyInfo=cobj)
+            serverrequestlst = ['      |',
+                                serverrequest.amount,
+                                serverrequest.duration,
+                                serverrequest.ratio,
+                                serverrequest.interest_rate,
+                                serverrequest.plan,
+                                serverrequest.small_loan,
+                                serverrequest.get_share_model_display(),
+                                serverrequest.request,
+                                serverrequest.otherrequest,
+            ]
+        except Exception:
+            serverrequestlst = ['      |','-','-','-','-','-','-','-','-','-']
+            # import traceback
+            # traceback.print_exc()
+
+
+
+
+
+
+        # ServerRequest
+
+        lst = [
+                cobj.get_status_display(),
+                cobj.incubator,
+                cobj.name,
+                cobj.create_date,
+                cobj.registered_capital,
+                cobj.paid_in_capital,
+                cobj.major_business,
+                cobj.work_force,
+                cobj.junior_college_number,
+                cobj.developer_number,
+                cobj.is_high_tech_enterprise,
+                cobj.abouts,
+                cobj.get_field_1_display(),
+                cobj.field_2,
+                cobj.credit_code,
+                cobj.phone,
+
+                ]
+        lst += othermlst
+        lst += productsandmarketlst
+        lst += technologyrdlst
+        lst += serverrequestlst
+
+
+
+
+        for j,l in enumerate(lst):
+            l = str(l).replace('\n','\t').replace(',','，')
+            if l == 'None':
+                l = '-'
+            worksheet.write(i, j, label = l)
+
+
+
+
+
+
+
+
+
+
+
+
+    # ----------------------孵化器----------------------
+    # ----------------------孵化器----------------------
+    worksheet = workbook.add_sheet('孵化器')
+    str_ = ['名称','联系电话','企业数量']
+
+    objs = Incubator.objects.all().order_by('name')
+    for i,s in enumerate(str_):
+        worksheet.write(0, i, label = s)
+            
+
+
+    for i,obj in enumerate(objs,1):
+
+        lst = [
+        obj.name,
+        obj.phone,
+        len(CompanyInfo.objects.all().filter(incubator=obj)),
+        ]
+
+        for j,l in enumerate(lst):
+
+            l = str(l).replace('\n','\t').replace(',','，')
+            if l == 'None':
+                l = '-'
+            worksheet.write(i, j, label = l)
+    
+    # ----------------------孵化器----------------------
+    # ----------------------孵化器------------------
+
+
+
+
+    # ----------------------机构----------------------
+    # ----------------------机构----------------------
+    worksheet = workbook.add_sheet('机构')
+    str_ = ['机构名称','机构类型','联系电话']
+
+    objs = Institution.objects.all().order_by('name')
+    for i,s in enumerate(str_):
+        worksheet.write(0, i, label = s)
+            
+
+
+    for i,obj in enumerate(objs,1):
+
+        lst = [
+        obj.name,
+        obj.get_type_display(),
+        obj.phone,
+        ]
+
+        for j,l in enumerate(lst):
+
+            l = str(l).replace('\n','\t').replace(',','，')
+            if l == 'None':
+                l = '-'
+            worksheet.write(i, j, label = l)
+    
+    # ----------------------机构----------------------
+    # ----------------------机构------------------
+
+
+
+
+
+
+    # ----------------------二、财务状况----------------------
+    # ----------------------二、财务状况----------------------
+    worksheet = workbook.add_sheet('二、财务状况')
+    str_ = ['企业','年份','累计销售收入','累计净利润','期末总资产','研发费用总额']
+
+    objs = FinancialSituation.objects.all().order_by('companyInfo__name')
+    for i,s in enumerate(str_):
+        worksheet.write(0, i, label = s)
+            
+
+
+    for i,obj in enumerate(objs,1):
+
+        lst = [
+        obj.companyInfo,
+        obj.year,
+        obj.income,
+        obj.profit,
+        obj.total,
+        obj.r_d_cost,
+        ]
+
+        for j,l in enumerate(lst):
+
+            l = str(l).replace('\n','\t').replace(',','，')
+            if l == 'None':
+                l = '-'
+            worksheet.write(i, j, label = l)
+    
+    # ----------------------二、财务状况----------------------
+    # ----------------------二、财务状况------------------
+
+
+
+    # ----------------------主要股东及股权比例（前五名）----------------------
+    # ----------------------主要股东及股权比例（前五名）----------------------
+    worksheet = workbook.add_sheet('主要股东及股权比例（前五名）')
+
+    str_ = ['企业','股东名称','股权比例(%)','出资形式']
+
+    objs = Shareholder.objects.all().order_by('companyInfo__name')
+    for i,s in enumerate(str_):
+        worksheet.write(0, i, label = s)
+            
+    for i,obj in enumerate(objs,1):
+
+
+        # try:
+        #     shareholder = Shareholder.objects.get(companyInfo=cobj)
+        #     shareholderlst = [shareholder.name,shareholder.share_ratio,shareholder.form_of_contribution]
+        # except Exception:
+        #     shareholderlst = ['-','-','-',]
+
+        lst = [obj.companyInfo,obj.name,obj.share_ratio,obj.form_of_contribution]
+
+        for j,l in enumerate(lst):
+
+            l = str(l).replace('\n','\t').replace(',','，')
+            if l == 'None':
+                l = '-'
+            worksheet.write(i, j, label = l)
+    
+    # ----------------------主要股东及股权比例（前五名）----------------------
+    # ----------------------主要股东及股权比例（前五名）----------------------
+
+
+
+
+    # ----------------------企业获奖情况----------------------
+    # ----------------------企业获奖情况----------------------
+    worksheet = workbook.add_sheet('企业获奖情况')
+    str_ = ['企业','获奖级别','获奖名称','获奖时间']
+
+    objs = EnterpriseAwards.objects.all().order_by('companyInfo__name')
+    for i,s in enumerate(str_):
+        worksheet.write(0, i, label = s)
+            
+
+
+    for i,obj in enumerate(objs,1):
+
+        lst = [obj.companyInfo,obj.level,obj.title,obj.date]
+
+        for j,l in enumerate(lst):
+
+            l = str(l).replace('\n','\t').replace(',','，')
+            if l == 'None':
+                l = '-'
+            worksheet.write(i, j, label = l)
+    
+    # ----------------------企业获奖情况----------------------
+    # ----------------------企业获奖情况----------------------
+
+
+    # ----------------------核心团队个人获奖情况----------------------
+    # ----------------------核心团队个人获奖情况----------------------
+    worksheet = workbook.add_sheet('核心团队个人获奖情况')
+    str_ = ['企业','获奖人','获奖级别/名称','获奖时间']
+
+    objs = PersonalAwards.objects.all().order_by('companyInfo__name')
+    for i,s in enumerate(str_):
+        worksheet.write(0, i, label = s)
+            
+
+
+    for i,obj in enumerate(objs,1):
+
+        lst = [obj.companyInfo,obj.name,obj.level_title,obj.date]
+
+        for j,l in enumerate(lst):
+
+            l = str(l).replace('\n','\t').replace(',','，')
+            if l == 'None':
+                l = '-'
+            worksheet.write(i, j, label = l)
+    
+    # ----------------------核心团队个人获奖情况----------------------
+    # ----------------------核心团队个人获奖情况----------------------
+
+
+
+    # ----------------------企业曾经承担或正在承担的科技计划项目----------------------
+    # ----------------------企业曾经承担或正在承担的科技计划项目----------------------
+    worksheet = workbook.add_sheet('企业曾经承担或正在承担的科技计划项目')
+    str_ = ['企业','计划类别','立项名称','立项时间','结项时间','结论']
+
+    objs = Project.objects.all().order_by('companyInfo__name')
+    for i,s in enumerate(str_):
+        worksheet.write(0, i, label = s)
+            
+
+
+    for i,obj in enumerate(objs,1):
+
+        lst = [obj.companyInfo,
+                obj._type,
+                obj.title,
+                obj.create_date,
+                obj.finished_date,
+                obj.conclusion]
+
+        for j,l in enumerate(lst):
+
+            l = str(l).replace('\n','\t').replace(',','，')
+            if l == 'None':
+                l = '-'
+            worksheet.write(i, j, label = l)
+    
+    
+    # ----------------------企业曾经承担或正在承担的科技计划项目----------------------
+    # ----------------------企业曾经承担或正在承担的科技计划项目----------------------
+
+
+
+    # ----------------------专利----------------------
+    # ----------------------专利----------------------
+    worksheet = workbook.add_sheet('专利')
+    str_ = ['企业','专利名','专利类型','专利号','获得时间']
+
+    objs = Patent.objects.all().order_by('companyInfo__name')
+    for i,s in enumerate(str_):
+        worksheet.write(0, i, label = s)
+            
+
+
+    for i,obj in enumerate(objs,1):
+
+        lst = [obj.companyInfo,
+                obj.title,
+                obj._type,
+                obj.num,
+                obj.date,
+                ]
+
+        for j,l in enumerate(lst):
+
+            l = str(l).replace('\n','\t').replace(',','，')
+            if l == 'None':
+                l = '-'
+            worksheet.write(i, j, label = l)
+    
+    
+    # ----------------------专利----------------------
+    # ----------------------专利----------------------
+    
+
+
+
+
+    # ----------------------药品批文----------------------
+    # ----------------------药品批文----------------------
+    worksheet = workbook.add_sheet('药品批文')
+    str_ = ['企业','药品名称','国家新药','国家一级中药保护品种','药品批准文号','有效日期']
+
+    objs = DrugApproval.objects.all().order_by('companyInfo__name')
+    for i,s in enumerate(str_):
+        worksheet.write(0, i, label = s)
+            
+
+
+    for i,obj in enumerate(objs,1):
+
+        lst = [obj.companyInfo,
+                obj.title,
+                obj.new_drug,
+                obj.c_drug,
+                obj.num,
+                obj.effective_date,
+                ]
+
+        for j,l in enumerate(lst):
+
+            l = str(l).replace('\n','\t').replace(',','，')
+            if l == 'None':
+                l = '-'
+            worksheet.write(i, j, label = l)
+    
+    
+    # ----------------------药品批文----------------------
+    # ----------------------药品批文----------------------
+    
+
+
+
+    # ----------------------医疗器械注册证----------------------
+    # ----------------------医疗器械注册证----------------------
+    worksheet = workbook.add_sheet('医疗器械注册证')
+    str_ = ['企业','产品名称','医疗器械注册号','有效日期']
+
+    objs = MIRC.objects.all().order_by('companyInfo__name')
+    for i,s in enumerate(str_):
+        worksheet.write(0, i, label = s)
+            
+
+
+    for i,obj in enumerate(objs,1):
+
+        lst = [obj.companyInfo,
+                obj.title,
+                obj.num,
+                obj.effective_date,
+                ]
+
+        for j,l in enumerate(lst):
+
+            l = str(l).replace('\n','\t').replace(',','，')
+            if l == 'None':
+                l = '-'
+            worksheet.write(i, j, label = l)
+    
+    
+    # ----------------------医疗器械注册证----------------------
+    # ----------------------医疗器械注册证----------------------
+    
+
+
+
+    # ----------------------标准制定情况----------------------
+    # ----------------------标准制定情况----------------------
+    worksheet = workbook.add_sheet('标准制定情况')
+    str_ = ['企业','标准名称','标准级别','标准编号','起草单位中的地位']
+
+    objs = StandardSetting.objects.all().order_by('companyInfo__name')
+    for i,s in enumerate(str_):
+        worksheet.write(0, i, label = s)
+            
+
+
+    for i,obj in enumerate(objs,1):
+
+        lst = [obj.companyInfo,
+                obj.title,
+                obj.level,
+                obj.num,
+                obj.status,
+                ]
+
+        for j,l in enumerate(lst):
+
+            l = str(l).replace('\n','\t').replace(',','，')
+            if l == 'None':
+                l = '-'
+            worksheet.write(i, j, label = l)
+    
+    
+    # ----------------------标准制定情况----------------------
+    # ----------------------标准制定情况----------------------
+    
+
+
+
+    # ----------------------  核心团队（至少填三人）----------------------
+    # ----------------------  核心团队（至少填三人）----------------------
+    worksheet = workbook.add_sheet('核心团队')
+    str_ = ['企业','姓名','性别','年龄','职位','留学经历','创业次数','谈对自己创业最重要的一个经历',
+            '学历','毕业院校','专业','学历','毕业院校','专业','学历','毕业院校','专业',
+            '工作单位','职位','开始','结束','工作单位','职位','开始','结束','工作单位','职位','开始','结束',]
+
+    objs = CoreMember.objects.all().order_by('companyInfo__name')
+    for i,s in enumerate(str_):
+        worksheet.write(0, i, label = s)
+            
+
+
+    for i,obj in enumerate(objs,1):
+
+        lst = [obj.companyInfo,
+                obj.name,
+                obj.gender,
+                obj.age,
+                obj.position,
+                obj.is_study_abroad,
+                obj.entrepreneurial_times,
+                obj.experience,
+
+                obj.education1,
+                obj.university1,
+                obj.major1,
+                obj.education2,
+                obj.university2,
+                obj.major2,
+                obj.education3,
+                obj.university3,
+                obj.major3,
+
+                obj.company1,
+                obj.position1,
+                obj.date_s1,
+                obj.date_e1,
+                obj.company2,
+                obj.position2,
+                obj.date_s2,
+                obj.date_e2,
+                obj.company3,
+                obj.position3,
+                obj.date_s3,
+                obj.date_e3,
+                ]
+
+        for j,l in enumerate(lst):
+
+            l = str(l).replace('\n','\t').replace(',','，')
+            if l == 'None':
+                l = '-'
+            worksheet.write(i, j, label = l)
+    
+    
+    # ----------------------  核心团队（至少填三人）----------------------
+    # ----------------------  核心团队（至少填三人）----------------------
+    
+
+
+
+
+
+
+
+
+    workbook.save('data.xls')
+
+
+
+    """查询数据下载"""
+    def file_iterator(file_name, chunk_size=512):
+        with open(file_name, 'rb') as f:
+            while True:
+                c = f.read(chunk_size)
+                # print(c)
+                if c:
+                    yield c
+                else:
+                    break
+    the_file_name = 'data.xls'
+    response = StreamingHttpResponse(file_iterator(the_file_name))
+    response['Content-Type'] = 'application/octet-stream'
+    response['Content-Disposition'] = 'attachment;filename="{0}"'.format(the_file_name)
+    return response
+
+
+def derive_data_view_old(request):
+    if not get_user_group(request,'super'):
+        return HttpResponseRedirect('/admin')
+    print('导出数据')
+
+    import xlwt
+    workbook = xlwt.Workbook(encoding = 'utf-8')
+    worksheet = workbook.add_sheet('企业信息')
+    worksheet.write(0, 0, label = 'Row 0, Column 0 Value')
+
+
+    cobjs = CompanyInfo.objects.all()
+    str_ = [
+        '企业名称',
+        '状态',
+        '所属孵化器',
+        '成立时间',
+        '注册资本（万元）',
+        '实收资本（万元）',
+        '主营产品（或服务）',
+        '职工总数',
+        '大专以上学历人数',
+        '从事研发人员数',
+        '是否是高新技术企业',
+        '企业简介',
+        '行业领域',
+        '二级领域',
+        '统一社会信用代码',
+        '联系电话',]
+
+
+    strlst = [','.join(str_)]
+    for cobj in cobjs:
+        lst = [
+                cobj.name,
+                cobj.get_status_display(),
+                cobj.incubator,
+                cobj.create_date,
+                cobj.registered_capital,
+                cobj.paid_in_capital,
+                cobj.major_business,
+                cobj.work_force,
+                cobj.junior_college_number,
+                cobj.developer_number,
+                cobj.is_high_tech_enterprise,
+                cobj.abouts,
+                cobj.get_field_1_display(),
+                cobj.field_2,
+                cobj.credit_code,
+                cobj.phone,]
+        lst = [ str(l).replace('\n','\t').replace(',','，') for l in lst]
+
+        strlst.append(','.join(lst))
+
+    for str_ in strlst:
+        print(type(str_))
+    filename = 'derive_data.csv'
+    with open(filename,'w',encoding='utf-8') as f:
+        f.write('\n'.join(strlst))
+
+
     return HttpResponseRedirect('/admin')
 
 def set_permission(request):

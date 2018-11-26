@@ -18,3 +18,5 @@ db.ini
 index/api/err
 static/upload
 */migrations
+.xls
+.csv
