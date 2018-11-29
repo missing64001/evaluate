@@ -5,7 +5,7 @@ window.onload=function(){
         var opt = tis.children("option:selected")
 
         // alert(opt.val() + tis.attr('cid'))
-        data={"cid":tis.attr("cid"),"type":tis.attr("type"),"opt":opt.val(),"csrfmiddlewaretoken":$("input:first").val()}
+        data={"cid":tis.attr("cid"),"type":tis.attr("type"),"opt":opt.val(),"csrfmiddlewaretoken":$("input[name='csrfmiddlewaretoken']").val()}
         post('/admin/institution/createcompanyreport/', data)
     })
 }
