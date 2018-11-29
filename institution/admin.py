@@ -292,7 +292,7 @@ class ReportBackAdmin(admin.ModelAdmin):
                 else:
                     raise ValueError('错误的数据')
         obj.save()
-        robj = obj.investreport or obj.investreport
+        robj = obj.investreport or obj.bankreport
         if obj.iscompanyview == 2:
             robj.companyInfo.status = 10
             robj.companyInfo.save()
