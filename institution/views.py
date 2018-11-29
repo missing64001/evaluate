@@ -210,7 +210,7 @@ def save_reportback_view(request):
     elif request.POST['report_type'] == 'bankreport':
         obj.bankreport = BankReport.objects.get(id=_id)
         obj.bankreport.companyInfo.status = 9
-        obj.investreport.companyInfo.save()
+        obj.bankreport.companyInfo.save()
     else:
         raise ValueError('错误的数据:' + request.POST['report_type'])
 
