@@ -4,23 +4,66 @@
 
 
 $(function(){
+    
+    //设置 首页的链接显示
+    var global_group = $('#global_group').attr('name')
+    var url = location.pathname
+
+    //设置 平台管理员的
+    if (global_group == 'super' & url == '/admin/'){
+        console.log('super1')
+        var cm_tbody = $('#content-main tbody')
+        var cm_tbody_tr = $('#content-main tbody:eq(0) tr')
+        $(cm_tbody[0]).html($(cm_tbody_tr[0]))
+
+
+        cm_tbody_tr = $('#content-main tbody:eq(3) tr:gt(1)')
+        cm_tbody_tr.remove()
+
+        $('#content-main tbody .addlink').parent().remove()
+    }
+
+    // 设置 企业用户
+    else if (global_group == '企业用户' & url == '/admin/'){
+        $('#content-main tbody:lt(2) .changelink').parent().next().remove()
+        $('#content-main tbody:eq(0) tr:gt(0):lt(8)').remove()
+    }
+
+    // 设置 孵化器用户
+    else if (global_group == '孵化器用户' & url == '/admin/'){
+        $('#content-main tbody:lt(3) .changelink').parent().next().remove()
+        $('#content-main tbody:eq(0) tr:gt(0):lt(9)').remove()
+    }
+
+    // 设置 机构用户
+    else if (global_group == '机构用户' & url == '/admin/'){
+        $('#content-main tbody:lt(3) .changelink').parent().next().remove()
+        $('#content-main tbody:eq(0) tr:gt(0)').remove()
+        $('#content-main tbody:eq(1) tr:odd').remove()
+    }
+
+
+
+
     var lis = $('ul.breadcrumb>li')
     // console.log(lis.length)
-
-
     if (lis.length > 2){
         var activeli = $('#left-nav>ul>li.active')
-        // console.log(activeli.children('a').attr('href'))
-        // console.log(activeli.children('a').text())
-        $(lis[1]).children('a').attr('href',activeli.children('a').attr('href'))
-        $(lis[1]).children('a').text(activeli.children('a').text())
+        if (activeli.children('a').length){
+            // console.log(activeli.children('a').length)
+            $(lis[1]).children('a').attr('href',activeli.children('a').attr('href'))
+            $(lis[1]).children('a').text(activeli.children('a').text())
+        }
+
     }
     if (lis.length == 4){
         var activeli = $('#left-nav>ul>li.active li.active')
-        // console.log(activeli.children('a').attr('href'))
-        // console.log(activeli.children('a').text())
-        $(lis[2]).children('a').attr('href',activeli.children('a').attr('href'))
-        $(lis[2]).children('a').text(activeli.children('a').text())
+        if (activeli.children('a').length){
+            // console.log(activeli.children('a').length)
+            $(lis[2]).children('a').attr('href',activeli.children('a').attr('href'))
+            $(lis[2]).children('a').text(activeli.children('a').text())
+        }
+
     }
 
     var activeliz = $('#left-nav>ul>li.active li.active')

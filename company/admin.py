@@ -350,6 +350,11 @@ class CompanyInfoAdmin(admin.ModelAdmin):
             return ('incubator','name','create_date','registered_capital','paid_in_capital',
                 'major_business','work_force','junior_college_number','developer_number','is_high_tech_enterprise'
                 ,'abouts','field_1','field_2','get_user_group_1') # ,'x1','technical_source','SOAT'
+
+        if get_user_group(request,'super'):
+            return ('incubator','name','create_date','registered_capital','paid_in_capital',
+                'major_business','work_force','junior_college_number','developer_number','is_high_tech_enterprise'
+                ,'abouts','field_1','field_2','get_user_group_1') # ,'x1','technical_source','SOAT'
         return []
 
     def get_queryset(self, request):

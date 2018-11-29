@@ -31,6 +31,14 @@
 {% load i18n %}
 
 <body class="{% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}">
+
+  {# ++++++++++++++++++++++++evalute change++++++++++++++++++++++++ #}
+  {# ++++++++++++++++++++++++evalute change++++++++++++++++++++++++ #}
+  <input type="hidden" id="global_group" name="{{global_group}}">
+  <input type="hidden" id="global_is_close_save" name="{{global_is_close_save}}">
+  {# ------------------------evalute change------------------------ #}
+  {# ------------------------evalute change------------------------ #}
+  
 <!-- Sticky footer wrap -->
 <div id="wrap">
 

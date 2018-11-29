@@ -16,6 +16,7 @@ from django.views import generic
 # from django.db.models import get_app_list
 from pprint import pprint
 from django.template.response import TemplateResponse
+from django.contrib import messages
 # class Index(generic.TemplateView):
 #     template_name = 'admin/index.html'
 #     def get_context_data(self, **kwargs):
@@ -176,7 +177,7 @@ def my_register_in(request):
      return render(request,'res_incubator_institution.html') #{'errors':errors}
 
 def my_register(request):
-
+    print(111,request.path,111)
     errors = []
     if request.method == 'POST':
 
@@ -186,15 +187,16 @@ def my_register(request):
         if len(request.POST['password2']) < 6:
             errors.append('密码小于六位')
 
-        if len(request.POST['credit_code']) != 18:
-            errors.append('请填写正确的统一社会信用代码（18位）')
-            
         # print(len(User.objects.all().filter(username = request.POST['username'])))
         if len(User.objects.all().filter(username = request.POST['username'])) == 1:
             errors.append('用户名已被使用')
 
-        if errors:
+        if errors and get_user_group(request) != 'super':
             return render(request,'res.html',{'errors':errors})
+        elif errors:
+            messages.error(request, '\n'.join(errors))
+            return HttpResponseRedirect('/res_in/')
+
 
         account = request.POST['username']
         password = request.POST['password']
@@ -204,6 +206,11 @@ def my_register(request):
         
 
         if request.POST['type'] == '1':
+            if len(request.POST['credit_code']) != 18:
+                errors.append('请填写正确的统一社会信用代码（18位）')
+            if errors:
+                return render(request,'res.html',{'errors':errors})
+
             userlogin = auth.authenticate(username = account,password = password)
             auth.login(request,userlogin)
             
@@ -229,6 +236,9 @@ def my_register(request):
             return HttpResponseRedirect('/admin')
 
         elif request.POST['type'] == '2':
+            if Incubator.objects.filter(name=request.POST['name']):
+                messages.error(request, '名称已存在，请重新输入')
+                return HttpResponseRedirect('/res_in/')   
 
             user.is_active = True
             user.is_staff = True
@@ -240,6 +250,9 @@ def my_register(request):
             return HttpResponseRedirect('/admin/auth/user/')
 
         elif request.POST['type'] == '3':
+            if Institution.objects.filter(name=request.POST['name']):
+                messages.error(request, '名称已存在，请重新输入')
+                return HttpResponseRedirect('/res_in/')   
 
             user.is_active = True
             user.is_staff = True
@@ -251,6 +264,9 @@ def my_register(request):
             return HttpResponseRedirect('/admin/auth/user/')
 
         elif request.POST['type'] == '4':
+            if Institution.objects.filter(name=request.POST['name']):
+                messages.error(request, '名称已存在，请重新输入')
+                return HttpResponseRedirect('/res_in/')  
 
             user.is_active = True
             user.is_staff = True

@@ -57,7 +57,14 @@ class UserAdmin(admin.ModelAdmin):
     inlines = [IncubatorInl,InstitutionInl]
     # readonly_fields = ('groups',)
 
+
+    
     def get_inline_instances(self, request, obj=None):
+        id = request.path.split('/')[-3]
+        if get_user_group(User.objects.get(id=id),'super'):
+            return []
+
+
         if request.GET.get('type'):
             type = request.GET['type']
         elif obj.groups:
@@ -128,7 +135,10 @@ class UserAdmin(admin.ModelAdmin):
             type = request.GET['type']
         else:
             id = request.path.split('/')[-3]
+            if get_user_group(User.objects.get(id=id),'super'):
+                return super().formfield_for_dbfield(db_field, request, **kwargs)
             type = User.objects.get(id=id).groups.values('id')[0]['id']
+
         if db_field.name == 'groups':
             kwargs["queryset"] = Group.objects.filter(id= type)
         field =  super().formfield_for_dbfield(db_field, request, **kwargs)
