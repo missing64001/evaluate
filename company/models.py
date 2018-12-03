@@ -24,7 +24,31 @@ status_choices = ((-2,'无效'),
                 (10,'用户获得反馈'),
             )
 
-field_1_choices = ((1 ,'电子信息'),  (2 ,'互联网及移动互联网'), (3 ,'生物医药'), (4 ,'先进制造'), (5 ,'新能源及节能环保'), (6 ,'新材料'), (7 ,'其他'))
+field_1_choices = ((1,'A 农、林、牧、渔业'),
+                (2,'B 采矿业'),
+                (3,'C 制造业'),
+                (4,'D 电力、热力、燃气及水生产和供应业'),
+                (5,'E 建筑业'),
+                (6,'F 批发和零售业'),
+                (7,'G 交通运输、仓储和邮政业'),
+                (8,'H 住宿和餐饮业'),
+                (9,'I 信息传输、软件和信息技术服务业'),
+                (10,'J 金融业'),
+                (11,'K 房地产业'),
+                (12,'L 租赁和商务服务业'),
+                (12,'M 科学研究和技术服务业'),
+                (13,'N 水利、环境和公共设施管理业'),
+                (14,'O 居民服务、修理和其他服务业'),
+                (15,'P 教育'),
+                (16,'Q 卫生和社会工作'),
+                (17,'R 文化、体育和娱乐业'),
+                (18,'S 公共管理、社会保障和社会组织'),
+                (19,'T 国际组织'),)
+
+
+
+
+
 technical_source_choices = ((1,'独立知识产权'), (2,'合作研发'), (3,'购买技术'), (4,'其他'))
 SOAT_choices = ((1,'高校/科研院所'), (2,'相关科技计划'), (3,'自行研发'), (4,'其他'))
 class CompanyInfo(models.Model):
@@ -337,10 +361,10 @@ class FinancialSituation(models.Model):
     '二、财务状况'
     companyInfo = models.ForeignKey(CompanyInfo,verbose_name='企业',blank=True,null=True)
     year = models.SmallIntegerField(verbose_name='年份',blank=True,null=True)
-    income = models.IntegerField(verbose_name='累计销售收入',blank=True,null=True)
-    profit = models.IntegerField(verbose_name='累计净利润',blank=True,null=True)
-    total = models.IntegerField(verbose_name='期末总资产',blank=True,null=True)
-    r_d_cost = models.IntegerField(verbose_name='研发费用总额',blank=True,null=True)
+    income = models.IntegerField(verbose_name='累计销售收入（万元）',blank=True,null=True)
+    profit = models.IntegerField(verbose_name='累计净利润（万元）',blank=True,null=True)
+    total = models.IntegerField(verbose_name='期末总资产（万元）',blank=True,null=True)
+    r_d_cost = models.IntegerField(verbose_name='研发费用总额（万元）',blank=True,null=True)
 
     def __str__(self):
         if self.year:
