@@ -186,9 +186,10 @@ class Project(models.Model):
 # 企业核心技术知识产权情况（可复选）
 class Patent(models.Model):
     '专利'
+    _type_choices = ((1,'发明专利') ,(2,'实用新型专利') ,(3,'外观设计') ,(4,'软件著作权'))
     companyInfo = models.ForeignKey(CompanyInfo,verbose_name='企业',blank=True,null=True)
     title = models.CharField(max_length=50,verbose_name='专利名',blank=True,null=True)
-    _type = models.CharField(max_length=50,verbose_name='专利类型',blank=True,null=True)
+    _type = models.SmallIntegerField(choices=_type_choices,verbose_name='专利类型',blank=True,null=True)
     num = models.CharField(max_length=50,verbose_name='专利号',blank=True,null=True)
     date = models.DateField(verbose_name='获得时间',blank=True,null=True)
 

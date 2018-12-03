@@ -142,7 +142,7 @@ function d17() {
         }
         
     }
-    $(".d17 span").text(total)
+    $(".d17 span").text(total.toFixed(2))
 }
 
 function e17() {
@@ -154,7 +154,7 @@ function e17() {
         }
         
     }
-    $(".e17 span").text(total)
+    $(".e17 span").text(total.toFixed(2))
 }
 
 

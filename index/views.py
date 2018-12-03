@@ -177,9 +177,10 @@ def my_register_in(request):
      return render(request,'res_incubator_institution.html') #{'errors':errors}
 
 def my_register(request):
-    print(111,request.path,111)
     errors = []
+    incubators = Incubator.objects.all()
     if request.method == 'POST':
+        
 
         if request.POST['password'] != request.POST['password2']:
             errors.append('两次输入密码不一致')
@@ -191,8 +192,25 @@ def my_register(request):
         if len(User.objects.all().filter(username = request.POST['username'])) == 1:
             errors.append('用户名已被使用')
 
+        if request.POST.get('credit_code') and len(request.POST['credit_code']) != 18:
+            errors.append('请填写正确的统一社会信用代码（18位）')
+
+
+        if request.POST['type'] == '1':
+            if CompanyInfo.objects.filter(name=request.POST['name']):
+                errors.append('企业名称已被使用')
+        elif request.POST['type'] == '2':
+            if Incubator.objects.filter(name=request.POST['name']):
+                errors.append('名称已被使用')
+        elif request.POST['type'] in '34':
+            if Institution.objects.filter(name=request.POST['name']):
+                errors.append('名称已被使用')
+
+
+
         if errors and get_user_group(request) != 'super':
-            return render(request,'res.html',{'errors':errors})
+            errors = ['　　'.join(errors)]
+            return render(request,'res.html',{'errors':errors,'incubators':incubators,'issuper':False})
         elif errors:
             messages.error(request, '\n'.join(errors))
             return HttpResponseRedirect('/res_in/')
@@ -206,11 +224,8 @@ def my_register(request):
         
 
         if request.POST['type'] == '1':
-            if len(request.POST['credit_code']) != 18:
-                errors.append('请填写正确的统一社会信用代码（18位）')
-            if errors:
-                return render(request,'res.html',{'errors':errors})
-
+            if CompanyInfo.objects.filter(name=request.POST['name']):
+                return render(request,'res.html',{'errors':'企业名称已被使用','incubators':incubators,'issuper':False})
             userlogin = auth.authenticate(username = account,password = password)
             auth.login(request,userlogin)
             
@@ -236,9 +251,7 @@ def my_register(request):
             return HttpResponseRedirect('/admin')
 
         elif request.POST['type'] == '2':
-            if Incubator.objects.filter(name=request.POST['name']):
-                messages.error(request, '名称已存在，请重新输入')
-                return HttpResponseRedirect('/res_in/')   
+ 
 
             user.is_active = True
             user.is_staff = True
@@ -250,9 +263,6 @@ def my_register(request):
             return HttpResponseRedirect('/admin/auth/user/')
 
         elif request.POST['type'] == '3':
-            if Institution.objects.filter(name=request.POST['name']):
-                messages.error(request, '名称已存在，请重新输入')
-                return HttpResponseRedirect('/res_in/')   
 
             user.is_active = True
             user.is_staff = True
@@ -263,10 +273,7 @@ def my_register(request):
             inc = Institution.objects.create(user=user,type=1,**dic)
             return HttpResponseRedirect('/admin/auth/user/')
 
-        elif request.POST['type'] == '4':
-            if Institution.objects.filter(name=request.POST['name']):
-                messages.error(request, '名称已存在，请重新输入')
-                return HttpResponseRedirect('/res_in/')  
+        elif request.POST['type'] == '4': 
 
             user.is_active = True
             user.is_staff = True
@@ -280,7 +287,7 @@ def my_register(request):
         return render(request,'res.html',{'errors':errors,'issuper':True})
 
 
-    incubators = Incubator.objects.all()
+    
     return render(request,'res.html',{'errors':errors,'incubators':incubators,'issuper':False})
 
 def savedata_view(request):
