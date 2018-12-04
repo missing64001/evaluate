@@ -59,7 +59,7 @@ class CompanyInfo(models.Model):
     incubator = models.ForeignKey(Incubator,verbose_name='所属孵化器',null=True)
 
     name = models.CharField(max_length=50,unique=True,verbose_name='企业名称')
-    create_date = models.DateField(verbose_name='成立时间')
+    create_date = models.DateField(verbose_name='成立时间',blank=True,null=True)
     registered_capital = models.IntegerField(verbose_name='注册资本（万元）')
     paid_in_capital = models.IntegerField(verbose_name='实收资本（万元）',null=True)
     major_business = models.CharField(max_length=50,verbose_name='主营产品（或服务）',null=True)

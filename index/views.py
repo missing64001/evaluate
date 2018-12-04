@@ -1095,6 +1095,8 @@ def set_permission(request):
                 gobj.save()
             except Exception:
                 pass
+
+        print('读取权限完成')
     return HttpResponseRedirect('/admin')
 
 
