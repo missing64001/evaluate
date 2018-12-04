@@ -56,24 +56,24 @@ class CompanyInfo(models.Model):
 
     user = models.ForeignKey(User,blank=True,null=True)
     status = models.SmallIntegerField(choices=status_choices,verbose_name='状态',default=0)
-    incubator = models.ForeignKey(Incubator,verbose_name='所属孵化器',blank=True,null=True)
+    incubator = models.ForeignKey(Incubator,verbose_name='所属孵化器',null=True)
 
-    name = models.CharField(max_length=50,unique=True,verbose_name='企业名称',blank=True,null=True)
-    create_date = models.DateField(verbose_name='成立时间',blank=True,null=True)
-    registered_capital = models.IntegerField(verbose_name='注册资本（万元）',blank=True,null=True)
-    paid_in_capital = models.IntegerField(verbose_name='实收资本（万元）',blank=True,null=True)
-    major_business = models.CharField(max_length=50,verbose_name='主营产品（或服务）',blank=True,null=True)
-    work_force = models.IntegerField(verbose_name='职工总数',blank=True,null=True)
-    junior_college_number = models.IntegerField(verbose_name='大专以上学历人数',blank=True,null=True)
-    developer_number = models.IntegerField(verbose_name='从事研发人员数',blank=True,null=True)
+    name = models.CharField(max_length=50,unique=True,verbose_name='企业名称')
+    create_date = models.DateField(verbose_name='成立时间')
+    registered_capital = models.IntegerField(verbose_name='注册资本（万元）')
+    paid_in_capital = models.IntegerField(verbose_name='实收资本（万元）',null=True)
+    major_business = models.CharField(max_length=50,verbose_name='主营产品（或服务）',null=True)
+    work_force = models.IntegerField(verbose_name='职工总数',null=True)
+    junior_college_number = models.IntegerField(verbose_name='大专以上学历人数',null=True)
+    developer_number = models.IntegerField(verbose_name='从事研发人员数',null=True)
 
 
     is_high_tech_enterprise = models.BooleanField(verbose_name='是否是高新技术企业',default=False)
-    abouts = models.TextField(verbose_name='企业简介',blank=True,null=True)
+    abouts = models.TextField(verbose_name='企业简介',null=True)
 
     # 
-    field_1 = models.SmallIntegerField(choices=field_1_choices,verbose_name='行业领域',blank=True,null=True)
-    field_2 = models.CharField(max_length=20,verbose_name='二级领域',blank=True,null=True)
+    field_1 = models.SmallIntegerField(choices=field_1_choices,verbose_name='行业领域',null=True)
+    field_2 = models.CharField(max_length=20,verbose_name='二级领域',null=True)
 
     # ???
     # 

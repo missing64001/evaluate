@@ -403,11 +403,11 @@ class CompanyInfoAdmin(admin.ModelAdmin):
         report = status_choices[obj.status]
 
         if obj.status == 4:
-            report = format_html("<a style='font-weight:bold;' onclick='reject_company({})'>{}（如有问题点击驳回）</a>",obj.id,report)
+            report = format_html("<input style='width:140px' type='button' onclick='reject_company({})' value=驳回企业提交数据 >",obj.id) # ,report #<span style='font-size: 12px;'> {}（如有问题点击驳回）</sapn>
         elif obj.status == 5:
-            report = format_html("<a style='color:red;' onclick='reject_company({})'>已被驳回（如有问题可点击添加驳回原因）</a>",obj.id)
+            report = format_html("<input style='width:140px' type='button' onclick='reject_company({})' value=添加驳回原因 >",obj.id)
         if not obj.user.is_staff:
-            report = format_html("<a style='color:red;' onclick='verify_company({})'>审核中（点击通过审核）</a>",obj.id)
+            report = format_html("<input style='width:140px' type='button' onclick='verify_company({})' value=通过审核 >",obj.id)
         return report
     
     new_status.short_description = '状态'
@@ -419,7 +419,7 @@ class CompanyInfoAdmin(admin.ModelAdmin):
         path = str(obj.business_license_pic)
         if not path.startswith('static/'):
             path = 'static/' + path
-        return format_html('<div style="height: 50px;overflow: hidden;"><a href="/' + path + '" width=30 height=50 data-lightbox="' + path + '"><img src="/' + path + '" width=30 height=50" /></a></div>')
+        return format_html('<div style="height: 25px;overflow: hidden;"><a href="/' + path + '" width=30 height=50 data-lightbox="' + path + '"><img src="/' + path + '" width=30 height=50" /></a></div>')
     business_license_pic_show.short_description = '营业执照'
 
     class Media:

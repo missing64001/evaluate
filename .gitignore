@@ -20,3 +20,4 @@ static/upload
 */migrations
 *.xls
 *.csv
+company/static/upload
