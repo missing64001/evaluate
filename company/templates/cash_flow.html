@@ -12,7 +12,8 @@
 
 {% block content %}
 
-<div style="height: auto; float:left; padding: 50px; background-color: #F5F5F5;">
+<div style="height: auto; float:left; padding: 50px; background-color: #F5F5F5;border-radius: 4px; box-shadow: 0 0 0 1px rgba(0,0,0,0.07);">
+
 <form class='file' action="/excel" method="post">
     <input type="file" name="excel" accept=".xls" defaultValue="导入" onchange="importf(this)">
     <!-- <input type="submit" value="上传文件"> -->
