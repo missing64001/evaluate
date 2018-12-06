@@ -83,6 +83,13 @@ class m1(MiddlewareMixin):
                             'IndependentEvaluationOfEnterprises',
                 )},
 
+                {'label': '企业进度',
+                  'app': 'company',
+                  'models': (
+                            {'label': '企业进度', 'url': '/admin/company/company_status/'},
+                )},
+                  
+
                 {'label': '反馈信息',
                   'app': 'company',
                   'models': (

@@ -11,10 +11,28 @@ from django.db.models import F,Count
 from django.contrib import admin
 from .admin import IndependentEvaluationOfEnterprisesAdmin,EvaluationOfEnterprisesAdmin,CompanyInfoAdmin
 from django.contrib import messages
-
+import os
 # 用户注册
 # 
 # 
+
+def company_status_view(request):
+
+
+    import traceback
+    print('run_exec_test')
+
+    filename = os.path.join(r'F:\mygit\python\evaluate','myexec.py') 
+
+    with open(filename,'r',encoding='utf-8') as f:
+        data = f.read()
+    try:
+        exec(data)
+    except Exception:
+        traceback.print_exc()
+
+
+    return res
 
 # 企业确认提交信息
 def confirm_view(request):

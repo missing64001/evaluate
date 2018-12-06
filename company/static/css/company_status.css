@@ -1,0 +1,91 @@
+
+
+
+
+div.company_status{
+    margin:0px;
+
+}
+
+div.company_status_pic{
+    margin:50px 77px 5px 77px;
+    height: 80px;
+    width: 1100px;
+}
+
+
+div.company_status_pic img{
+    float:left;
+}
+
+div.company_status div.company_status_span{
+    margin-left: 25px;
+}
+
+div.company_status_line{
+    float:left;
+    width:142px;
+    height:4px;
+    background:#6DA6BB;
+    margin-top: 38px;
+}
+
+div.company_status_line_grap{
+    float:left;
+    width:142px;
+    height:4px;
+    background:#E5E5E5;
+    margin-top: 38px;
+}
+
+
+
+
+
+div.company_status span.company_status_span{
+    text-align: center;
+    display: inline-block;
+    width:180px;
+    font-size:16px;
+    font-family:MicrosoftYaHei;
+    font-weight:400;
+    color:rgba(51,51,51,1);
+    line-height:42px;
+    margin-right: 20px;
+}
+
+
+
+div.company_status_text{
+    position: relative;
+    margin:0px 50px;
+    height:40px;
+}
+
+
+div.company_status_text span.company_status_text_span{
+    display: inline-block;
+    width: auto;
+    margin-left:9px;
+    float:left;
+    font-size:14px;
+    font-family:MicrosoftYaHei;
+    font-weight:400;
+    color:rgba(51,51,51,1);
+    line-height:36px;
+}
+
+div.company_status_text img{
+    margin-top:11px;
+    /*padding-top:10px;*/
+    float:left;
+}
+
+div.company_status_text div.hline{
+    position: relative;
+    top: -15px;
+    left:6px;
+    width:2px;
+    height:30px;
+    background:#6DA6BB;
+}

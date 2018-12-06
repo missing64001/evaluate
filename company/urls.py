@@ -36,4 +36,11 @@ urlpatterns = [
     url(r'^reject/$',reject_view, name='reject_view'),
     url(r'^verify/$',verify_view, name='verify_view'),
     # url(r'^independentevaluationofenterprises_change/(\d+)/',IndependentEvaluationOfEnterprisesAdmin.change_view, name='independentevaluationofenterprises_change_view'),
+
+
+
+    url(r'^company_status/$',company_status_view, name='company_status_view'),
+
+
+
 ]
