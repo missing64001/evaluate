@@ -376,7 +376,7 @@ class CompanyInfoAdmin(admin.ModelAdmin):
                 if obj.financialsituation_set and obj.productsandmarket and obj.technologyrd and obj.serverrequest:
                     obj.status = 1
                     if not CompanyStatus.objects.filter(companyInfo=obj,status=1):
-                        CompanyStatus.create(companyInfo=obj,status=1)
+                        CompanyStatus.objects.create(companyInfo=obj,status=1)
             obj.save()
         except Exception:
             obj.save()
@@ -506,7 +506,7 @@ class IndependentEvaluationOfEnterprisesAdmin(admin.ModelAdmin):
             cobj.status = 3
             cobj.save()
             if not CompanyStatus.objects.filter(companyInfo=cobj,status=3):
-                CompanyStatus.create(companyInfo=cobj,status=3)
+                CompanyStatus.objects.create(companyInfo=cobj,status=3)
 
     def external_environment_add(self,obj):
         eobjs = EvaluationOfEnterprises.objects.filter(companyInfo=obj.companyInfo)
@@ -584,7 +584,7 @@ class EvaluationOfEnterprisesAdmin(admin.ModelAdmin):
         obj.companyInfo.status = 7
         obj.companyInfo.save()
         obj.save()
-        CompanyStatus.create(companyInfo=obj,status=7)
+        CompanyStatus.objects.create(companyInfo=obj.companyInfo,status=7)
 
 
     class Media:

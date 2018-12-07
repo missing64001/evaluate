@@ -76,7 +76,7 @@ class InvestReport(models.Model):
         return (self.create_date+ timedelta(hours=8)).strftime("%Y-%m-%d %H:%M:%S")
 
     class Meta:
-        verbose_name='投资类金融报告'
+        verbose_name='发送投资类金融报告'
         verbose_name_plural=verbose_name
 
 
@@ -119,7 +119,7 @@ class BankReport(models.Model):
         return (self.create_date+ timedelta(hours=8)).strftime("%Y-%m-%d %H:%M:%S")
 
     class Meta:
-        verbose_name='银行类金融报告'
+        verbose_name='发送银行类金融报告'
         verbose_name_plural=verbose_name
 
 

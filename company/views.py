@@ -75,7 +75,7 @@ def company_status_view(request):
         status_line[0] = '_grap'
 
     if status == 2:
-        status_text[0] = '企业进行自我评价'
+        status_text[0] = '企业进行自主评价'
     if status == 1:
         status_text[0] = '企业上传财务报表'
     if status == 0:
@@ -91,7 +91,6 @@ def company_status_view(request):
     nodes = []
     nodes.append((0,request.user.date_joined,'企业填写企业信息　　下一步：上传企业财务报表'))
     cstatusall = CompanyStatus.objects.filter(companyInfo=cobj).order_by('id')
-    cstatusall = [(s.status,s.create_date) for s in cstatusall]
     rreasons = RejectReason.objects.filter(companyInfo=cobj)
     rreasonlst = []
     for reason in rreasons:
@@ -107,9 +106,9 @@ def company_status_view(request):
         status = cstatus.status
         create_date = cstatus.create_date
         if status == 1:
-            nodes.append((status,create_date,'企业上传财务报表　　下一步：企业进行自我评价'))
+            nodes.append((status,create_date,'企业上传财务报表　　下一步：企业进行自主评价'))
         elif status == 2:
-            nodes.append((status,create_date,'企业进行自我评价　　下一步：企业提交信息'))
+            nodes.append((status,create_date,'企业进行自主评价　　下一步：企业提交信息'))
         elif status == 3:
             nodes.append((status,create_date,'企业提交信息　　下一步：所属孵化器审核企业信息'))
         elif status == 4:
@@ -146,7 +145,7 @@ def confirm_view(request):
     if cobj.status == 3 or cobj.status == 5:          
         cobj.status = 4
         cobj.save()
-        CompanyStatus.create(companyInfo=cobj,status=4)
+        CompanyStatus.objects.create(companyInfo=cobj,status=4)
 
     RejectReason.objects.filter(companyInfo=cobj,is_alive=True).update(is_alive=False)
 
@@ -163,7 +162,7 @@ def reject_view(request):
         cobj.status = 5
         cobj.save()
         if not CompanyStatus.objects.filter(companyInfo=cobj,status=5):
-            CompanyStatus.create(companyInfo=cobj,status=5)
+            CompanyStatus.objects.create(companyInfo=cobj,status=5)
 
     RejectReason.objects.create(companyInfo=cobj,text=reason)
 
@@ -326,7 +325,7 @@ def balance_submit_table_view(request):
                 cobj.status = 2
                 cobj.save()
                 if not CompanyStatus.objects.filter(companyInfo=cobj,status=2):
-                    CompanyStatus.create(companyInfo=cobj,status=2)
+                    CompanyStatus.objects.create(companyInfo=cobj,status=2)
 
     messages.success(request, '数据提交成功')
 
@@ -447,7 +446,7 @@ def profit_submit_table_view(request):
                 cobj.status = 2
                 cobj.save()
                 if not CompanyStatus.objects.filter(companyInfo=cobj,status=2):
-                    CompanyStatus.create(companyInfo=cobj,status=2)
+                    CompanyStatus.objects.create(companyInfo=cobj,status=2)
 
     messages.success(request, '数据提交成功')
     ren = redirect ('/admin/company/profit/')
@@ -712,7 +711,7 @@ def cash_flow_submit_table_view(request):
                 cobj.status = 2
                 cobj.save()
                 if not CompanyStatus.objects.filter(companyInfo=cobj,status=2):
-                    CompanyStatus.create(companyInfo=cobj,status=2)
+                    CompanyStatus.objects.create(companyInfo=cobj,status=2)
 
     messages.success(request, '数据提交成功')
     ren = redirect ('/admin/company/cashflow/')

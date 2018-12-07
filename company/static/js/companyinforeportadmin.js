@@ -10,6 +10,13 @@ window.onload=function(){
     })
 }
 
+function createcompanyreport(tt) {
+    tis = $(tt)
+    // console.log(tis)
+    data={"cid":tis.attr("cid"),"type":tis.attr("_type"),"opt":tis.attr("value"),"csrfmiddlewaretoken":$("input[name='csrfmiddlewaretoken']").val()}
+    // console.log(data)
+    post('/admin/institution/createcompanyreport/', data)
+}
 
 function post(URL, PARAMS) {        
     var temp = document.createElement("form");        

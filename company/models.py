@@ -58,7 +58,7 @@ class CompanyInfo(models.Model):
     status = models.SmallIntegerField(choices=status_choices,verbose_name='状态',default=0)
     incubator = models.ForeignKey(Incubator,verbose_name='所属孵化器',null=True)
 
-    name = models.CharField(max_length=50,unique=True,verbose_name='企业名称')
+    name = models.CharField(max_length=50,unique=True,verbose_name='企业名称',null=True)
     create_date = models.DateField(verbose_name='成立时间',null=True)
     registered_capital = models.IntegerField(verbose_name='注册资本（万元）',null=True)
     paid_in_capital = models.IntegerField(verbose_name='实收资本（万元）',null=True)
@@ -95,7 +95,7 @@ class CompanyInfo(models.Model):
         verbose_name_plural=verbose_name
 
 class CompanyStatus(models.Model):
-    companyInfo = models.OneToOneField(CompanyInfo,verbose_name='企业',blank=True,null=True)
+    companyInfo = models.ForeignKey(CompanyInfo,verbose_name='企业',blank=True,null=True)
     status = models.SmallIntegerField(verbose_name='状态',blank=True,null=True)
     create_date = models.DateTimeField(verbose_name='生成时间',auto_now_add=True,blank=True,null=True)
 

@@ -27,7 +27,13 @@ class m1(MiddlewareMixin):
                              {'label': '校正评价', 'url': '/admin/company/independentevaluationofenterprises/'},
 
                             'index.Bonus','index.Subtraction',
-                            {'label': '金融报告', 'url': '/admin/institution/report'},
+                )},
+                {'label': '报告管理',
+                  'app': 'institution',
+                  'models': (
+                            {'label': '生成报告', 'url': '/admin/institution/report'},
+                            'InvestReport',
+                            'BankReport',
                 )},
 
                 {'label': '账号管理',

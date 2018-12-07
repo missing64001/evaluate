@@ -74,7 +74,7 @@ class InvestReportAdmin(admin.ModelAdmin):
         obj.companyInfo.status = 8
         obj.companyInfo.save()
         obj.save()
-        CompanyStatus.create(companyInfo=obj,status=8)
+        CompanyStatus.objects.create(companyInfo=obj.companyInfo,status=8)
 
 
 @admin.register(BankReport)
@@ -133,11 +133,10 @@ class BankReportAdmin(admin.ModelAdmin):
         obj.companyInfo.status = 8
         obj.companyInfo.save()
         obj.save()
-        CompanyStatus.create(companyInfo=obj,status=8)
+        CompanyStatus.objects.create(companyInfo=obj.companyInfo,status=8)
 
 class CompanyInfoReportAdmin(admin.ModelAdmin):
-    list_display=['name','incubator','i_evaluate_status','balance_status','profit_status',
-                'cash_flow_status','invest_report','bank_report']
+    list_display=['name','incubator','invest_report','bank_report']
     # list_editable = ['status']
     
     def get_queryset(self, request):
@@ -210,18 +209,10 @@ class CompanyInfoReportAdmin(admin.ModelAdmin):
             #     </select>
             #     '''%reportstr,0)
 
-            return format_html('''
-            <select class="ms" cid={} type={} style="width:100px;">
-                <option>生成报告</option>
-                <option>最新年份</option>
-                <option>全部年份</option>
-            </select>
-            <select class="ms" type={} style="width:100px;">
-                <option>查看</option>
-                %s
-            </select>
-            '''%reportstr,obj.id,0,0)
-    invest_report.short_description = '投资类报告'
+            return format_html("<input style='width:90px' cid={} _type=0 type='button' onclick='createcompanyreport(this)' value=最新年份 >\
+                <input style='width:90px' cid={} _type=0 type='button' onclick='createcompanyreport(this)' value=全部年份 >"
+                ,obj.id,obj.id)
+    invest_report.short_description = '生成投资类报告'
 
     def bank_report(self,obj):
         if self.i_evaluate_status(obj,False) and self.balance_status(obj,ishtml=False) and \
@@ -233,18 +224,10 @@ class CompanyInfoReportAdmin(admin.ModelAdmin):
                 reportstr += '<option value="%s">%s</option>' % (bobj.id,(bobj.create_date+ timedelta(hours=8)).strftime("%Y-%m-%d"))
 
 
-            return format_html('''
-            <select class="ms" cid={} type={} style="width:100px;">
-                <option>生成报告</option>
-                <option>最新年份</option>
-                <option>全部年份</option>
-            </select>
-            <select class="ms" type={} style="width:100px;">
-                <option>查看</option>
-                %s
-            </select>
-            '''%reportstr,obj.id,1,1)
-    bank_report.short_description = '银行类报告'
+            return format_html("<input style='width:90px' cid={} _type=1 type='button' onclick='createcompanyreport(this)' value=最新年份 >\
+                <input style='width:90px' cid={} _type=1 type='button' onclick='createcompanyreport(this)' value=全部年份 >"
+                ,obj.id,obj.id)
+    bank_report.short_description = '生成银行类报告'
     class Media:
         js = ('/static/js/companyinforeportadmin.js',)
 
@@ -298,7 +281,7 @@ class ReportBackAdmin(admin.ModelAdmin):
         if obj.iscompanyview == 2:
             robj.companyInfo.status = 10
             robj.companyInfo.save()
-            CompanyStatus.create(companyInfo=robj.companyInfo,status=10)
+            CompanyStatus.objects.create(companyInfo=robj.companyInfo,status=10)
 
 
     def get_readonly_fields(self, request,obj=None):
