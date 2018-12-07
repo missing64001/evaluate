@@ -7,21 +7,21 @@ from datetime import timedelta
 x1_d = ((1 ,'集成电路布图'),  (2 ,'其他'))
 status_choices = ((-2,'无效'),
                 (-1,'完成'),
-                (0,'孵化器审核通过'),
-                (1,'填写企业信息完成'),
-                (2,'上传财务报表完成'),
-                (3,'企业自我评价完成'),
-                (4,'企业完成录入提交'),
+                (0,'账号已激活'),
+                (1,'已填写企业信息'),
+                (2,'已上传财务报表'),
+                (3,'已完成自我评价'),
+                (4,'已提交企业信息'),
 
                 (5,'孵化器驳回信息'), #修改后确认提交
-                (6,'孵化器审核完成'),
-                (7,'孵化器修正评价完成'),
+                # (6,'孵化器已审核信息'),
+                (7,'孵化器已校正评价'),
 
-                (8,'平台发送报告'),
+                (8,'已发送评估报告'),
 
-                (9,'机构反馈报告'),
+                (9,'机构已反馈报告'),
 
-                (10,'用户获得反馈'),
+                (10,'企业收到反馈信息'),
             )
 
 field_1_choices = ((1,'A 农、林、牧、渔业'),
@@ -93,6 +93,11 @@ class CompanyInfo(models.Model):
     class Meta:
         verbose_name='一、基本信息'
         verbose_name_plural=verbose_name
+
+class CompanyStatus(models.Model):
+    companyInfo = models.OneToOneField(CompanyInfo,verbose_name='企业',blank=True,null=True)
+    status = models.SmallIntegerField(verbose_name='状态',blank=True,null=True)
+    create_date = models.DateTimeField(verbose_name='生成时间',auto_now_add=True,blank=True,null=True)
 
 class RejectReason(models.Model):
     companyInfo = models.ForeignKey(CompanyInfo,verbose_name='企业',blank=True,null=True)

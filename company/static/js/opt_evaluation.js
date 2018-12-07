@@ -11,8 +11,7 @@ $(function(){
     var z = $('div.inner-center-column')
     var z1 = $('<div style="padding:10px; height: auto; width:880px; float:left; background-color: #fff;border-radius: 4px; box-shadow: 0 0 0 1px rgba(0,0,0,0.07);"></div>')
     var z2 = $('<div style="height: auto; width:800px; float:left; padding: 10px 50px; background-color: #F5F5F5;border-radius: 4px; box-shadow: 0 0 0 1px rgba(0,0,0,0.07);"></div>')
-    z.append(z1)
-    z.append(z2)
+
 
     var s1 = $('#id_external_environment')
     // console.log(s1)
@@ -58,8 +57,12 @@ $(function(){
     });
 
     // z.append(csrf)
+    
     if (s1.length){
-        z1.append($("<h1 style='margin:2px 45px;'>"+name+"</h1>"))
+        // z.append(z1)
+        z.append(z2)
+        // z1.append($("<h1 style='margin:2px 45px;'>"+name+"</h1>"))
+        $('#suit-center ul li').eq(3).text(name)
         z2.append($("<h2>企业所处外部环境"+isocre1+"</h2>"))
         z2.append($("<h5>根据企业经营业务与政府优先发展的战略性优势产业契合度自评；</h5>"))
         z2.append($("<h5>根据政府对企业所处行业政策利好情况自评；</h5>"))

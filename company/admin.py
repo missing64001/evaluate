@@ -375,6 +375,8 @@ class CompanyInfoAdmin(admin.ModelAdmin):
             if obj.status == 0:
                 if obj.financialsituation_set and obj.productsandmarket and obj.technologyrd and obj.serverrequest:
                     obj.status = 1
+                    if not CompanyStatus.objects.filter(companyInfo=obj,status=1):
+                        CompanyStatus.create(companyInfo=obj,status=1)
             obj.save()
         except Exception:
             obj.save()
@@ -382,21 +384,21 @@ class CompanyInfoAdmin(admin.ModelAdmin):
     def new_status(self,obj):
         status_choices = ((-2,'无效'),
                         (-1,'完成'),
-                        (0,'孵化器审核通过'),
-                        (1,'填写企业信息完成'),
-                        (2,'上传财务报表完成'),
-                        (3,'企业自我评价完成'),
-                        (4,'企业完成录入提交'),
+                        (0,'账号已激活'),
+                        (1,'已填写企业信息'),
+                        (2,'已上传财务报表'),
+                        (3,'已完成自我评价'),
+                        (4,'已提交企业信息'),
 
                         (5,'孵化器驳回信息'), #修改后确认提交
-                        (6,'孵化器审核完成'),
-                        (7,'孵化器修正评价完成'),
+                        # (6,'孵化器已审核信息'),
+                        (7,'孵化器已校正评价'),
 
-                        (8,'平台发送报告'),
+                        (8,'已发送评估报告'),
 
-                        (9,'机构反馈报告'),
+                        (9,'机构已反馈报告'),
 
-                        (10,'用户获得反馈'),
+                        (10,'企业收到反馈信息'),
                     )
 
         status_choices = dict(status_choices)
@@ -503,6 +505,8 @@ class IndependentEvaluationOfEnterprisesAdmin(admin.ModelAdmin):
         if cobj.status == 2:
             cobj.status = 3
             cobj.save()
+            if not CompanyStatus.objects.filter(companyInfo=cobj,status=3):
+                CompanyStatus.create(companyInfo=cobj,status=3)
 
     def external_environment_add(self,obj):
         eobjs = EvaluationOfEnterprises.objects.filter(companyInfo=obj.companyInfo)
@@ -580,6 +584,7 @@ class EvaluationOfEnterprisesAdmin(admin.ModelAdmin):
         obj.companyInfo.status = 7
         obj.companyInfo.save()
         obj.save()
+        CompanyStatus.create(companyInfo=obj,status=7)
 
 
     class Media:

@@ -19,17 +19,122 @@ import os
 def company_status_view(request):
 
 
-    import traceback
-    print('run_exec_test')
+    
+    cobj = CompanyInfo.objects.get(user=request.user)
+    status = cobj.status
 
-    filename = os.path.join(r'F:\mygit\python\evaluate','myexec.py') 
 
-    with open(filename,'r',encoding='utf-8') as f:
-        data = f.read()
-    try:
-        exec(data)
-    except Exception:
-        traceback.print_exc()
+
+    #设置 状态栏
+    status_pic = ['finished','finished','finished','finished','finished']
+    status_text = ['企业进度已完成','孵化器进度已完成','平台进度已完成','投资机构进度已完成','企业收到反馈信息']
+    status_line = [''] * 4
+
+    if status < 10:
+        status_pic[4] = 'wait'
+        status_text[4] = '等待平台发送反馈信息'
+    if status < 9:
+        status_pic[4] = '5'
+        status_pic[3] = 'wait'
+
+        status_text[4] = '企业未收到反馈信息'
+        status_text[3] = '等待投资机构反馈给平台'
+
+        status_line[3] = '_grap'
+    if status < 8:
+        status_pic[3] = '4'
+        status_pic[2] = 'wait'
+
+        status_text[3] = '投资机构进度未开始'
+        status_text[2] = '平台发送评估报告到机构'
+
+        status_line[2] = '_grap'
+    if status < 7:
+        status_pic[2] = '3'
+        status_pic[1] = 'wait'
+
+        status_text[2] = '平台进度未开始'
+        status_text[1] = '所属孵化器审核企业信息'
+
+        status_line[1] = '_grap'
+    if status == 5:
+
+
+        status_pic[0] = 'wait'
+        status_text[0] = '企业提交信息'
+        status_text[1] = '所属孵化器驳回企业信息'
+
+
+    if status < 4:
+        status_pic[1] = '2'
+        status_pic[0] = 'wait'
+
+        status_text[1] = '孵化器进度未开始'
+        status_text[0] = '企业提交信息'
+
+        status_line[0] = '_grap'
+
+    if status == 2:
+        status_text[0] = '企业进行自我评价'
+    if status == 1:
+        status_text[0] = '企业上传财务报表'
+    if status == 0:
+        status_text[0] = '企业填写企业信息'
+    if status in (3,5):
+        showbutton = True
+    else:
+        showbutton = False
+
+
+
+    # 设置流程说明
+    nodes = []
+    nodes.append((0,request.user.date_joined,'企业填写企业信息　　下一步：上传企业财务报表'))
+    cstatusall = CompanyStatus.objects.filter(companyInfo=cobj).order_by('id')
+    cstatusall = [(s.status,s.create_date) for s in cstatusall]
+    rreasons = RejectReason.objects.filter(companyInfo=cobj)
+    rreasonlst = []
+    for reason in rreasons:
+        text = reason.text
+        rreasonlst.append([text[:39]])
+        text = text[39:]
+        while len(text) > 0:
+            rreasonlst[-1].append(text[:39])
+            text = text[39:]
+
+
+    for cstatus in cstatusall:
+        status = cstatus.status
+        create_date = cstatus.create_date
+        if status == 1:
+            nodes.append((status,create_date,'企业上传财务报表　　下一步：企业进行自我评价'))
+        elif status == 2:
+            nodes.append((status,create_date,'企业进行自我评价　　下一步：企业提交信息'))
+        elif status == 3:
+            nodes.append((status,create_date,'企业提交信息　　下一步：所属孵化器审核企业信息'))
+        elif status == 4:
+            nodes.append((status,create_date,'所属孵化器审核企业信息'))
+        elif status == 5:
+            nodes.append(rreasonlst)
+            nodes.append((status,create_date,'所属孵化器驳回企业信息　　下一步：企业提交信息'))
+        elif status == 7:
+            nodes.append((status,create_date,'所属孵化器修正企业评价　　孵化器进度已完成　　下一步：平台发送评估报告到机构'))
+        elif status == 8:
+            nodes.append((status,create_date,'平台发送评估报告到机构　　平台进度已完成　　下一步：等待机构反馈给平台'))
+        elif status == 9:
+            nodes.append((status,create_date,'投资机构反馈给平台　　投资机构进度已完成　　下一步：等待平台发送反馈信息'))
+        elif status == 10:
+            nodes.append((status,create_date,'您已收到来自平台的反馈信息'))
+                
+
+    res = render(request,'company_status.html',{'nodes':reversed(nodes),'showbutton':showbutton,
+                'status_pic':status_pic,'status_text':status_text,'status_line':status_line})
+
+
+
+
+
+
 
 
     return res
@@ -41,10 +146,11 @@ def confirm_view(request):
     if cobj.status == 3 or cobj.status == 5:          
         cobj.status = 4
         cobj.save()
+        CompanyStatus.create(companyInfo=cobj,status=4)
 
     RejectReason.objects.filter(companyInfo=cobj,is_alive=True).update(is_alive=False)
 
-    ren = redirect ('/admin')
+    ren = redirect ('/admin/company/company_status/')
     return ren
 
 # 孵化器驳回信息
@@ -56,6 +162,8 @@ def reject_view(request):
     if cobj.status == 4:          
         cobj.status = 5
         cobj.save()
+        if not CompanyStatus.objects.filter(companyInfo=cobj,status=5):
+            CompanyStatus.create(companyInfo=cobj,status=5)
 
     RejectReason.objects.create(companyInfo=cobj,text=reason)
 
@@ -217,6 +325,8 @@ def balance_submit_table_view(request):
             CashFlow.objects.filter(companyInfo=cobj):
                 cobj.status = 2
                 cobj.save()
+                if not CompanyStatus.objects.filter(companyInfo=cobj,status=2):
+                    CompanyStatus.create(companyInfo=cobj,status=2)
 
     messages.success(request, '数据提交成功')
 
@@ -336,6 +446,8 @@ def profit_submit_table_view(request):
             CashFlow.objects.filter(companyInfo=cobj):
                 cobj.status = 2
                 cobj.save()
+                if not CompanyStatus.objects.filter(companyInfo=cobj,status=2):
+                    CompanyStatus.create(companyInfo=cobj,status=2)
 
     messages.success(request, '数据提交成功')
     ren = redirect ('/admin/company/profit/')
@@ -599,6 +711,9 @@ def cash_flow_submit_table_view(request):
             CashFlow.objects.filter(companyInfo=cobj):
                 cobj.status = 2
                 cobj.save()
+                if not CompanyStatus.objects.filter(companyInfo=cobj,status=2):
+                    CompanyStatus.create(companyInfo=cobj,status=2)
+
     messages.success(request, '数据提交成功')
     ren = redirect ('/admin/company/cashflow/')
     return ren

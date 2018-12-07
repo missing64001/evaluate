@@ -20,7 +20,7 @@
 {% load admin_static %}
 {% block extrahead %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/company_status.css' %}" media="all"/>
-
+<script src="{% static 'js/status.js' %}"></script>
 {% endblock %}
 
 
@@ -54,7 +54,9 @@
             <img src="/static/img/company_status/{{status_pic.3}}.png">
             <div class="company_status_line{{status_line.3}}"></div>
             <img src="/static/img/company_status/{{status_pic.4}}.png">
-
+            {% if showbutton %}
+            <input id='colorbutton' style='width:90px;position: relative;left:-975px;top:133px;' type='button' onclick='submit_lock({})' value=提交信息 >
+            {% endif %}
         </div>
 
         <div class="company_status_span">
@@ -71,30 +73,41 @@
         </div>
     </div>
 </div>
+<div style="width:1120px; height: auto; float:left; padding: 0px 5px 0px 5px; background-color: #F6F7F8;border-radius: 4px; box-shadow: 0 0 0 1px rgba(0,0,0,0.07);">
+    <div style="margin: 30px 115px;width:800px;height: auto; float:left; padding: 50px; background-color: #fff;border-radius: 4px; box-shadow: 0 0 0 1px rgba(0,0,0,0.07);">
+        
 
-<div style="margin: 30px 100px;width:800px;height: auto; float:left; padding: 50px; background-color: #fff;border-radius: 4px; box-shadow: 0 0 0 1px rgba(0,0,0,0.07);">
-    
-    <div class="company_status_text">
-        <img src="{% static 'img/company_status/0.png' %}">        
-        <span class="company_status_text_span"> 2018-12-11 15:34:13 </span> <span class="company_status_text_span"> 您已收到来自平台的反馈信息 </span>
-    </div>
 
-    <div class="company_status_text">
-        <img src="{% static 'img/company_status/0.png' %}">
-        <span class="company_status_text_span"> 2018-12-11 15:34:13 </span> <span class="company_status_text_span"> 您已收到来自平台的反馈信息 </span>
-        <div class="hline"></div>
-    </div>
 
-    <div class="company_status_text">
-        <img src="{% static 'img/company_status/0.png' %}" style="opacity:0;">
-        <span class="company_status_text_span" style="opacity:0;"> 2018-12-11 15:34:13 </span> <span class="company_status_text_span"> 您已收到来自平台的反馈信息 </span>
-        <div class="hline" style="height:50px;"></div>
-    </div>
+        {% for node in nodes %}
+            {% if node.0 >= 0 %}
+                <div class="company_status_text">
+                    <img src="{% static 'img/company_status/0.png' %}">
+                    <span class="company_status_text_span"> {{node.1}} </span> <span class="company_status_text_span"> {{node.2}} </span>
+                    {% if not forloop.first %}
+                        <div class="hline"></div>
+                    {% endif %}
+                </div>
+            {% else %}
+                {% for nn in node %}
+                    {% for n in nn %}
+                        <div class="company_status_text">
+                            <img src="{% static 'img/company_status/0.png' %}" style="opacity:0;">
+                            <span style="opacity:0" class="company_status_text_span" > 2018-12-11 15:34:13 </span> 
+                            <span style="{% if not forloop.parentloop.first or not forloop.first %} opacity:0; {% endif %}" class="company_status_text_span">  驳回原因： </span> 
+                            <span {% if forloop.parentloop.counter|divisibleby:2 %}style="color: #ff00de;" {% else %}style="color: red;"{% endif %} class="company_status_text_span"> {{n}} </span>
 
-    <div class="company_status_text">
-        <img src="{% static 'img/company_status/0.png' %}">
-        <span class="company_status_text_span"> 2018-12-11 15:34:13 </span> <span class="company_status_text_span"> 您已收到来自平台的反馈信息 </span>
-        <div class="hline"></div>
+                            <div class="hline" style="height:50px;"></div>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+
+
+
+            {% endif %}
+        {% endfor %}
+
+
     </div>
 </div>
 {% endblock content %}

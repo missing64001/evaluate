@@ -74,6 +74,7 @@ class InvestReportAdmin(admin.ModelAdmin):
         obj.companyInfo.status = 8
         obj.companyInfo.save()
         obj.save()
+        CompanyStatus.create(companyInfo=obj,status=8)
 
 
 @admin.register(BankReport)
@@ -132,6 +133,7 @@ class BankReportAdmin(admin.ModelAdmin):
         obj.companyInfo.status = 8
         obj.companyInfo.save()
         obj.save()
+        CompanyStatus.create(companyInfo=obj,status=8)
 
 class CompanyInfoReportAdmin(admin.ModelAdmin):
     list_display=['name','incubator','i_evaluate_status','balance_status','profit_status',
@@ -296,6 +298,8 @@ class ReportBackAdmin(admin.ModelAdmin):
         if obj.iscompanyview == 2:
             robj.companyInfo.status = 10
             robj.companyInfo.save()
+            CompanyStatus.create(companyInfo=robj.companyInfo,status=10)
+
 
     def get_readonly_fields(self, request,obj=None):
         if get_user_group(request,'super'):

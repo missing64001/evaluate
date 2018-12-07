@@ -1,6 +1,13 @@
 
 
-
+#colorbutton{
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    background-repeat: repeat-x;
+    background-image: linear-gradient(to bottom, #62c462, #51a351);
+    color: #ffffff;
+    background-color: #5bb75b;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
 
 div.company_status{
     margin:0px;
@@ -8,7 +15,7 @@ div.company_status{
 }
 
 div.company_status_pic{
-    margin:50px 77px 5px 77px;
+    margin:10px 77px 5px 77px;
     height: 80px;
     width: 1100px;
 }
@@ -58,7 +65,7 @@ div.company_status span.company_status_span{
 
 div.company_status_text{
     position: relative;
-    margin:0px 50px;
+    margin:0px 0px;
     height:40px;
 }
 
@@ -75,6 +82,19 @@ div.company_status_text span.company_status_text_span{
     line-height:36px;
 }
 
+div.company_status_text span.company_status_text_spana{
+    display: inline-block;
+    width: auto;
+    margin-left:9px;
+    float:left;
+    font-size:14px;
+    font-family:MicrosoftYaHei;
+    font-weight:400;
+    color:#fba7a7;
+    line-height:36px;
+
+}
+
 div.company_status_text img{
     margin-top:11px;
     /*padding-top:10px;*/
@@ -89,3 +109,4 @@ div.company_status_text div.hline{
     height:30px;
     background:#6DA6BB;
 }
+

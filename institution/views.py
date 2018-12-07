@@ -207,10 +207,12 @@ def save_reportback_view(request):
         obj.investreport = InvestReport.objects.get(id=_id)
         obj.investreport.companyInfo.status = 9
         obj.investreport.companyInfo.save()
+        CompanyStatus.create(companyInfo=obj.investreport.companyInfo,status=9)
     elif request.POST['report_type'] == 'bankreport':
         obj.bankreport = BankReport.objects.get(id=_id)
         obj.bankreport.companyInfo.status = 9
         obj.bankreport.companyInfo.save()
+        CompanyStatus.create(companyInfo=obj.bankreport.companyInfo,status=9)
     else:
         raise ValueError('错误的数据:' + request.POST['report_type'])
 
