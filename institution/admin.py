@@ -82,10 +82,12 @@ class BankReportAdmin(admin.ModelAdmin):
     readonly_fields = ('companyInfo','i1','i2','i3','i4','i5','i6','i7','i8','i9','i10','i11','i12','i13','i14','i15','i16','i17','i18','bonus','subtraction','totle')
     list_display=['companyInfo','totle','create_date']
     def totle(self,obj):
-        return (obj.i1 + obj.i2 + obj.i3 + obj.i4 *2) * 2 * 0.35 + (
+        data = (obj.i1 + obj.i2 + obj.i3 + obj.i4 *2) * 2 * 0.35 + (
             obj.i5 *10 +obj.i6 *7 +obj.i7 *8 +obj.i8 *10 +obj.i9 *5 +obj.i10 *10 +
             obj.i11 *10 +obj.i12 *5 +obj.i13 *5 +obj.i14 *5 +obj.i15 *5 +obj.i16 *5 +
             obj.i17 *5 +obj.i18 *10) * 0.65
+        data = round(data + self.bonus(obj) + self.subtraction(obj),2)
+        return data 
     totle.short_description = '总分数'
 
     def bonus(self,obj):
