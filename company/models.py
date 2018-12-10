@@ -253,7 +253,8 @@ class StandardSetting(models.Model):
     num = models.CharField(max_length=50,verbose_name='  标准编号 ',blank=True,null=True)
 
     # 1 牵头 2 参与
-    status = models.SmallIntegerField(verbose_name='起草单位中的地位',blank=True,null=True)
+    status_choices = ((1,'牵头'),(2,'参与'))
+    status = models.SmallIntegerField(choices=status_choices,verbose_name='起草单位中的地位',blank=True,null=True)
     
     def __str__(self):
         if self.title:
