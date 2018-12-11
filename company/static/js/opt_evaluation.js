@@ -67,7 +67,7 @@ $(function(){
     
     if (s1.length){
         // z.append(z1)
-        // 
+        $('#suit-center ul li').eq(3).text(name)
         var item = $(itemstr)
         item.find('div.control-label').append('<label for="id_name">企业所处外部环境</label>')
         item.find('div.controls').append(s1)
