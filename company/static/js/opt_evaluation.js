@@ -69,6 +69,9 @@ $(function(){
         // z.append(z1)
         $('#suit-center ul li').eq(3).text(name)
         var item = $(itemstr)
+
+        item.find('div.control-label').css({'padding-top':'15px'})
+        item.find('div.controls').css({'padding-top':'10px'})
         item.find('div.control-label').append('<label for="id_name">企业所处外部环境</label>')
         item.find('div.controls').append(s1)
         item.find('div.controls').append(isocre1)
@@ -131,7 +134,7 @@ $(function(){
 
 
         var seth5 = $('h5')
-        seth5.css({'fontSize':'14px','fontWeight':'500','color':'#888','margin-left':'8px'})
+        seth5.css({'fontSize':'13px','fontWeight':'500','color':'#888','margin-left':'8px'})
 
         var seth2 = $('h2')
         seth2.css({'margin-top':'28px'})

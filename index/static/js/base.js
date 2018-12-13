@@ -74,9 +74,7 @@ $(function(){
     if (activeliz.children('a').text() == '孵化器数据统计' & $(lis[2]).text() == '孵化器'){
         $(lis[2]).text('孵化器数据统计')
 
-        var downbutton = $('<button style="margin-bottom:15px;border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);\
-            background-repeat: repeat-x;background-image: linear-gradient(to bottom, #62c462, #51a351);color: #ffffff;\
-            background-color: #5bb75b;text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);">导出全部数据</button>')
+        var downbutton = $('<button class="btn btn-success" style="margin-bottom:10px;">导出全部数据</button>')
         downbutton.bind("click",function(event){
             window.location.href='/download_data'
         })

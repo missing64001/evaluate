@@ -367,11 +367,11 @@ class WorkExperience(models.Model):
 class FinancialSituation(models.Model):
     '二、财务状况'
     companyInfo = models.ForeignKey(CompanyInfo,verbose_name='企业',blank=True,null=True)
-    year = models.SmallIntegerField(verbose_name='年份',blank=True,null=True)
-    income = models.IntegerField(verbose_name='累计销售收入（万元）',blank=True,null=True)
-    profit = models.IntegerField(verbose_name='累计净利润（万元）',blank=True,null=True)
-    total = models.IntegerField(verbose_name='期末总资产（万元）',blank=True,null=True)
-    r_d_cost = models.IntegerField(verbose_name='研发费用总额（万元）',blank=True,null=True)
+    year = models.SmallIntegerField(verbose_name='年份',null=True)
+    income = models.IntegerField(verbose_name='累计销售收入（万元）',null=True)
+    profit = models.IntegerField(verbose_name='累计净利润（万元）',null=True)
+    total = models.IntegerField(verbose_name='期末总资产（万元）',null=True)
+    r_d_cost = models.IntegerField(verbose_name='研发费用总额（万元）',null=True)
 
     def __str__(self):
         if self.year:

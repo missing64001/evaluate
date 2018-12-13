@@ -56,8 +56,8 @@
 
 
 
-<div style="width:1120px; height: auto; float:left; padding: 50px 10px 50px 0px; background-color: #fff;border-radius: 4px; box-shadow: 0 0 0 1px rgba(0,0,0,0.07);">
-    <div class="company_status">
+<div style="min-width: 1120px; width:99%; height: auto; float:left; padding: 50px 10px 50px 0px; background-color: #fff;border-radius: 4px; box-shadow: 0 0 0 1px rgba(0,0,0,0.07);border-bottom-left-radius: 0px;border-bottom-right-radius: 0px;">
+    <div class="company_status" style="width:1120px;margin:0px auto;">
         <div class="company_status_pic">
             <img src="/static/img/company_status/{{status_pic.0}}.png">
             <div class="company_status_line{{status_line.0}}"></div>
@@ -69,7 +69,7 @@
             <div class="company_status_line{{status_line.3}}"></div>
             <img src="/static/img/company_status/{{status_pic.4}}.png">
             {% if showbutton %}
-            <input id='colorbutton' style='width:90px;position: relative;left:-975px;top:133px;' type='button' onclick='submit_lock({})' value=提交信息 >
+            <input class="btn btn-success" style='width:90px;position: relative;left:-975px;top:133px;' type='button' onclick='submit_lock({})' value=提交信息 >
             {% endif %}
         </div>
 
@@ -87,8 +87,8 @@
         </div>
     </div>
 </div>
-<div style="width:1120px; height: auto; float:left; padding: 0px 5px 0px 5px; background-color: #F6F7F8;border-radius: 4px; box-shadow: 0 0 0 1px rgba(0,0,0,0.07);">
-    <div style="margin: 30px 115px;width:800px;height: auto; float:left; padding: 50px; background-color: #fff;border-radius: 4px; box-shadow: 0 0 0 1px rgba(0,0,0,0.07);">
+<div style="min-width: 1120px; width:99%; height: auto; float:left; padding: 0px 5px 0px 5px; background-color: #F6F7F8;border-radius: 4px; box-shadow: 0 0 0 1px rgba(0,0,0,0.07);    border-top-left-radius: 0px;border-top-right-radius: 0px;">
+    <div style="margin:30px auto;width:800px;height: auto; padding: 50px; background-color: #fff;border-radius: 4px; box-shadow: 0 0 0 1px rgba(0,0,0,0.07);">
         
 
 
