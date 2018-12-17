@@ -43,39 +43,39 @@ window.onload=function(){
         {
             c5()
             c6()
-            c23()
-            c28()
-            c30()
+            c24()
+            c29()
+            c31()
         }
-        else if (n2 ==13 | n2==14 | n2==15 | n2==17 | n2==19)
+        else if (n2 ==13 | n2==14 | n2==15 | n2==17 | n2==20)
         {
             c9()
-            c23()
-            c28()
-            c30()
+            c24()
+            c29()
+            c31()
         }        
         else if (n2 == 11 | n2 == 12)
         {
             c10()
             c9()
-            c23()
-            c28()
-            c30()
+            c24()
+            c29()
+            c31()
         }
-        else if (n2 == 20 | n2 == 21)
+        else if (n2 == 21 | n2 == 22)
         {
-            c23()
-            c28()
-            c30()
+            c24()
+            c29()
+            c31()
         }
-        else if (n2 == 24 | n2 == 26)
+        else if (n2 == 25 | n2 == 27)
         {
-            c28()
-            c30()
+            c29()
+            c31()
         }
-        else if (n2 == 29)
+        else if (n2 == 30)
         {
-            c30()
+            c31()
         }
 
 
@@ -86,9 +86,9 @@ window.onload=function(){
     c6()
     c10()
     c9()
-    c23()
-    c28()
-    c30()
+    c24()
+    c29()
+    c31()
 
 }
 
@@ -104,23 +104,23 @@ function c10() {
 function c9() {
     cal('c11,c12,c13,c14,c15,c17,c19,c9')
 }
-function c23() {
-    cal('c7,c8,-c11,-c12,-c13,-c14,-c15,-c17,-c19,-c20,-c21,c23')
+function c24() {
+    cal('c7,c8,-c11,-c12,-c13,-c14,-c15,-c17,-c20,-c21,-c22,c24')
 }
-function c28() {
-    cal('c7,c8,-c11,-c12,-c13,-c14,-c15,-c17,-c19,-c20,-c21,c24,-c26,c28')
+function c29() {
+    cal('c7,c8,-c11,-c12,-c13,-c14,-c15,-c17,-c20,-c21,-c22,c25,-c27,c29')
 }
-function c30() {
-    cal('c7,c8,-c11,-c12,-c13,-c14,-c15,-c17,-c19,-c20,-c21,c24,-c26,-c29,c30')
+function c31() {
+    cal('c7,c8,-c11,-c12,-c13,-c14,-c15,-c17,-c20,-c21,-c22,c25,-c27,-c30,c31')
 }
 function refreshdata() {
     c5()
     c6()
     c10()
     c9()
-    c23()
-    c28()
-    c30()
+    c24()
+    c29()
+    c31()
 }
 function cal(str) {
     var total = 0

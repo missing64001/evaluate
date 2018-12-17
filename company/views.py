@@ -398,13 +398,19 @@ def profit_view(request,id_):
 
     dataa = [   ('a%s'%i ,s.strip('\n'))      for i,s in enumerate(profit_str.split('\n'),5)   ]
     datac = []
-    for i in range(5,31):
-        if i not in (5,6,9,10,23,28,30):
+    for i in range(5,32):
+        if i not in (5,6,9,10,24,29,31):
             datac.append(('c%s'%i,True,bal_dict.get('c%s'%i,'')))
         else:
             datac.append(('c%s'%i,False))
+    datad = []
+    for i in range(5,31):
+        if i not in (5,6,9,10,24,29,31):
+            datad.append(('d%s'%i,True,bal_dict.get('d%s'%i,'')))
+        else:
+            datad.append(('d%s'%i,False))
 
-    data = zip(dataa,datac)
+    data = zip(dataa,datac,datad)
 
     cobj = CompanyInfo.objects.get(user=request.user)
     status = cobj.status
@@ -850,7 +856,8 @@ profit_str='''一、营业总收入
 　　　　管理费用
 　　　　　其中：研发费用
 　　　　财务费用
-　　　　　其中：利息收入
+　　　　　其中：利息费用
+　　　　　利息收入
 　　　　资产减值损失
 　　加：公允价值变动收益（损失以“－”号填列）
 　　　　投资收益（损失以“－”号填列）
