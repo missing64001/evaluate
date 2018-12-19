@@ -209,17 +209,17 @@ function i28() {
 }
 
 function h35() {
-    cal('h30,h31,h32,h33,h34,h35')
+    cal('h30,h31,-h32,h33,h34,h35')
 }
 function i35() {
-    cal('i30,i31,i32,i33,i34,i35')
+    cal('i30,i31,-i32,i33,i34,i35')
 }
 
 function h38() {
-    cal('h6,h7,h8,h9,h10,h11,h12,h13,h14,h15,h16,h17,h19,h20,h21,h22,h23,h24,h25,h26,h30,h31,h32,h33,h34,h38')
+    cal('h6,h7,h8,h9,h10,h11,h12,h13,h14,h15,h16,h17,h19,h20,h21,h22,h23,h24,h25,h26,h30,h31,-h32,h33,h34,h38')
 }
 function i38() {
-    cal('i6,i7,i8,i9,i10,i11,i12,i13,i14,i15,i16,i17,i19,i20,i21,i22,i23,i24,i25,i26,i30,i31,i32,i33,i34,i38')
+    cal('i6,i7,i8,i9,i10,i11,i12,i13,i14,i15,i16,i17,i19,i20,i21,i22,i23,i24,i25,i26,i30,i31,-i32,i33,i34,i38')
 }
 
 function refreshdata() {

@@ -68,9 +68,18 @@ class InvestReport(models.Model):
     for i in enumerate(invest_report_items[:4],1):
         exec("i%s = models.SmallIntegerField(choices=external_environment_choices,verbose_name='%s',default=1,blank=True,null=True)"%i)
     for i in enumerate(invest_report_items[4:],5):
-        exec("i%s = models.BooleanField(verbose_name='%s',choices = ((0,'%s分'),(1,'%s分')),default=False)"%(*i,'0',re.findall(r'\d+',i[1])[0]))
+        exec("i%s = models.CharField(max_length=5,verbose_name='%s',blank=True,null=True)"%(*i,))
+    
+
+    years = models.CharField(max_length=50,verbose_name='年份',blank=True,null=True)
+
+    bonus = models.FloatField(verbose_name='加分',blank=True,null=True)
+    subtraction = models.FloatField(verbose_name='减分',blank=True,null=True)
+    totle = models.FloatField(verbose_name='总分',blank=True,null=True)
 
     create_date = models.DateTimeField(verbose_name='生成时间',auto_now=True,blank=True,null=True)
+
+
 
     def __str__(self):
         return (self.create_date+ timedelta(hours=8)).strftime("%Y-%m-%d %H:%M:%S")

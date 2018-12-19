@@ -38,45 +38,88 @@ window.onload=function(){
         n2 = name.slice(1)
         jthis.val(jthis.val().replace(",",""))
 
+        if (n1 == 'c'){
+            if (n2 == 7 | n2 == 8)
+            {
+                c5()
+                c6()
+                c24()
+                c29()
+                c31()
+            }
+            else if (n2 ==13 | n2==14 | n2==15 | n2==17 | n2==20)
+            {
+                c9()
+                c24()
+                c29()
+                c31()
+            }        
+            else if (n2 == 11 | n2 == 12)
+            {
+                c10()
+                c9()
+                c24()
+                c29()
+                c31()
+            }
+            else if (n2 == 21 | n2 == 22)
+            {
+                c24()
+                c29()
+                c31()
+            }
+            else if (n2 == 25 | n2 == 27)
+            {
+                c29()
+                c31()
+            }
+            else if (n2 == 30)
+            {
+                c31()
+            }
+        }
 
-        if (n2 == 7 | n2 == 8)
-        {
-            c5()
-            c6()
-            c24()
-            c29()
-            c31()
+        if (n1 == 'd'){
+            if (n2 == 7 | n2 == 8)
+            {
+                d5()
+                d6()
+                d24()
+                d29()
+                d31()
+            }
+            else if (n2 ==13 | n2==14 | n2==15 | n2==17 | n2==20)
+            {
+                d9()
+                d24()
+                d29()
+                d31()
+            }        
+            else if (n2 == 11 | n2 == 12)
+            {
+                d10()
+                d9()
+                d24()
+                d29()
+                d31()
+            }
+            else if (n2 == 21 | n2 == 22)
+            {
+                d24()
+                d29()
+                d31()
+            }
+            else if (n2 == 25 | n2 == 27)
+            {
+                d29()
+                d31()
+            }
+            else if (n2 == 30)
+            {
+                d31()
+            }
         }
-        else if (n2 ==13 | n2==14 | n2==15 | n2==17 | n2==20)
-        {
-            c9()
-            c24()
-            c29()
-            c31()
-        }        
-        else if (n2 == 11 | n2 == 12)
-        {
-            c10()
-            c9()
-            c24()
-            c29()
-            c31()
-        }
-        else if (n2 == 21 | n2 == 22)
-        {
-            c24()
-            c29()
-            c31()
-        }
-        else if (n2 == 25 | n2 == 27)
-        {
-            c29()
-            c31()
-        }
-        else if (n2 == 30)
-        {
-            c31()
-        }
+
 
 
 
@@ -89,6 +132,14 @@ window.onload=function(){
     c24()
     c29()
     c31()
+
+    d5()
+    d6()
+    d10()
+    d9()
+    d24()
+    d29()
+    d31()
 
 }
 
@@ -113,6 +164,33 @@ function c29() {
 function c31() {
     cal('c7,c8,-c11,-c12,-c13,-c14,-c15,-c17,-c20,-c21,-c22,c25,-c27,-c30,c31')
 }
+
+function d5() {
+    cal('d7,d8,d5')
+}
+function d6() {
+    cal('d7,d8,d6')
+}
+function d10() {
+    cal('d11,d12,d10')
+}
+function d9() {
+    cal('d11,d12,d13,d14,d15,d17,d19,d9')
+}
+function d24() {
+    cal('d7,d8,-d11,-d12,-d13,-d14,-d15,-d17,-d20,-d21,-d22,d24')
+}
+function d29() {
+    cal('d7,d8,-d11,-d12,-d13,-d14,-d15,-d17,-d20,-d21,-d22,d25,-d27,d29')
+}
+function d31() {
+    cal('d7,d8,-d11,-d12,-d13,-d14,-d15,-d17,-d20,-d21,-d22,d25,-d27,-d30,d31')
+}
+
+
+
+
+
 function refreshdata() {
     c5()
     c6()
@@ -121,7 +199,19 @@ function refreshdata() {
     c24()
     c29()
     c31()
+
+    d5()
+    d6()
+    d10()
+    d9()
+    d24()
+    d29()
+    d31()
 }
+
+
+
+
 function cal(str) {
     var total = 0
     var lst_s = str.split(',')

@@ -12,6 +12,7 @@ from django.contrib import admin
 from .admin import IndependentEvaluationOfEnterprisesAdmin,EvaluationOfEnterprisesAdmin,CompanyInfoAdmin
 from django.contrib import messages
 import os
+from functools import reduce
 # 用户注册
 # 
 # 
@@ -22,6 +23,10 @@ def company_status_view(request):
     
     cobj = CompanyInfo.objects.get(user=request.user)
     status = cobj.status
+
+
+
+
 
 
 
@@ -404,7 +409,7 @@ def profit_view(request,id_):
         else:
             datac.append(('c%s'%i,False))
     datad = []
-    for i in range(5,31):
+    for i in range(5,32):
         if i not in (5,6,9,10,24,29,31):
             datad.append(('d%s'%i,True,bal_dict.get('d%s'%i,'')))
         else:
