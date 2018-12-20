@@ -61,7 +61,7 @@ invest_report_items = (
 
 
 class InvestReport(models.Model):
-    institution = models.ManyToManyField(Institution,verbose_name='请选择推荐的机构')
+    institution = models.ManyToManyField(Institution,help_text='按住 ”Ctrl“，或者Mac上的 “Command”，可以选择多个。',verbose_name='请选择推荐的机构')
 
     companyInfo = models.ForeignKey(CompanyInfo,verbose_name='企业')
 
@@ -115,12 +115,18 @@ bank_report_items = (
 
 class BankReport(models.Model):
 
-    institution = models.ManyToManyField(Institution,verbose_name='请选择推荐的机构')
+    institution = models.ManyToManyField(Institution,help_text='按住 ”Ctrl“，或者Mac上的 “Command”，可以选择多个。',verbose_name='请选择推荐的机构')
     companyInfo = models.ForeignKey(CompanyInfo,verbose_name='企业')
     for i in enumerate(bank_report_items[:4],1):
         exec("i%s = models.SmallIntegerField(choices=external_environment_choices,verbose_name='%s',default=1,blank=True,null=True)"%i)
     for i in enumerate(bank_report_items[4:],5):
-        exec("i%s = models.BooleanField(verbose_name='%s',choices = ((0,'%s分'),(1,'%s分')),default=False)"%(*i,'0',re.findall(r'\d+',i[1])[0]))
+        exec("i%s = models.CharField(max_length=5,verbose_name='%s',blank=True,null=True)"%(*i,))
+
+    years = models.CharField(max_length=50,verbose_name='年份',blank=True,null=True)
+
+    bonus = models.FloatField(verbose_name='加分',blank=True,null=True)
+    subtraction = models.FloatField(verbose_name='减分',blank=True,null=True)
+    totle = models.FloatField(verbose_name='总分',blank=True,null=True)
 
     create_date = models.DateTimeField(verbose_name='生成时间',auto_now=True,blank=True,null=True)
 

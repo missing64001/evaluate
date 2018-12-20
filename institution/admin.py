@@ -17,38 +17,26 @@ class InstitutionAdmin(admin.ModelAdmin):
             return qs.filter(user=request.user)
 @admin.register(InvestReport)
 class InvestReportAdmin(admin.ModelAdmin):
-    readonly_fields = ('companyInfo','i1','i2','i3','i4','i5','i6','i7','i8','i9','i10','i11','i12','i13','i14','i15','i16','i17','i18','bonus','subtraction','totle')
+    readonly_fields = ('companyInfo',)
+    fields = ('institution','companyInfo')
     list_display=['companyInfo','totle','create_date']
-    def totle(self,obj):
-        data = (obj.i1 + obj.i2 + obj.i3 + obj.i4 *2) * 2 * 0.35 + (
-            obj.i5 *10 +obj.i6 *7 +obj.i7 *8 +obj.i8 *10 +obj.i9 *5 +obj.i10 *10 +
-            obj.i11 *10 +obj.i12 *5 +obj.i13 *5 +obj.i14 *5 +obj.i15 *5 +obj.i16 *5 +
-            obj.i17 *5 +obj.i18 *10) * 0.65
-        data = round(data + self.bonus(obj) + self.subtraction(obj),2)
-        return data 
-    totle.short_description = '总分数'
-
-    def bonus(self,obj):
-        bonus = Bonus.objects.filter(companyInfo=obj.companyInfo).values('value')
-        bonus = sum([ int(b['value']) for b in bonus])
-        return bonus
-    bonus.short_description = '加分'
-
-    def subtraction(self,obj):
-        subtraction = Subtraction.objects.filter(companyInfo=obj.companyInfo).values('value')
-        subtraction = sum([ -abs(int(b['value'])) for b in subtraction])
-        return subtraction
-    subtraction.short_description = '减分'
 
     def get_user_group_1(self,obj):
         return format_html('''<span class="get_user_group">机构用户</span> <script type="text/javascript" src="/static/js/set_head.js"></script>''')
     
+
+
+    def get_fields(self, request, obj=None):
+        if get_user_group(request,'机构用户'):
+            return ('companyInfo','get_user_group_1')
+
     def get_readonly_fields(self, request,obj=None):
         if get_user_group(request,'机构用户'):
             return list(self.readonly_fields) + ['get_user_group_1']
         return self.readonly_fields
 
     def get_exclude(self, request, obj=None):
+
         qs = super().get_queryset(request)
         if request.user.is_superuser:
             return self.exclude
@@ -56,6 +44,7 @@ class InvestReportAdmin(admin.ModelAdmin):
             return ('institution',)
 
     def get_queryset(self, request):
+        self.xxvvvv = '3333'
         qs = super().get_queryset(request)
         if request.user.is_superuser:
             return qs
@@ -79,32 +68,18 @@ class InvestReportAdmin(admin.ModelAdmin):
 
 @admin.register(BankReport)
 class BankReportAdmin(admin.ModelAdmin):
-    readonly_fields = ('companyInfo','i1','i2','i3','i4','i5','i6','i7','i8','i9','i10','i11','i12','i13','i14','i15','i16','i17','i18','bonus','subtraction','totle')
+    readonly_fields = ('companyInfo',)
+    fields = ('institution','companyInfo')
     list_display=['companyInfo','totle','create_date']
-    def totle(self,obj):
-        data = (obj.i1 + obj.i2 + obj.i3 + obj.i4 *2) * 2 * 0.35 + (
-            obj.i5 *10 +obj.i6 *7 +obj.i7 *8 +obj.i8 *10 +obj.i9 *5 +obj.i10 *10 +
-            obj.i11 *10 +obj.i12 *5 +obj.i13 *5 +obj.i14 *5 +obj.i15 *5 +obj.i16 *5 +
-            obj.i17 *5 +obj.i18 *10) * 0.65
-        data = round(data + self.bonus(obj) + self.subtraction(obj),2)
-        return data 
-    totle.short_description = '总分数'
 
-    def bonus(self,obj):
-        bonus = Bonus.objects.filter(companyInfo=obj.companyInfo).values('value')
-        bonus = sum([ int(b['value']) for b in bonus])
-        return bonus
-    bonus.short_description = '加分'
-
-    def subtraction(self,obj):
-        subtraction = Subtraction.objects.filter(companyInfo=obj.companyInfo).values('value')
-        subtraction = sum([ -abs(int(b['value'])) for b in subtraction])
-        return subtraction
-    subtraction.short_description = '减分'
     
     def get_user_group_1(self,obj):
         return format_html('''<span class="get_user_group">机构用户</span> <script type="text/javascript" src="/static/js/set_head.js"></script>''')
     
+    def get_fields(self, request, obj=None):
+        if get_user_group(request,'机构用户'):
+            return ('companyInfo','get_user_group_1')
+            
     def get_readonly_fields(self, request,obj=None):
         if get_user_group(request,'机构用户'):
             return list(self.readonly_fields) + ['get_user_group_1']
@@ -320,6 +295,5 @@ class ReportBackAdmin(admin.ModelAdmin):
 
         elif get_user_group(request,'企业用户'):
             return qs.filter(investreport__companyInfo__user=request.user,iscompanyview=2) | qs.filter(bankreport__companyInfo__user=request.user,iscompanyview=2)
-
 
 

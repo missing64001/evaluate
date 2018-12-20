@@ -140,11 +140,13 @@ def createcompanyreport_view(request):
                 return res
 
 
-            das = reduce(setda,das)
-
-            print(das)
+            data = reduce(setda,das)
 
 
+            def getdata_data(i):
+                if i in ['i1','i2','i3','i4']:
+                    return data[i]
+                return int(data[i][0])
 
 
             eoe = EvaluationOfEnterprises.objects.get(companyInfo=cobj)
@@ -152,6 +154,36 @@ def createcompanyreport_view(request):
             data['i2'] = eoe.products_and_market
             data['i3'] = eoe.technology_R_D
             data['i4'] = eoe.team
+
+
+
+            bonus = Bonus.objects.filter(companyInfo=cobj).values('value')
+            bonus = sum([ int(b['value']) for b in bonus])
+            data['bonus'] = bonus
+
+            subtraction = Subtraction.objects.filter(companyInfo=cobj).values('value')
+            subtraction = sum([ -abs(int(b['value'])) for b in subtraction])
+            data['subtraction'] = subtraction
+            years = g.years
+            years = [str(year) for year in years]
+            data['years'] = '_'.join(years)
+
+
+            if _type == '0':
+                totle = (getdata_data('i1') + getdata_data('i2') + getdata_data('i3') + getdata_data('i4') *2) * 2 * 0.35 + (
+                    getdata_data('i5') *10 +getdata_data('i6') *7 +getdata_data('i7') *8 +getdata_data('i8') *10 +getdata_data('i9') *5 +getdata_data('i10') *10 +
+                    getdata_data('i11') *10 +getdata_data('i12') *5 +getdata_data('i13') *5 +getdata_data('i14') *5 +getdata_data('i15') *5 +getdata_data('i16') *5 +
+                    getdata_data('i17') *5 +getdata_data('i18') *10) * 0.65
+            else:
+                totle = (getdata_data('i1') + getdata_data('i2') + getdata_data('i3') + getdata_data('i4') *2) * 2 * 0.35 + (
+                    getdata_data('i5') *5 +getdata_data('i6') *5 +getdata_data('i7') *5 +getdata_data('i8') *10 +getdata_data('i9') *5 +getdata_data('i10') *5 +
+                    getdata_data('i11') *10 +getdata_data('i12') *5 +getdata_data('i13') *5 +getdata_data('i14') *10 +getdata_data('i15') *10 +getdata_data('i16') *7 +
+                    getdata_data('i17') *8 +getdata_data('i18') *10) * 0.65
+            totle = round(totle + bonus + subtraction,2)
+            data['totle'] = totle
+
+
+
             data['companyInfo'] = cobj
 
 

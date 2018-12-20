@@ -17,6 +17,8 @@ from functools import reduce
 # 
 # 
 
+
+
 def company_status_view(request):
 
 
