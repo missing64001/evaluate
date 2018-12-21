@@ -29,6 +29,8 @@ class InvestReportAdmin(admin.ModelAdmin):
     def get_fields(self, request, obj=None):
         if get_user_group(request,'机构用户'):
             return ('companyInfo','get_user_group_1')
+        else:
+            return self.fields
 
     def get_readonly_fields(self, request,obj=None):
         if get_user_group(request,'机构用户'):
@@ -44,7 +46,6 @@ class InvestReportAdmin(admin.ModelAdmin):
             return ('institution',)
 
     def get_queryset(self, request):
-        self.xxvvvv = '3333'
         qs = super().get_queryset(request)
         if request.user.is_superuser:
             return qs
@@ -79,6 +80,8 @@ class BankReportAdmin(admin.ModelAdmin):
     def get_fields(self, request, obj=None):
         if get_user_group(request,'机构用户'):
             return ('companyInfo','get_user_group_1')
+        else:
+            return self.fields
             
     def get_readonly_fields(self, request,obj=None):
         if get_user_group(request,'机构用户'):
