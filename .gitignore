@@ -17,7 +17,7 @@ build
 db.ini
 index/api/err
 static/upload
-*/migrations
+migrations
 *.xls
 *.csv
 company/static/upload

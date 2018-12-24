@@ -19,7 +19,7 @@ window.onload=function(){
             <div class="control-group form-row field-will "><div><div class="control-label"><label for="id_will">意向:</label></div><div class="controls"><select name="will" id="id_will"><option value="" selected="">---------</option><option value="1">有意向</option><option value="2">无意向</option></select></div></div></div>\
             <div class="control-group form-row field-type "><div><div class="control-label"><label for="id_type">选择反馈类别:</label></div><div class="controls"><select name="type" id="id_type"><option value="" selected="">---------</option><option value="1">对企业进一步了解</option><option value="2">与孵化器进一步协调</option></select></div></div></div>\
             <div class="control-group form-row field-note "><div><div class="control-label"><label for="id_note">反馈内容:</label></div><div class="controls"><textarea name="note" cols="40" id="id_note" rows="10" class="vLargeTextField"></textarea></div></div></div>\
-            <div style="margin-top: 20px;"><button type="submit" class="btn btn-high btn-info  name="_save">提交</button></div></form>')
+            <div style="margin-top: 20px;"><button style="float:left;width:150px;" type="submit" class="btn btn-high btn-info  name="_save">提交</button></div></form>')
 
 
 
