@@ -190,7 +190,7 @@ def verify_view(request):
 def deldata_view(request):
     year = request.GET['year']
     model = request.GET['model']
-    if model == 'cash_flow':
+    if model == 'cashflow':
         M = CashFlow
     elif model == 'balance':
         M = Balance
@@ -299,13 +299,14 @@ def balance_view(request,id_):
 
 def balance_submit_table_view(request):
 
-
-
+    from pprint import pprint
+    # pprint(request.POST)
     year = request.POST['year']
     for x in request.POST:
-        if x == 'year':
+        if x == 'year' or x == 'excel':
             pass
         elif len(x)<6:
+            # print(x)
             if not request.POST[x]:
                 res = 0
             else:

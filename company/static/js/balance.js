@@ -1,6 +1,10 @@
 function verify() {
+
+
+
+    return false
+
     var input = $('#inputbrowsers')
-    console.log(input.val())
     if (input.val()){
 
         return true
@@ -12,6 +16,10 @@ function verify() {
     }
 }
 
+function save_h() {
+    document.saveda.action="/admin/company/balance/submit_table/";
+    document.saveda.submit();
+}
 
 // function yearchange() {
 //     var input = $('#inputbrowsers')

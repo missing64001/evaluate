@@ -47,56 +47,29 @@
 
 {% block content %}
 
-xxxxxxxxxxxxxx
+
 <div id="content-main" class="inner-two-columns">
 
-    <form enctype="multipart/form-data" action="" method="post" id="reportback_form" class="form-horizontal" novalidate="">
+    <!-- <form enctype="multipart/form-data" action="" method="post" id="reportback_form" class="form-horizontal" novalidate=""> -->
+    <form class='form-horizontal' action="" method="post" enctype="multipart/form-data" name='saveda' onsubmit="return verify()">
 
+{% if status%}
       <div class="inner-right-column">
 
         <div class="box save-box">
 
-          
-
-
+{% csrf_token %}
 <div class="submit-row clearfix">
-  <button disabled="" style="background-color: #aaa" type="submit" class="btn btn-high btn-info" name="_save">保存</button>
-  
+  <button  class="btn btn-high btn-info" name="_save" onclick="save_h()">保存</button>
+  <button  class="btn btn-high btn-info" name="_del" onclick="deldata()">删除</button>
 
 </div>
-<!--   <input type="hidden" class="isocre1" value="">
-  <input type="hidden" class="isocre2" value="">
-  <input type="hidden" class="isocre3" value="">
-  <input type="hidden" class="isocre4" value=""> -->
 
 
 
         </div>
-
-        
-          
-            <h4 class="italic-title">Tools</h4>
-            <ul class="box menu-box">
-              
-                <li>
-                  
-                  
-                  <a href="/admin/institution/reportback/1/history/" class="historylink">
-                  
-                  <i class="icon-time icon-alpha75"></i>历史</a>
-                </li>
-                
-
-                
-
-              
-            </ul>
-          
-        
-
-      
-
       </div>
+{% endif%}
       <div class="inner-center-column">
         <input type="hidden" name="csrfmiddlewaretoken" value="OjyFi2QruukBeDekJdi3oVSNcEHkQLRBwrXe9K7tfouiu9kqXQdcg506C90PX4aY">
         
@@ -109,7 +82,6 @@ xxxxxxxxxxxxxx
           
           
 
-
           
             
               
@@ -119,8 +91,15 @@ xxxxxxxxxxxxxx
     
       <div class="control-group form-row field-institution ">
         
-          <div><div class="control-label"><label>请填写表格年份:</label></div>
-          <div class="controls"><input style="box-sizing:content-box;" type="text" class="vTextField" maxlength="50" id="id_name" ></div>
+          <div><div class="control-label"><label class="required">请填写表格年份:</label></div>
+          <div class="controls">
+            <input style="box-sizing:content-box;"
+            {% if year%}
+            value="{{year}}" 
+            {% endif %}
+           list="browsers" autocomplete="off"  name="year"
+           type="text" class="vTextField" maxlength="50" id="inputbrowsers" required></div>
+      
       </div>
         
 
@@ -132,7 +111,7 @@ xxxxxxxxxxxxxx
         
           <div><div class="control-label"><label>下载表格模板:</label></div>
           <div class="controls">
-            <input type="button" value="点击下载">
+            <input type="button" value="点击下载" onclick="location.href='/static/baobiao.xls'">
         </div>
       </div>
 
@@ -140,16 +119,16 @@ xxxxxxxxxxxxxx
       
       <div class="control-group form-row field-note ">
         
-          <div><div class="control-label"><label>下载表格模板:</label></div>
+          <div><div class="control-label"><label>上传表格模板:</label></div>
           <div class="controls">
-            <input type="button" value="点击下载">
+            <input type="file" name="excel" accept=".xls" defaultValue="导入" onchange="importf(this)">
         </div>
       </div>
 
       </div>
     
   
-</fieldset>
+
 
 
 
@@ -166,16 +145,56 @@ xxxxxxxxxxxxxx
             
           
 
-        </div>
+        
 
         
 
 
-      </div>
+    
+        </fieldset>
+
+
+
+        <h4 style="margin-top:20px">资产负债表</h4>
+        <fieldset style="margin: 0px auto;background-color: #F6F7F8;">
+
+          <table style="margin:50px">
+              <tr >
+                  <th> 资产
+                   </th>
+                  <th> 年初余额</th>
+                  <th> 期末余额</th>
+                  <th> 负债及所有者权益</th>
+                  <th> 年初余额</th>
+                  <th> 期末余额</th>
+              </tr>
+              {%for da in data%}
+              <tr >
+                  {%for d in da%}
+                      {%if d.1 == False %}
+                          <td class="{{d.0}}"><span></span> </td>
+                      {% elif d.1 == True%}
+                          <td class="input">
+                              <input type="text" class="{{d.0}} " name="{{d.0}} " value="{{d.2}}" placeholder="请填写" autocomplete="off">
+                          </td>
+                          
+                      {%else%}
+                          <td class="{{d.0}}"> <span>{{d.1}}</span></td>
+                      {% endif %}
+                  {%endfor%}
+              </tr>
+              {%endfor%}
+          </table>
+
+
+      </fieldset>
+      
+    </div>
+
+  </div>
     </form>
   </div>
 
-xxxxxxxxxxxxxx
 
 
 
@@ -198,83 +217,4 @@ xxxxxxxxxxxxxx
 
 
 
-
-
-
-<div style="height: auto; float:left; padding: 50px; background-color: #F5F5F5;border-radius: 4px; box-shadow: 0 0 0 1px rgba(0,0,0,0.07);">
-
-<form class='file' action="/excel" method="post">
-    <input type="file" name="excel" accept=".xls" defaultValue="导入" onchange="importf(this)">
-    <!-- <input type="submit" value="上传文件"> -->
-    <a href="/static/baobiao.xls">excel模板下载</a>
-</form>
-
-<form class='mtable' action="/admin/company/balance/submit_table/" method="post" enctype="multipart/form-data" onsubmit="return verify()">
-    
-    {% if status%}
-    {% csrf_token %}
-    <button onclick="deldata()" type="button">删除数据</button>
-    <input class='upload' type="submit" value="提交数据">
-    {% endif%}
-
-    <div class="select">
-        <input id="inputbrowsers" 
-        {% if year%}
-        value="{{year}}" 
-        {% endif %}
-
-        list="browsers" autocomplete="off" name="year" onchange="yearchange()" style="width: 100px">
-        <datalist id="browsers" style="width: 100px">
-
-        {% for ye in years %}
-        <option value="{{ye}}"></option>
-        {% endfor %}
-        </datalist>
-    </div>
-
-
-  <script type="text/javascript" src="/static/admin/js/core.js"></script>
-<script type="text/javascript" src="/static/admin/js/vendor/jquery/jquery.js"></script>
-<script type="text/javascript" src="/static/admin/js/jquery.init.js"></script>
-<script type="text/javascript" src="/static/admin/js/admin/RelatedObjectLookups.js"></script>
-<script type="text/javascript" src="/static/admin/js/actions.js"></script>
-<script type="text/javascript" src="/static/admin/js/urlify.js"></script>
-<script type="text/javascript" src="/static/admin/js/prepopulate.js"></script>
-<script type="text/javascript" src="/static/admin/js/vendor/xregexp/xregexp.js"></script>
-<script type="text/javascript" src="/static/admin/js/inlines.js"></script>
-    
-    <div class="nf"> 年份： </div>
-
-
-    <table >
-        <tr >
-            <th> 资产
-             </th>
-            <th> 年初余额</th>
-            <th> 期末余额</th>
-            <th> 负债及所有者权益</th>
-            <th> 年初余额</th>
-            <th> 期末余额</th>
-        </tr>
-        {%for da in data%}
-        <tr >
-            {%for d in da%}
-                {%if d.1 == False %}
-                    <td class="{{d.0}}"><span></span> </td>
-                {% elif d.1 == True%}
-                    <td class="input">
-                        <input type="text" class="{{d.0}} " name="{{d.0}} " value="{{d.2}}" placeholder="请填写" autocomplete="off">
-                    </td>
-                    
-                {%else%}
-                    <td class="{{d.0}}"> <span>{{d.1}}</span></td>
-                {% endif %}
-            {%endfor%}
-        </tr>
-        {%endfor%}
-    </table>
-
-
-</form>
-</div>
 {% endblock content %}

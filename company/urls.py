@@ -23,7 +23,7 @@ urlpatterns = [
     url(r'^profit/add/$',profit_add_view, name='profit_add_view'),
 
     url(r'^cashflow/(.+)/change/$',cash_flow_view, name='cash_flow_view'),
-    url(r'^cash_flow/submit_table/$',cash_flow_submit_table_view, name='cash_flow_submit_table_view'),
+    url(r'^cashflow/submit_table/$',cash_flow_submit_table_view, name='cash_flow_submit_table_view'),
     url(r'^cashflow/add/$',cash_flow_add_view, name='cash_flow_add_view'),
     
     url(r'^deldata/$',deldata_view, name='deldata_view'),

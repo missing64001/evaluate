@@ -1,22 +1,18 @@
 function verify() {
-    var input = $('#inputbrowsers')
-    console.log(input.val())
-    if (input.val()){
 
-        return true
-    }
-    else{
+    return false
 
-        alert('请填写年份')
-        return false
-    }
 }
 
+function save_h() {
+    document.saveda.action="/admin/company/profit/submit_table/";
+    document.saveda.submit();
+}
 
 // function yearchange() {
 //     var input = $('#inputbrowsers')
 //     var year = input.val()
-//     window.location.href="/admin/company/profit/?year=" + year
+//     window.location.href="/admin/company/balance/?year=" + year
 //     // console.log(year)
 // }
 
@@ -26,6 +22,8 @@ function deldata() {
     window.location.href="/admin/company/deldata/?year=" + year + '&model=profit' 
     // console.log(year)
 }
+
+
 
 
 window.onload=function(){
