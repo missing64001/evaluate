@@ -189,8 +189,7 @@ class CompanyInfoReportAdmin(admin.ModelAdmin):
             #     </select>
             #     '''%reportstr,0)
 
-            return format_html("<input style='width:90px' cid={} _type=0 type='button' onclick='createcompanyreport(this)' value=最新年份 >\
-                <input style='width:90px' cid={} _type=0 type='button' onclick='createcompanyreport(this)' value=全部年份 >"
+            return format_html("<input style='width:90px' cid={} _type=0 type='button' onclick='createcompanyreport(this)' value=生成报告 >"
                 ,obj.id,obj.id)
     invest_report.short_description = '生成投资类报告'
 
@@ -204,8 +203,7 @@ class CompanyInfoReportAdmin(admin.ModelAdmin):
                 reportstr += '<option value="%s">%s</option>' % (bobj.id,(bobj.create_date+ timedelta(hours=8)).strftime("%Y-%m-%d"))
 
 
-            return format_html("<input style='width:90px' cid={} _type=1 type='button' onclick='createcompanyreport(this)' value=最新年份 >\
-                <input style='width:90px' cid={} _type=1 type='button' onclick='createcompanyreport(this)' value=全部年份 >"
+            return format_html("<input style='width:90px' cid={} _type=1 type='button' onclick='createcompanyreport(this)' value=生成报告 >"
                 ,obj.id,obj.id)
     bank_report.short_description = '生成银行类报告'
     class Media:

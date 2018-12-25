@@ -49,7 +49,7 @@ def createcompanyreport_view(request):
         _type = request.POST['type']
 
         modleName = 'investreport' if _type == '0' else 'bankreport'
-        if opt == '最新年份' or opt == '全部年份':
+        if opt == '生成报告':
             
             Report = InvestReport if _type == '0' else BankReport
             
