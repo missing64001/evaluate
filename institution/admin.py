@@ -21,8 +21,8 @@ class InvestReportAdmin(admin.ModelAdmin):
     readonly_fields = ('companyInfo',)
     fields = ('institution','companyInfo')
     list_display=['companyInfo','totle','create_date']
-    search_fields = ('companyInfo', 'institution')
-    
+    search_fields = ('companyInfo')
+
     def get_user_group_1(self,obj):
         return format_html('''<span class="get_user_group">机构用户</span> <script type="text/javascript" src="/static/js/set_head.js"></script>''')
     
@@ -74,7 +74,7 @@ class BankReportAdmin(admin.ModelAdmin):
     readonly_fields = ('companyInfo',)
     fields = ('institution','companyInfo')
     list_display=['companyInfo','totle','create_date']
-    search_fields = ('companyInfo', 'institution')
+    search_fields = ('companyInfo')
 
     
     def get_user_group_1(self,obj):
@@ -219,7 +219,7 @@ class CompanyInfoReportAdmin(admin.ModelAdmin):
 @admin.register(ReportBack)
 class ReportBackAdmin(admin.ModelAdmin):
     exclude = ['investreport','bankreport',]
-    search_fields = ('mget_company', 'institution')
+    search_fields = ('institution',)
 
     def get_list_display(self, request, obj=None):
         if get_user_group(request,'super'):
