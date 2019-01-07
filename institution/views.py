@@ -183,6 +183,9 @@ def createcompanyreport_view(request):
                     getdata_data('i5') *5 +getdata_data('i6') *5 +getdata_data('i7') *5 +getdata_data('i8') *10 +getdata_data('i9') *5 +getdata_data('i10') *5 +
                     getdata_data('i11') *10 +getdata_data('i12') *5 +getdata_data('i13') *5 +getdata_data('i14') *10 +getdata_data('i15') *10 +getdata_data('i16') *7 +
                     getdata_data('i17') *8 +getdata_data('i18') *10) * 0.65
+            
+            print(data)
+            print(totle , bonus , subtraction)
             totle = round(totle + bonus + subtraction,2)
             data['totle'] = totle
 
