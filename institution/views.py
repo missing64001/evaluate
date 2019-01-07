@@ -184,9 +184,6 @@ def createcompanyreport_view(request):
                     getdata_data('i11') *10 +getdata_data('i12') *5 +getdata_data('i13') *5 +getdata_data('i14') *10 +getdata_data('i15') *10 +getdata_data('i16') *7 +
                     getdata_data('i17') *8 +getdata_data('i18') *10) * 0.65
             
-            print(data)
-            print(totle , bonus , subtraction)
-            print(3333333333)
             totle = round(totle + bonus + subtraction,2)
             data['totle'] = totle
 
@@ -230,7 +227,7 @@ class GetData(object):
             yearset = [ o['year'] for o in ob.objects.all().filter(companyInfo=companyInfo).values('year').annotate(Count('year'))]
             yearset = set(yearset)
             yearsets.append(yearset)
-        print(yearsets)
+        # print(yearsets)
         yearset = reduce(lambda x,y:x&y,yearsets)
 
         yearset = sorted(yearset,key=lambda x:x,reverse=True)[:5]
