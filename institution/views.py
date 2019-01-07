@@ -146,6 +146,10 @@ def createcompanyreport_view(request):
             def getdata_data(i):
                 if i in ['i1','i2','i3','i4']:
                     return data[i]
+
+                di = data[i]
+                if type(di) == int:
+                    return di
                 return int(data[i][0])
 
 
