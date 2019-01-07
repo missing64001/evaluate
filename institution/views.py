@@ -186,6 +186,7 @@ def createcompanyreport_view(request):
             
             print(data)
             print(totle , bonus , subtraction)
+            print(3333333333)
             totle = round(totle + bonus + subtraction,2)
             data['totle'] = totle
 
