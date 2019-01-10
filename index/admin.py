@@ -192,29 +192,32 @@ class UserAdmin(admin.ModelAdmin):
         related_search_fields = {
                'companyInfo': ('name'),
             }
-        list_display = ('companyInfo','incubator','item','note','value')
+        list_display = ('companyInfo','incubatorr','item','note','value')
         search_fields = ('companyInfo__name','companyInfo__incubator__name')
 
-        def incubator(self,obj):
+        def incubatorr(self,obj):
 
             return obj.companyInfo.incubator
-        incubator.short_description = '机构'
+        incubatorr.short_description = '机构'
 
         class Media:
-            js = ('/static/js/jquery-migrate-1.2.1.js',)
-            
+            js = ('/static/js/deal_bug.js',)
+
     @admin.register(Subtraction)
     class SubtractionAdmin(ForeignKeyAutocompleteAdmin):
         related_search_fields = {
                'companyInfo': ('name'),
             }
-        list_display = ('companyInfo','incubator','item','note','value')
+        list_display = ('companyInfo','incubatorr','item','note','value')
         search_fields = ('companyInfo__name','companyInfo__incubator__name')
 
-        def incubator(self,obj):
+        def incubatorr(self,obj):
 
             return obj.companyInfo.incubator
-        incubator.short_description = '机构'
+        incubatorr.short_description = '机构'
+        
+        class Media:
+            js = ('/static/js/deal_bug.js',)
 
 
 
