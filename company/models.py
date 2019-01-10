@@ -52,7 +52,7 @@ field_1_choices = ((1,'A 农、林、牧、渔业'),
 technical_source_choices = ((1,'独立知识产权'), (2,'合作研发'), (3,'购买技术'), (4,'其他'))
 SOAT_choices = ((1,'高校/科研院所'), (2,'相关科技计划'), (3,'自行研发'), (4,'其他'))
 class CompanyInfo(models.Model):
-    '一、基本信息'
+    '企业信息'
 
     user = models.ForeignKey(User,blank=True,null=True)
     status = models.SmallIntegerField(choices=status_choices,verbose_name='状态',default=0)
@@ -91,7 +91,7 @@ class CompanyInfo(models.Model):
             return '无名企业'
 
     class Meta:
-        verbose_name='一、基本信息'
+        verbose_name='企业信息'
         verbose_name_plural=verbose_name
 
 class CompanyStatus(models.Model):

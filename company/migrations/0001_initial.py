@@ -61,8 +61,8 @@ class Migration(migrations.Migration):
                 ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
             options={
-                'verbose_name': '一、基本信息',
-                'verbose_name_plural': '一、基本信息',
+                'verbose_name': '基本信息',
+                'verbose_name_plural': '基本信息',
             },
         ),
         migrations.CreateModel(

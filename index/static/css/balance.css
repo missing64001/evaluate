@@ -15,6 +15,7 @@ td,th{
 }
 
 td.input input{
+    text-align: center;
     border: none;
     box-shadow: none;
     border-radius: 0;
@@ -33,6 +34,7 @@ td.input{
 
 table span{
     padding:5px;
+    display:block;
 }
 
 
@@ -43,6 +45,7 @@ form.file{
 button,input.upload,div.select{
     float: right;
     margin: 0px 10px 20px 0px;
+
 }
 select{
     width: 100px;
@@ -64,3 +67,17 @@ table.profit{
 }
 
 
+fieldset tr td.input input.bold,fieldset tr td.bold{
+    font-weight: bold;
+}
+
+
+fieldset tr td.input input.backgc,fieldset tr td.backgc{
+    background-color: #FAFAFA;
+}
+
+
+fieldset tr td.center{
+    text-align: center;
+    
+}

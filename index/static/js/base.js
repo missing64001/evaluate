@@ -44,7 +44,7 @@ $(function(){
 
 
 
-
+    // 设置侧边栏和导航栏的数据
     var lis = $('ul.breadcrumb>li')
     // console.log(lis.length)
     if (lis.length > 2){
@@ -85,6 +85,24 @@ $(function(){
     }
     if (activeliz.children('a').text() == '企业数据统计' & $(lis[2]).text() == '一、基本信息'){
         $(lis[2]).text('企业数据统计')
+    }
+
+
+
+    // 设置 /admin/auth/user/res_in 页面的breadcrumb
+    if (url == "/admin/auth/user/res_in"){
+        console.log('xxxxxxxxxx')
+        var b = '<ul class="breadcrumb">\
+                      <li><a href="/admin/">首页</a>\
+                        <span class="divider">»</span></li>\
+                      <li>\
+                        <a href="/admin/auth/user/">账号管理\
+                            </a>\
+                        <span class="divider">»</span></li>\
+                      <li class="active">增加 孵化器/机构用户</li>\
+                    </ul>'
+
+        $('ul.breadcrumb').html(b)
     }
 
 })

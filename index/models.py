@@ -19,10 +19,10 @@ class Bonus(models.Model):
 
 subtraction_items = ((1,'房屋信息通报'),(2,'经营者社会评价'),(3,'其他'))  
 class Subtraction(models.Model):
-    companyInfo = models.ForeignKey(CompanyInfo,verbose_name='企业',blank=True,null=True)
-    item = models.SmallIntegerField(verbose_name='减分项',choices=subtraction_items,blank=True,null=True)
-    note = models.TextField(verbose_name='减分说明',blank=True,null=True)
-    value = models.SmallIntegerField(verbose_name='分值',blank=True,null=True)
+    companyInfo = models.ForeignKey(CompanyInfo,verbose_name='企业')
+    item = models.SmallIntegerField(verbose_name='减分项',choices=subtraction_items)
+    note = models.TextField(verbose_name='减分说明')
+    value = models.SmallIntegerField(verbose_name='分值')
 
     def __str__(self):
         return self.companyInfo.name

@@ -256,34 +256,67 @@ def balance_view(request,id_):
     
 
     bal_data = Balance.objects.all().filter(companyInfo=CompanyInfo.objects.get(user=request.user),year=year)
-    bal_dict = { da.name:  da.value if da.value != 0 else '' for da in bal_data}
+    bal_dict = { da.name:  da.value if da.value else '' for da in bal_data}
 
     data = []
 
-    datab = [   ('b%s'%i ,s.strip('\n'))      for i,s in enumerate(B.split('\n'),4)   ]
-    dataf = [   ('f%s'%i ,s.strip('\n'))      for i,s in enumerate(F.split('\n'),4)   ]
+
+    datab = [   ('','b%s'%i ,s.strip('\n'))      for i,s in enumerate(B.split('\n'),5)   ]
+    dataf = [   ('','f%s'%i ,s.strip('\n'))      for i,s in enumerate(F.split('\n'),5)   ]
 
     
     datad = []
     datae = []
     for i in range(5,39):
         if i not in (5,17,18,26,28,37,38):
-            datad.append(('d%s'%i,True,bal_dict.get('d%s'%i,'')))
-            datae.append(('e%s'%i,True,bal_dict.get('e%s'%i,'')))
+            datad.append(('','d%s'%i,True,bal_dict.get('d%s'%i,'')))
+            datae.append(('','e%s'%i,True,bal_dict.get('e%s'%i,'')))
         else:
-            datad.append(('d%s'%i,False))
-            datae.append(('e%s'%i,False))
+            datad.append(('','d%s'%i,False))
+            datae.append(('','e%s'%i,False))
 
     datah = []
     datai = []
     for i in range(5,39):
         if i not in (5,18,19,27,28,29,35,36,37,38):
-            datah.append(('h%s'%i,True,bal_dict.get('h%s'%i,'')))
-            datai.append(('i%s'%i,True,bal_dict.get('i%s'%i,'')))
+            datah.append(('','h%s'%i,True,bal_dict.get('h%s'%i,'')))
+            datai.append(('','i%s'%i,True,bal_dict.get('i%s'%i,'')))
         else:
-            datah.append(('h%s'%i,False))
-            datai.append(('i%s'%i,False))
+            datah.append(('','h%s'%i,False))
+            datai.append(('','i%s'%i,False))
 
+
+    backcolor1 = [17,26,28,37,38]
+    backcolor2 = [18,27,28,35,38]
+
+    fontbold1 = [5,17,18,37,38]
+    fontbold2 = [5,18,19,27,28,35,38]
+
+    # 设置底色
+    datab = [  [da[0] + ' backgc'] + list(da[1:]) if int(da[1].split(' ')[0][1:]) in backcolor1 else da   for da in datab]
+    datad = [  [da[0] + ' backgc'] + list(da[1:]) if int(da[1].split(' ')[0][1:]) in backcolor1 else da   for da in datad]
+    datae = [  [da[0] + ' backgc'] + list(da[1:]) if int(da[1].split(' ')[0][1:]) in backcolor1 else da   for da in datae]
+
+    dataf = [  [da[0] + ' backgc'] + list(da[1:]) if int(da[1].split(' ')[0][1:]) in backcolor2 else da   for da in dataf]
+    datah = [  [da[0] + ' backgc'] + list(da[1:]) if int(da[1].split(' ')[0][1:]) in backcolor2 else da   for da in datah]
+    datai = [  [da[0] + ' backgc'] + list(da[1:]) if int(da[1].split(' ')[0][1:]) in backcolor2 else da   for da in datai]
+
+
+    # 设置字体加粗
+    datab = [  [da[0] + ' bold'] + list(da[1:]) if int(da[1].split(' ')[0][1:]) in fontbold1 else da   for da in datab]
+    datad = [  [da[0] + ' bold'] + list(da[1:]) if int(da[1].split(' ')[0][1:]) in fontbold1 else da   for da in datad]
+    datae = [  [da[0] + ' bold'] + list(da[1:]) if int(da[1].split(' ')[0][1:]) in fontbold1 else da   for da in datae]
+
+    dataf = [  [da[0] + ' bold'] + list(da[1:]) if int(da[1].split(' ')[0][1:]) in fontbold2 else da   for da in dataf]
+    datah = [  [da[0] + ' bold'] + list(da[1:]) if int(da[1].split(' ')[0][1:]) in fontbold2 else da   for da in datah]
+    datai = [  [da[0] + ' bold'] + list(da[1:]) if int(da[1].split(' ')[0][1:]) in fontbold2 else da   for da in datai]
+
+    # 文字居中
+    datad = [  [da[0] + ' center'] + list(da[1:]) for da in datad]
+    datae = [  [da[0] + ' center'] + list(da[1:]) for da in datae]
+    datah = [  [da[0] + ' center'] + list(da[1:]) for da in datah]
+    datai = [  [da[0] + ' center'] + list(da[1:]) for da in datai]
+    
 
     data = zip(datab,datad,datae,dataf,datah,datai)
 
@@ -402,21 +435,43 @@ def profit_view(request,id_):
         year = Profit.objects.get(id=id_).year
 
     bal_data = Profit.objects.all().filter(companyInfo=CompanyInfo.objects.get(user=request.user),year=year)
-    bal_dict = { da.name:da.value for da in bal_data}
+    bal_dict = { da.name:da.value if da.value else '' for da in bal_data}
 
-    dataa = [   ('a%s'%i ,s.strip('\n'))      for i,s in enumerate(profit_str.split('\n'),5)   ]
+    dataa = [   ('','a%s'%i ,s.strip('\n'))      for i,s in enumerate(profit_str.split('\n'),5)   ]
     datac = []
     for i in range(5,32):
         if i not in (5,6,9,10,24,29,31):
-            datac.append(('c%s'%i,True,bal_dict.get('c%s'%i,'')))
+            datac.append(('','c%s'%i,True,bal_dict.get('c%s'%i,'')))
         else:
-            datac.append(('c%s'%i,False))
+            datac.append(('','c%s'%i,False))
     datad = []
     for i in range(5,32):
         if i not in (5,6,9,10,24,29,31):
-            datad.append(('d%s'%i,True,bal_dict.get('d%s'%i,'')))
+            datad.append(('','d%s'%i,True,bal_dict.get('d%s'%i,'')))
         else:
-            datad.append(('d%s'%i,False))
+            datad.append(('','d%s'%i,False))
+
+
+
+
+    backcolor1 = [5,6,9,10,24,29,31]
+
+    fontbold1 = [5,9,24,29,31]
+
+    # 设置底色
+    dataa = [  [da[0] + ' backgc'] + list(da[1:]) if int(da[1].split(' ')[0][1:]) in backcolor1 else da   for da in dataa]
+    datac = [  [da[0] + ' backgc'] + list(da[1:]) if int(da[1].split(' ')[0][1:]) in backcolor1 else da   for da in datac]
+    datad = [  [da[0] + ' backgc'] + list(da[1:]) if int(da[1].split(' ')[0][1:]) in backcolor1 else da   for da in datad]
+
+    # 设置字体加粗
+    dataa = [  [da[0] + ' bold'] + list(da[1:]) if int(da[1].split(' ')[0][1:]) in fontbold1 else da   for da in dataa]
+    datac = [  [da[0] + ' bold'] + list(da[1:]) if int(da[1].split(' ')[0][1:]) in fontbold1 else da   for da in datac]
+    datad = [  [da[0] + ' bold'] + list(da[1:]) if int(da[1].split(' ')[0][1:]) in fontbold1 else da   for da in datad]
+
+    # 文字居中
+    datac = [  [da[0] + ' center'] + list(da[1:]) for da in datac]
+    datad = [  [da[0] + ' center'] + list(da[1:]) for da in datad]
+
 
     data = zip(dataa,datac,datad)
 
@@ -632,7 +687,7 @@ def cash_flow_view(request,id_):
             resda = bd6
         if resda:
             return round(resda,2)
-        return resda
+        return ""
 
 
 
@@ -653,34 +708,70 @@ def cash_flow_view(request,id_):
 
     if year:
         bal_data = CashFlow.objects.filter(companyInfo=CompanyInfo.objects.get(user=request.user),year=year)
-        bal_dict = { da.name:da.value for da in bal_data}
+        bal_dict = { da.name:da.value if da.value else '' for da in bal_data}
     else:
         bal_dict = {}
 
-    datab = [   ('b%s'%i ,s.strip('\n'))      for i,s in enumerate(cash_flow_strb.split('\n'),5)   ]
-    datae = [   ('e%s'%i ,s.strip('\n'))      for i,s in enumerate(cash_flow_stre.split('\n'),5)   ]
+    datab = [   ('','b%s'%i ,s.strip('\n'))      for i,s in enumerate(cash_flow_strb.split('\n'),5)   ]
+    datae = [   ('','e%s'%i ,s.strip('\n'))      for i,s in enumerate(cash_flow_stre.split('\n'),5)   ]
     datad = []
     datag = []
 
 
     for i in range(5,39):
         if i in (7,18,19,20,24,30,33,34,      8,11,12,13,45,55):
-            datad.append(('d%s'%i,True,bal_dict.get('d%s'%i,'')))
+            datad.append(('','d%s'%i,True,bal_dict.get('d%s'%i,'')))
         elif i in (6,17,22,23,28,29):
-            datad.append(('d%s'%i,get_other_data('d%s'%i)))
+            datad.append(('','d%s'%i,get_other_data('d%s'%i)))
         else:
-            datad.append(('d%s'%i,False))
+            datad.append(('','d%s'%i,False))
 
 
     for i in range(5,39):
         if i in (7,9,13,14,      10,15,17,27,28,29,36,37):
-            datag.append(('g%s'%i,True,bal_dict.get('g%s'%i,'')))
+            datag.append(('','g%s'%i,True,bal_dict.get('g%s'%i,'')))
         elif i in (6,8,11,12,16,18,19,20,34,35):
-            datag.append(('g%s'%i,get_other_data('g%s'%i)))
+            datag.append(('','g%s'%i,get_other_data('g%s'%i)))
         else:
-            datag.append(('g%s'%i,False))
+            datag.append(('','g%s'%i,False))
     # print('----------changdu----------')
     # print(len(datab),len(datad),len(datae),len(datag))
+
+
+
+
+
+
+    backcolor1 = [6,10,14,15,17,21,22,23,25,26,28,29,31,35,36,38]
+    backcolor2 = [6,8,11,12,16,18,19,20,21,22,34,35,38]
+
+    fontbold1 = [5,9,14,15,16,21,25,26,27,31,35,36,37,38]
+    fontbold2 = [5,22,26,33,38]
+
+    # 设置底色
+    datab = [  [da[0] + ' backgc'] + list(da[1:]) if int(da[1].split(' ')[0][1:]) in backcolor1 else da   for da in datab]
+    datad = [  [da[0] + ' backgc'] + list(da[1:]) if int(da[1].split(' ')[0][1:]) in backcolor1 else da   for da in datad]
+
+    datae = [  [da[0] + ' backgc'] + list(da[1:]) if int(da[1].split(' ')[0][1:]) in backcolor2 else da   for da in datae]
+    datag = [  [da[0] + ' backgc'] + list(da[1:]) if int(da[1].split(' ')[0][1:]) in backcolor2 else da   for da in datag]
+
+
+    # 设置字体加粗
+    datab = [  [da[0] + ' bold'] + list(da[1:]) if int(da[1].split(' ')[0][1:]) in fontbold1 else da   for da in datab]
+    datad = [  [da[0] + ' bold'] + list(da[1:]) if int(da[1].split(' ')[0][1:]) in fontbold1 else da   for da in datad]
+
+    datae = [  [da[0] + ' bold'] + list(da[1:]) if int(da[1].split(' ')[0][1:]) in fontbold2 else da   for da in datae]
+    datag = [  [da[0] + ' bold'] + list(da[1:]) if int(da[1].split(' ')[0][1:]) in fontbold2 else da   for da in datag]
+
+
+
+    # 文字居中
+    datad = [  [da[0] + ' center'] + list(da[1:]) for da in datad]
+    datag = [  [da[0] + ' center'] + list(da[1:]) for da in datag]
+
+
+
+
     data = zip(datab,datad,datae,datag)
 
 

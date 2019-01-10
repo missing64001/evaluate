@@ -180,7 +180,8 @@ def my_register(request):
     errors = []
     incubators = Incubator.objects.all()
     if request.method == 'POST':
-        
+
+
 
         if request.POST['password'] != request.POST['password2']:
             errors.append('两次输入密码不一致')
@@ -211,9 +212,14 @@ def my_register(request):
         if errors and get_user_group(request) != 'super':
             errors = ['　　'.join(errors)]
             return render(request,'res.html',{'errors':errors,'incubators':incubators,'issuper':False})
-        elif errors:
-            messages.error(request, '\n'.join(errors))
-            return HttpResponseRedirect('/res_in/')
+
+        elif get_user_group(request) == 'super':
+            if not request.POST['username']:
+                errors.append('请输入用户名')
+
+            if errors:
+                messages.error(request, '\n'.join(errors))
+                return HttpResponseRedirect('/admin/auth/user/res_in')
 
 
         account = request.POST['username']

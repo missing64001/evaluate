@@ -72,7 +72,7 @@ $(function(){
 
         item.find('div.control-label').css({'padding-top':'15px'})
         item.find('div.controls').css({'padding-top':'10px'})
-        item.find('div.control-label').append('<label for="id_name">企业所处外部环境</label>')
+        item.find('div.control-label').append('<label for="id_name">企业所处外部环境:</label>')
         item.find('div.controls').append(s1)
         item.find('div.controls').append(isocre1)
         item.find('div.controls').append($("<h5>根据企业经营业务与政府优先发展的战略性优势产业契合度自评；</h5>"))
@@ -82,7 +82,7 @@ $(function(){
         z.append(item)
 
         var item = $(itemstr)
-        item.find('div.control-label').append('<label for="id_name">企业主营产品及市场开拓</label>')
+        item.find('div.control-label').append('<label for="id_name">企业主营产品及市场开拓:</label>')
         item.find('div.controls').append(s2)
         item.find('div.controls').append(isocre1)
         item.find('div.controls').append($("<h5>企业主营产品或服务及业务领域稳定性自评；</h5>"))
@@ -91,7 +91,7 @@ $(function(){
         z.append(item)
 
         var item = $(itemstr)
-        item.find('div.control-label').append('<label for="id_name">企业核心技术及研发实力</label>')
+        item.find('div.control-label').append('<label for="id_name">企业核心技术及研发实力:</label>')
         item.find('div.controls').append(s3)
         item.find('div.controls').append(isocre1)
         item.find('div.controls').append($("<h5>企业核心技术创新性、技术所产阶段自评；</h5>"))
@@ -100,7 +100,7 @@ $(function(){
         z.append(item)
 
         var item = $(itemstr)
-        item.find('div.control-label').append('<label for="id_name">企业经营及管理团队</label>')
+        item.find('div.control-label').append('<label for="id_name">企业经营及管理团队:</label>')
         item.find('div.controls').append(s4)
         item.find('div.controls').append(isocre1)
         item.find('div.controls').append($("<h5>管理层学历状况、主要管理层在同行业从业经历、从业时间、管理经验、经营业绩及相关社会背景自评；</h5>"))

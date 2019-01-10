@@ -31,7 +31,7 @@ class m1(MiddlewareMixin):
                 {'label': '报告管理',
                   'app': 'institution',
                   'models': (
-                            {'label': '生成报告', 'url': '/admin/institution/report'},
+                            {'label': '生成报告', 'url': '/admin/institution/report/'},
                             'InvestReport',
                             'BankReport',
                 )},
@@ -45,7 +45,7 @@ class m1(MiddlewareMixin):
                 )},
 
                 {'label': '反馈信息',
-                  'app': 'incubator',
+                  'app': 'institution',
                   'models': (
 
                             'institution.ReportBack',

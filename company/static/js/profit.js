@@ -226,7 +226,12 @@ function cal(str) {
             total = total + parseFloat($('.input .'+s).val()) * sign
         }
     }
-    $("." + res_s + " span").text(total.toFixed(2))
+    if (total != 0){
+        $("." + res_s + " span").text(total.toFixed(2))
+    }
+    else{
+        $("." + res_s + " span").text('-')
+    }
 }
 
 

@@ -1,11 +1,51 @@
- {% extends "balance.html" %} 
-{% load admin_static %}
-{% block extrahead %}
-<script type="text/javascript" src="{% static 'js/jquery-1.11.3.js' %}"></script>
+{% extends "admin/base_site.html" %}
+{% load i18n admin_static admin_modify suit_tags admin_urls %}
+{% load url from suit_compat %}
 
+{% block extrahead %}{{ block.super }}
+  {% url 'admin:jsi18n' as jsi18nurl %}
+  <script type="text/javascript" src="{{ jsi18nurl|default:"../../../jsi18n/" }}"></script>
 
+  {{ media }}
 
 {% endblock %}
+
+
+{% block extrajs %}
+  {{ block.super }}
+
+  {% if 'CONFIRM_UNSAVED_CHANGES'|suit_conf %}
+    <!-- Warn on leaving unsaved form -->
+    <script src="{% static 'suit/js/suit-form-confirm.js' %}"></script>
+    <script type="text/javascript">
+      confirmExitIfModified('{% firstof opts.model_name opts.module_name %}_form', '{% trans 'You have unsaved changes' %}.');
+    </script>
+  {% endif %}
+
+  {% if adminform.model_admin.suit_form_tabs %}
+    <script type="text/javascript">
+    (function ($) {
+      $(function () {
+        $('#suit_form_tabs').suit_form_tabs();
+      });
+    }(Suit.$))
+    </script>
+  {% endif %}
+        
+  <script>
+    (function ($) {
+      $(function () {
+        $("#{% firstof opts.model_name opts.module_name %}_form").suit_form_debounce();
+      });
+    }(Suit.$))    
+  </script>
+
+{% endblock %}
+
+{% block extrastyle %}
+  {{ block.super }}
+{% endblock %}
+
 {% block content %}
   <div id="content-main" class="inner-two-columns">
     <form enctype="multipart/form-data" action="/res/" method="post"
@@ -54,19 +94,19 @@
     
       <div class="control-group form-row field-name ">
         
-          <div><div class="control-label"><label for="id_name">用户名:</label></div><div class="controls"><input AUTOCOMPLETE="off" style="height: 28px;width: 220px;" type="text" name="username" class="vTextField" maxlength="50" id="id_name" required /></div></div>
+          <div><div class="control-label"><label class="required" for="id_name" >用户名:</label></div><div class="controls"><input AUTOCOMPLETE="off" style="height: 28px;width: 220px;" type="text" name="username" class="vTextField" maxlength="50" id="id_name1" required /></div></div>
         
       </div>
     
       <div class="control-group form-row field-name ">
         
-          <div><div class="control-label"><label for="id_name">密码:</label></div><div class="controls"><input AUTOCOMPLETE="off" style="height: 28px;width: 220px;" type="password" name="password" class="vTextField" maxlength="50" id="id_name" required /></div></div>
+          <div><div class="control-label"><label class="required" for="id_name">密码:</label></div><div class="controls"><input AUTOCOMPLETE="off" style="height: 28px;width: 220px;" type="password" name="password" class="vTextField" maxlength="50" id="id_name2" required /></div></div>
         
       </div>
     
       <div class="control-group form-row field-name ">
         
-          <div><div class="control-label"><label for="id_name">确认密码:</label></div><div class="controls"><input AUTOCOMPLETE="off" style="height: 28px;width: 220px;" type="password" name="password2" class="vTextField" maxlength="50" id="id_name" required /></div></div>
+          <div><div class="control-label"><label class="required" for="id_name">确认密码:</label></div><div class="controls"><input AUTOCOMPLETE="off" style="height: 28px;width: 220px;" type="password" name="password2" class="vTextField" maxlength="50" id="id_name3" required /></div></div>
         
       </div>
     
@@ -81,13 +121,13 @@
 
       <div class="control-group form-row field-name ">
         
-          <div><div class="control-label"><label for="id_name">名称:</label></div><div class="controls"><input AUTOCOMPLETE="off" style="height: 28px;width: 220px;" type="text" name="name" class="vTextField" maxlength="50" id="id_name" required /></div></div>
+          <div><div class="control-label"><label class="required" for="id_name">名称:</label></div><div class="controls"><input AUTOCOMPLETE="off" style="height: 28px;width: 220px;" type="text" name="name" class="vTextField" maxlength="50" id="id_name4" required /></div></div>
         
       </div>
 
       <div class="control-group form-row field-name ">
         
-          <div><div class="control-label"><label for="id_name">电话:</label></div><div class="controls"><input AUTOCOMPLETE="off" style="height: 28px;width: 220px;" type="text" name="phone" class="vTextField" maxlength="50" id="id_name" required /></div></div>
+          <div><div class="control-label"><label class="required" for="id_name">电话:</label></div><div class="controls"><input AUTOCOMPLETE="off" style="height: 28px;width: 220px;" type="text" name="phone" class="vTextField" maxlength="50" id="id_name5" required /></div></div>
         
       </div>
 
@@ -123,32 +163,6 @@
 
 
         
-            <script type="text/javascript">
-                (function($) {
-                    $(document).ready(function() {
-                        $('.add-another').click(function(e) {
-                            e.preventDefault();
-                            showAddAnotherPopup(this);
-                        });
-                        $('.related-lookup').click(function(e) {
-                            e.preventDefault();
-                            showRelatedObjectLookupPopup(this);
-                        });
-                    
-                    });
-                })(django.jQuery);
-            </script>
-        
-
-        
-        
-<script type="text/javascript"
-        id="django-admin-prepopulated-fields-constants"
-        src="/static/admin/js/prepopulate_init.js"
-        data-prepopulated-fields="[]">
-</script>
-
-
       </div>
     </form>
   </div>

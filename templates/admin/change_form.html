@@ -81,6 +81,7 @@
 
 {% block content %}
   <div id="content-main" class="inner-two-columns">
+
     <form {% if has_file_field %}enctype="multipart/form-data" {% endif %}action="{{ form_url }}" method="post"
           id="{% firstof opts.model_name opts.module_name %}_form" class="form-horizontal" novalidate>
 
@@ -125,7 +126,7 @@
 
           {% block field_sets %}
             {% for fieldset in adminform %}
-              {% include "admin/institution/bankreport/fieldset.html" %}
+              {% include "admin/includes/fieldset.html" %}
             {% endfor %}
           {% endblock %}
 
@@ -139,6 +140,7 @@
               {% include inline_admin_formset.opts.template %}
             {% endfor %}
           {% endblock %}
+
         </div>
 
         {% block after_related_objects %}{% endblock %}

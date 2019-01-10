@@ -24,8 +24,9 @@
 
 {% csrf_token %}
 <div class="submit-row clearfix">
-  <button  class="btn btn-high btn-info" name="_save" onclick="save_h()">保存</button>
-  <button  class="btn btn-high btn-info" name="_del" onclick="deldata()">删除</button>
+  <button style="margin-right: 0px" class="btn btn-high btn-info" name="_save" onclick="save_h()">保存</button>
+<!--   <button  class="btn btn-high btn-info" name="_del" onclick="deldata()">删除</button> -->
+  <a href="#" onclick="deldata()">删除</a>
 
 </div>
 
@@ -122,28 +123,32 @@
         <h4 style="margin-top:20px">资产负债表</h4>
         <fieldset style="margin: 0px auto;background-color: #F6F7F8;">
 
-            <table class="profit">
+            <div style="margin:30px 0px 0px 50px;font-size: 13px;color:#666 "><span>*上传模板后数据显示在下方表格</span></div>
+            <table style="margin:50px;margin-top:13px">
                     <tr >
-                        <th> 项目 </th>
-                        <th> 上年金额</th>
-                        <th> 本年金额</th>
+                        <td> <span>项目</span> </td>
+                        <td class="center"> <span>上年金额</span></td>
+                        <td class="center"> <span>本年金额</span></td>
                     </tr>
+
+
                     {%for da in data%}
                     <tr >
                         {%for d in da%}
-                            {%if d.1 == False %}
-                                <td class="{{d.0}}"><span></span> </td>
-                            {% elif d.1 == True%}
+                            {%if d.2 == False %}
+                                <td class="{{d.1}}{{d.0}}"><span></span> </td>
+                            {% elif d.2 == True%}
                                 <td class="input">
-                                    <input type="text" class="{{d.0}} " name="{{d.0}} " value="{{d.2}}" placeholder="请填写" autocomplete="off">
+                                    <input type="text" class="{{d.1}}{{d.0}} " name="{{d.1}} " value='{{d.3|floatformat:"2"}}' placeholder="请填写" autocomplete="off">
                                 </td>
                                 
                             {%else%}
-                                <td class="{{d.0}}"> <span>{{d.1}}</span></td>
+                                <td class="{{d.1}}{{d.0}}"> <span>{{d.2}}</span></td>
                             {% endif %}
                         {%endfor%}
                     </tr>
                     {%endfor%}
+
                 </table>
 
 
