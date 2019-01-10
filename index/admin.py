@@ -190,7 +190,7 @@ class UserAdmin(admin.ModelAdmin):
     @admin.register(Bonus)
     class BonusAdmin(ForeignKeyAutocompleteAdmin):
         related_search_fields = {
-               'companyInfo': ('name'),
+               'companyInfo': ('name','incubator'),
             }
         list_display = ('companyInfo','incubatorr','item','note','value')
         search_fields = ('companyInfo__name','companyInfo__incubator__name')
@@ -206,7 +206,7 @@ class UserAdmin(admin.ModelAdmin):
     @admin.register(Subtraction)
     class SubtractionAdmin(ForeignKeyAutocompleteAdmin):
         related_search_fields = {
-               'companyInfo': ('name'),
+               'companyInfo': ('name','incubator'),
             }
         list_display = ('companyInfo','incubatorr','item','note','value')
         search_fields = ('companyInfo__name','companyInfo__incubator__name')
@@ -215,7 +215,7 @@ class UserAdmin(admin.ModelAdmin):
 
             return obj.companyInfo.incubator
         incubatorr.short_description = '机构'
-        
+
         class Media:
             js = ('/static/js/deal_bug.js',)
 
