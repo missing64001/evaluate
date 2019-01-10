@@ -6,6 +6,7 @@ from institution.models import Institution
 
 from django.contrib.auth.models import User,Group
 from django.views.decorators.cache import never_cache
+from django_extensions.admin import ForeignKeyAutocompleteAdmin
 
 class IncubatorInl(admin.StackedInline):
     model = Incubator
@@ -187,7 +188,10 @@ class UserAdmin(admin.ModelAdmin):
     # 
     # 
     @admin.register(Bonus)
-    class BonusAdmin(admin.ModelAdmin):
+    class BonusAdmin(ForeignKeyAutocompleteAdmin):
+        related_search_fields = {
+               'companyInfo': ('name'),
+            }
         list_display = ('companyInfo','incubator','item','note','value')
         search_fields = ('companyInfo__name','companyInfo__incubator__name')
 
@@ -195,8 +199,15 @@ class UserAdmin(admin.ModelAdmin):
 
             return obj.companyInfo.incubator
         incubator.short_description = '机构'
+
+        class Media:
+            js = ('/static/js/jquery-migrate-1.2.1.js',)
+            
     @admin.register(Subtraction)
-    class SubtractionAdmin(admin.ModelAdmin):
+    class SubtractionAdmin(ForeignKeyAutocompleteAdmin):
+        related_search_fields = {
+               'companyInfo': ('name'),
+            }
         list_display = ('companyInfo','incubator','item','note','value')
         search_fields = ('companyInfo__name','companyInfo__incubator__name')
 

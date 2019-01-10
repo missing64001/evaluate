@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'company',
     'incubator',
     'institution',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
