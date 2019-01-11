@@ -238,8 +238,10 @@ def balance_add_view(request):
 def balance_view(request,id_):
     if id_ == 'n':
         year = None
+        isdel = True
     else:
         year = Balance.objects.get(id=id_).year
+        isdel = False
 
     # year = request.GET.get('year')
 
@@ -327,7 +329,7 @@ def balance_view(request,id_):
     else:
         status = False
 
-    return render(request,'balance.html',{'data':data,'status':status,'year':year})
+    return render(request,'balance.html',{'data':data,'status':status,'year':year,'isdel':isdel})
 
 
 def balance_submit_table_view(request):
@@ -431,8 +433,10 @@ def profit_view(request,id_):
     #     year = max(years)
     if id_ == 'n':
         year = None
+        isdel = True
     else:
         year = Profit.objects.get(id=id_).year
+        isdel = False
 
     bal_data = Profit.objects.all().filter(companyInfo=CompanyInfo.objects.get(user=request.user),year=year)
     bal_dict = { da.name:da.value if da.value else '' for da in bal_data}
@@ -483,7 +487,7 @@ def profit_view(request,id_):
         status = False
 
 
-    return render(request,'profit.html',{'data':data,'status':status,'year':year})
+    return render(request,'profit.html',{'data':data,'status':status,'year':year,'isdel':isdel})
 
 
 
@@ -703,8 +707,10 @@ def cash_flow_view(request,id_):
 
     if id_ == 'n':
         year = None
+        isdel = True
     else:
         year = CashFlow.objects.get(id=id_).year
+        isdel = False
 
     if year:
         bal_data = CashFlow.objects.filter(companyInfo=CompanyInfo.objects.get(user=request.user),year=year)
@@ -783,7 +789,7 @@ def cash_flow_view(request,id_):
     else:
         status = False
     # print(year)
-    return render(request,'cash_flow.html',{'data':data,'status':status,'year':year})
+    return render(request,'cash_flow.html',{'data':data,'status':status,'year':year,'isdel':isdel})
 
     
 

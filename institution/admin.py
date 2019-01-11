@@ -20,8 +20,14 @@ class InstitutionAdmin(admin.ModelAdmin):
 class InvestReportAdmin(admin.ModelAdmin):
     readonly_fields = ('companyInfo',)
     fields = ('institution','companyInfo')
-    list_display=['companyInfo','totle','create_date']
+    list_display=['companyInfo','totle','create_date','aopt']
     search_fields = ('companyInfo__name',)
+
+    def aopt(self,obj):
+        return format_html("""<input style='width:90px'  type='button' onclick='location.href=("/admin/institution/investreport/{}/change/")' value=发送报告 >"""
+                ,obj.id)
+    aopt.short_description = '操作'
+
 
     def get_user_group_1(self,obj):
         return format_html('''<span class="get_user_group">机构用户</span> <script type="text/javascript" src="/static/js/set_head.js"></script>''')
@@ -73,9 +79,13 @@ class InvestReportAdmin(admin.ModelAdmin):
 class BankReportAdmin(admin.ModelAdmin):
     readonly_fields = ('companyInfo',)
     fields = ('institution','companyInfo')
-    list_display=['companyInfo','totle','create_date']
+    list_display=['companyInfo','totle','create_date','aopt']
     search_fields = ('companyInfo__name',)
 
+    def aopt(self,obj):
+        return format_html("""<input style='width:90px'  type='button' onclick='location.href=("/admin/institution/bankreport/{}/change/")' value=发送报告 >"""
+                ,obj.id)
+    aopt.short_description = '操作'
     
     def get_user_group_1(self,obj):
         return format_html('''<span class="get_user_group">机构用户</span> <script type="text/javascript" src="/static/js/set_head.js"></script>''')
@@ -302,3 +312,5 @@ class ReportBackAdmin(admin.ModelAdmin):
             return qs.filter(investreport__companyInfo__user=request.user,iscompanyview=2) | qs.filter(bankreport__companyInfo__user=request.user,iscompanyview=2)
 
 
+    class Media:
+        js = ('/static/js/debug_reportbackadmin.js',)

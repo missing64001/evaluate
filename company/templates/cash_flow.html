@@ -23,11 +23,12 @@
         <div class="box save-box">
 
 {% csrf_token %}
-<div class="submit-row clearfix">
+<div style="width: 150px;margin: 0px 5px" class="submit-row clearfix">
   <button style="margin-right: 0px" class="btn btn-high btn-info" name="_save" onclick="save_h()">保存</button>
 <!--   <button  class="btn btn-high btn-info" name="_del" onclick="deldata()">删除</button> -->
-  <a href="#" onclick="deldata()">删除</a>
-
+  {% if not isdel %}
+  <a href="#" style="color: #b94a48" onclick="deldata()">删除</a>
+  {% endif %}
 </div>
 
 
@@ -74,7 +75,7 @@
       
       <div class="control-group form-row field-note ">
         
-          <div><div class="control-label"><label>下载表格模板:</label></div>
+          <div><div style="padding-top:8px;" class="control-label"><label>下载表格模板:</label></div>
           <div class="controls">
             <input type="button" value="点击下载" onclick="location.href='/static/baobiao.xls'">
         </div>

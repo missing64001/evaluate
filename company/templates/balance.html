@@ -62,7 +62,11 @@
 <div style="width: 150px;margin: 0px 5px" class="submit-row clearfix">
   <button style="margin-right: 0px" class="btn btn-high btn-info" name="_save" onclick="save_h()">保存</button>
 <!--   <button  class="btn btn-high btn-info" name="_del" onclick="deldata()">删除</button> -->
+
+  {% if not isdel %}
   <a href="#" style="color: #b94a48" onclick="deldata()">删除</a>
+  {% endif %}
+  
 </div>
 
 
@@ -108,7 +112,7 @@
       
       <div class="control-group form-row field-note ">
         
-          <div><div class="control-label"><label>下载表格模板:</label></div>
+          <div><div style="padding-top:8px;" class="control-label"><label>下载表格模板:</label></div>
           <div class="controls">
             <input type="button" value="点击下载" onclick="location.href='/static/baobiao.xls'">
         </div>
@@ -158,7 +162,7 @@
         <fieldset style="margin: 0px auto;background-color: #F6F7F8;">
 
             <div style="margin:30px 0px 0px 50px;font-size: 13px;color:#666 "><span>*上传模板后数据显示在下方表格</span></div>
-            <table style="margin:50px;margin-top:13px">
+            <table style="margin:50px;margin-top:13px;">
               <tr >
                   <td> <span> 资产</span>     </td>
                   <td class="center"> <span> 年初余额</span> </td>

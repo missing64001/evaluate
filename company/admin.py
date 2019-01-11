@@ -600,6 +600,8 @@ class RejectReasonAdmin(admin.ModelAdmin):
     search_fields = ('companyInfo__name', 'text')
     list_editable = ('is_alive',)
 
+    class Media:
+        js = ('/static/js/debug_rejectreasonadmin.js',)
 
 @admin.register(Balance)
 class BalanceAdmin(admin.ModelAdmin):
