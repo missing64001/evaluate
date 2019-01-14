@@ -198,12 +198,16 @@ def globar_var(request):
             report_data += [fin_totle,bonus,subtraction,totle]
 
 
+            data['report_data'] = report_data
 
+
+        if get_user_group(request,'super') and request.path in ('/admin/index/bonus/','/admin/index/subtraction/'):
+            
+            data['global_is_action'] = 'global_is_action'
             
 
-
-
-            data['report_data'] = report_data
+            # res = re.search(url,request.path)
+            # if res
 
 
 

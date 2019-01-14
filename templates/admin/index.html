@@ -16,33 +16,275 @@
 {% block content %}
   <div id="content-main">
     {% if app_list %}
-      {% for app in app_list %}
-        <div class="module">
-          <table class="table-overview applist" summary="{% blocktrans with name=app.name %}Models available in the {{ name }} application.{% endblocktrans %}">
-            <caption><a href="{{ app.app_url }}" class="section">{% trans app.name %}</a></caption>
-            {% for model in app.models %}
-              <tr>
-                <th scope="row">{{ model.name }}</th>
-                {% if model.admin_url %}
-                  <td>
-                    <a href="{{ model.admin_url }}" class="changelink icon">{% trans 'Change' %}</a>
-                  </td>
-                {% else %}
-                  <td>&nbsp;</td>
-                {% endif %}
 
-                {% if model.add_url %}
-                  <td><a href="{{ model.add_url }}" class="addlink icon"><i
-                          class="icon-plus-sign icon-alpha75"></i>{% trans 'Add' %}
-                  </a></td>
-                {% else %}
-                  <td>&nbsp;</td>
-                {% endif %}
+      {% if global_group == 'super' %}
+        <div class="module">
+          <table class="table-overview applist" summary="Models available in the 用户数据管理 application.">
+            <caption><a href="/admin/incubator/incubator/" class="section">用户数据管理</a></caption>
+              <tbody><tr>
+                <th scope="row">孵化器数据统计</th>
+                
+                  <td>
+                    <a href="/admin/incubator/incubator/" class="changelink icon">修改</a>
+                  </td>
               </tr>
-            {% endfor %}
-          </table>
+            
+              <tr>
+                <th scope="row">企业数据统计</th>
+                
+                  <td>
+                    <a href="/admin/company/companyinfo/" class="changelink icon">修改</a>
+                  </td>
+              </tr>
+          </tbody></table>
         </div>
-      {% endfor %}
+
+
+        <div class="module">
+          <table class="table-overview applist" summary="Models available in the 评分管理 application.">
+            <caption><a href="/admin/company/independentevaluationofenterprises/" class="section">评分管理</a></caption>
+              <tbody><tr>
+                <th scope="row">校正评价</th>
+                
+                  <td>
+                    <a href="/admin/company/independentevaluationofenterprises/" class="changelink icon">修改</a>
+                  </td>
+              </tr>
+            
+              <tr>
+                <th scope="row">加分项</th>
+                
+                  <td>
+                    <a href="/admin/index/bonus/" class="changelink icon">修改</a>
+                  </td>
+              </tr>
+            
+              <tr>
+                <th scope="row">减分项</th>
+                
+                  <td>
+                    <a href="/admin/index/subtraction/" class="changelink icon">修改</a>
+                  </td>
+              </tr>
+          </tbody></table>
+        </div>
+
+        <div class="module">
+          <table class="table-overview applist" summary="Models available in the 报告管理 application.">
+            <caption><a href="/admin/institution/report/" class="section">报告管理</a></caption>
+              <tbody><tr>
+                <th scope="row">生成报告</th>
+                
+                  <td>
+                    <a href="/admin/institution/report/" class="changelink icon">修改</a>
+                  </td>
+              </tr>
+            
+              <tr>
+                <th scope="row">发送投资类金融报告</th>
+                
+                  <td>
+                    <a href="/admin/institution/investreport/" class="changelink icon">修改</a>
+                  </td>
+              </tr>
+            
+              <tr>
+                <th scope="row">发送银行类金融报告</th>
+                
+                  <td>
+                    <a href="/admin/institution/bankreport/" class="changelink icon">修改</a>
+                  </td>
+              </tr>
+          </tbody></table>
+        </div>
+
+
+        <div class="module">
+          <table class="table-overview applist" summary="Models available in the 账号管理 application.">
+            <caption><a href="/admin/auth/user/" class="section">账号管理</a></caption>
+              <tbody><tr>
+                <th scope="row">账号管理</th>
+                
+                  <td>
+                    <a href="/admin/auth/user/" class="changelink icon">修改</a>
+                  </td>
+              </tr>
+          </tbody></table>
+        </div>
+
+
+        <div class="module">
+          <table class="table-overview applist" summary="Models available in the 反馈信息 application.">
+            <caption><a href="/admin/institution/reportback/" class="section">反馈信息</a></caption>
+              <tbody><tr>
+                <th scope="row">反馈信息</th>
+                
+                  <td>
+                    <a href="/admin/institution/reportback/" class="changelink icon">修改</a>
+                  </td>
+              </tr>
+          </tbody></table>
+        </div>
+
+
+
+      {% elif global_group == '企业用户' %}
+        <div class="module">
+          <table class="table-overview applist" summary="Models available in the 基本信息 application.">
+            <caption><a href="/admin/company/companyinfo/" class="section">基本信息</a></caption>
+              <tbody><tr>
+                <th scope="row">企业信息</th>
+                
+                  <td>
+                    <a href="/admin/company/companyinfo/" class="changelink icon">修改</a>
+                  </td>
+              </tr>
+          </tbody></table>
+        </div>
+
+        <div class="module">
+          <table class="table-overview applist" summary="Models available in the 财务数据 application.">
+            <caption><a href="/admin/company/balance/" class="section">财务数据</a></caption>
+              <tbody><tr>
+                <th scope="row">资产负债表</th>
+                
+                  <td>
+                    <a href="/admin/company/balance/" class="changelink icon">修改</a>
+                  </td>
+              </tr>
+
+              <tr>
+                <th scope="row">利润表</th>
+                
+                  <td>
+                    <a href="/admin/company/profit/" class="changelink icon">修改</a>
+                  </td>
+              </tr>
+
+              <tr>
+                <th scope="row">现金流量表</th>
+                
+                  <td>
+                    <a href="/admin/company/cashflow/" class="changelink icon">修改</a>
+                  </td>
+              </tr>
+
+          </tbody></table>
+        </div>
+
+        <div class="module">
+          <table class="table-overview applist" summary="Models available in the 自主评价 application.">
+            <caption><a href="/admin/company/independentevaluationofenterprises/" class="section">自主评价</a></caption>
+              <tbody><tr>
+                <th scope="row">自主评价</th>
+                
+                  <td>
+                    <a href="/admin/company/independentevaluationofenterprises/" class="changelink icon">修改</a>
+                  </td>
+              </tr>
+          </tbody></table>
+        </div>
+
+        <div class="module">
+          <table class="table-overview applist" summary="Models available in the 企业进度 application.">
+            <caption><a href="/admin/company/company_status/" class="section">企业进度</a></caption>
+              <tbody><tr>
+                <th scope="row">企业进度</th>
+                
+                  <td>
+                    <a href="/admin/company/company_status/" class="changelink icon">修改</a>
+                  </td>
+              </tr>
+          </tbody></table>
+        </div>
+
+        <div class="module">
+          <table class="table-overview applist" summary="Models available in the 反馈信息 application.">
+            <caption><a href="/admin/institution/reportback/" class="section">反馈信息</a></caption>
+              <tbody><tr>
+                <th scope="row">反馈信息</th>
+                
+                  <td>
+                    <a href="/admin/institution/reportback/" class="changelink icon">修改</a>
+                  </td>
+              </tr>
+          </tbody></table>
+        </div>
+
+
+
+
+      {% elif global_group == '孵化器用户' %}
+        <div class="module">
+          <table class="table-overview applist" summary="Models available in the 基本信息 application.">
+            <caption><a href="/admin/company/companyinfo/" class="section">基本信息</a></caption>
+              <tbody><tr>
+                <th scope="row">企业基本信息</th>
+                
+                  <td>
+                    <a href="/admin/company/companyinfo/" class="changelink icon">修改</a>
+                  </td>
+              </tr>
+
+
+              <tr>
+                <th scope="row">校正评价</th>
+                
+                  <td>
+                    <a href="/admin/company/independentevaluationofenterprises/" class="changelink icon">修改</a>
+                  </td>
+              </tr>
+
+
+              <tr>
+                <th scope="row">驳回理由</th>
+                
+                  <td>
+                    <a href="/admin/company/rejectreason/" class="changelink icon">修改</a>
+                  </td>
+              </tr>
+
+              <tr>
+                <th scope="row">反馈信息</th>
+                
+                  <td>
+                    <a href="/admin/institution/reportback/" class="changelink icon">修改</a>
+                  </td>
+              </tr>
+
+          </tbody></table>
+        </div>
+
+
+
+
+      {% elif global_group == '机构用户' %}
+        <div class="module">
+          <table class="table-overview applist" summary="Models available in the 基本信息 application.">
+            <caption><a href="/admin/institution/" class="section">基本信息</a></caption>
+              <tbody><tr>
+                <th scope="row">金融报告</th>
+                  <td>
+                    <a href="/admin/institution/" class="changelink icon">修改</a>
+                  </td>
+              </tr>
+
+
+
+              <tr>
+                <th scope="row">反馈信息</th>
+                
+                  <td>
+                    <a href="/admin/institution/reportback/" class="changelink icon">修改</a>
+                  </td>
+              </tr>
+
+          </tbody></table>
+        </div>
+      {% endif %}
+
+
+      
     {% else %}
       <p>{% trans "You don't have permission to edit anything." %}</p>
     {% endif %}

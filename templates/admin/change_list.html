@@ -135,8 +135,10 @@
 
 {# ++++++++++++++++++++++++evalute change++++++++++++++++++++++++ #}
 {# ++++++++++++++++++++++++evalute change++++++++++++++++++++++++ #}
-              <!-- {% if action_form and actions_on_bottom and cl.full_result_count %}
-                {% admin_actions %}{% endif %} -->
+              {% if global_is_action == 'global_is_action' %}
+              {% if action_form and actions_on_bottom and cl.full_result_count %}
+                {% admin_actions %}{% endif %}
+              {% endif %}
 {# ------------------------evalute change------------------------ #}
 {# ------------------------evalute change------------------------ #}
 

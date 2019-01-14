@@ -7,7 +7,7 @@ $(function () {
             if (ac.text() == '-'){
                 $(as[i]).parent().remove()
             }
-            console.log(ac.text())
+            // console.log(ac.text())
         }
     }
     var as = $('.field-xxtemp1 .field-xxtemp1')

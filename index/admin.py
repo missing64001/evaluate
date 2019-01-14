@@ -7,6 +7,8 @@ from institution.models import Institution
 from django.contrib.auth.models import User,Group
 from django.views.decorators.cache import never_cache
 from django_extensions.admin import ForeignKeyAutocompleteAdmin
+from django.contrib.auth.admin import UserAdmin as ua
+
 
 class IncubatorInl(admin.StackedInline):
     model = Incubator
@@ -52,9 +54,10 @@ class InstitutionInl(admin.StackedInline):
 
 admin.site.unregister(User)
 @admin.register(User)
-class UserAdmin(admin.ModelAdmin):
+class UserAdmin(ua):
     list_display = ('username','mname','phone','email','group','owned_incubator','date_joined','is_staff')
-    fields = ('username','email','is_staff','is_active','groups')
+    fieldsets = ((None,{'fields':('username','password','email','is_staff','is_active','groups')}),)
+    readonly_fields = ('username','email')
     inlines = [IncubatorInl,InstitutionInl]
     # readonly_fields = ('groups',)
 
