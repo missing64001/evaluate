@@ -20,8 +20,15 @@ class InstitutionAdmin(admin.ModelAdmin):
 class InvestReportAdmin(admin.ModelAdmin):
     readonly_fields = ('companyInfo',)
     fields = ('institution','companyInfo')
-    list_display=['companyInfo','totle','create_date','aopt']
+    list_display=['companyInfo','totle','create_date']
     search_fields = ('companyInfo__name',)
+
+
+    def get_list_display(self, request, obj=None):
+        if get_user_group(request,'super'):
+            return ['companyInfo','totle','create_date','aopt']
+        return self.list_display
+
 
     def aopt(self,obj):
         return format_html("""<input style='width:90px'  type='button' onclick='location.href=("/admin/institution/investreport/{}/change/")' value=发送报告 >"""
@@ -79,9 +86,14 @@ class InvestReportAdmin(admin.ModelAdmin):
 class BankReportAdmin(admin.ModelAdmin):
     readonly_fields = ('companyInfo',)
     fields = ('institution','companyInfo')
-    list_display=['companyInfo','totle','create_date','aopt']
+    list_display=['companyInfo','totle','create_date']
     search_fields = ('companyInfo__name',)
 
+
+    def get_list_display(self, request, obj=None):
+        if get_user_group(request,'super'):
+            return ['companyInfo','totle','create_date','aopt']
+        return self.list_display
     def aopt(self,obj):
         return format_html("""<input style='width:90px'  type='button' onclick='location.href=("/admin/institution/bankreport/{}/change/")' value=发送报告 >"""
                 ,obj.id)
