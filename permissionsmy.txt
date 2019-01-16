@@ -114,6 +114,5 @@
 机构用户,change_bankreport
 机构用户,change_institution
 机构用户,change_investreport
-机构用户,add_reportback
 机构用户,change_reportback
 机构用户,delete_reportback

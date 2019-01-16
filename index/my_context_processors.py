@@ -3,7 +3,7 @@
 
 from django.contrib.auth.models import Group
 from company.models import get_user_group,CompanyInfo
-from institution.models import BankReport,InvestReport
+from institution.models import BankReport,InvestReport,Institution
 import re
 
 def globar_var(request):
@@ -205,6 +205,11 @@ def globar_var(request):
             
             data['global_is_action'] = 'global_is_action'
             
+        elif get_user_group(request,'机构用户'):
+            user = request.user
+            obj = Institution.objects.get(user=user)
+            # print(obj.type,type(obj.type))
+            data['institution_type'] = 'invest' if obj.type==1 else 'bank'
 
             # res = re.search(url,request.path)
             # if res
