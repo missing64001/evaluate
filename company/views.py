@@ -132,9 +132,13 @@ def company_status_view(request):
         elif status == 10:
             nodes.append((status,create_date,'您已收到来自平台的反馈信息'))
                 
+    incubatorphone = cobj.incubator.phone
+    superphone = User.objects.get(id=1).first_name
+
 
     res = render(request,'company_status.html',{'nodes':reversed(nodes),'showbutton':showbutton,
-                'status_pic':status_pic,'status_text':status_text,'status_line':status_line})
+                'status_pic':status_pic,'status_text':status_text,'status_line':status_line,
+                'incubatorphone':incubatorphone,'superphone':superphone})
 
 
 

@@ -321,9 +321,9 @@ class CompanyInfoAdmin(admin.ModelAdmin):
     def get_list_display(self, request, obj=None):
         if get_user_group(request,'super'):
             self.list_editable = ('status',)
-            return ['name','phone','incubator','credit_code','business_license_pic_show','status']
+            return ['name','phone','incubator','credit_code','business_license_pic_show','status','liveness']
         elif get_user_group(request,'孵化器用户'):
-            return ['name','phone','incubator','credit_code','business_license_pic_show','new_status']
+            return ['name','phone','incubator','credit_code','business_license_pic_show','new_status','liveness']
         else:
             return self.list_display
 
@@ -415,6 +415,13 @@ class CompanyInfoAdmin(admin.ModelAdmin):
     new_status.short_description = '状态'
     # class Media:        
     #     js = ('/static/js/balance.js',)
+
+    def liveness(self,obj):
+        if obj.status >= 1:
+            return '较活跃'
+        else:
+            return '欠活跃'
+    liveness.short_description = '活跃度'
 
     def business_license_pic_show(self,obj):
 
