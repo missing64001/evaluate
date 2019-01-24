@@ -432,6 +432,7 @@ class CompanyInfoAdmin(admin.ModelAdmin):
             return '欠活跃'
 
     liveness.short_description = '活跃度'
+    livenesssuper.short_description = '活跃度'
 
     def business_license_pic_show(self,obj):
 
