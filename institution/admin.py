@@ -332,7 +332,8 @@ class ReportBackAdmin(admin.ModelAdmin):
             return qs.filter(investreport__companyInfo__incubator__user=request.user,isinstitutionview=2) | qs.filter(bankreport__companyInfo__incubator__user=request.user,isinstitutionview=2)
 
         elif get_user_group(request,'企业用户'):
-            return qs.filter(investreport__companyInfo__name=CompanyInfo.objects.get(user=request.user).name ,iscompanyview=2) | qs.filter(bankreport__companyInfo____name=CompanyInfo.objects.get(user=request.user).name ,iscompanyview=2)
+            print(CompanyInfo.objects.get(user=request.user).name)
+            return qs.filter(investreport__companyInfo__name=CompanyInfo.objects.get(user=request.user).name ,iscompanyview=2) | qs.filter(bankreport__companyInfo__name=CompanyInfo.objects.get(user=request.user).name ,iscompanyview=2)
 
 
     class Media:
