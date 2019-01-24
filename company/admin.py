@@ -418,7 +418,7 @@ class CompanyInfoAdmin(admin.ModelAdmin):
 
     def liveness(self,obj):
         
-        if obj.status == 10:
+        if obj.status == 10 and get_user_group('super'):
             return format_html("<input style='width:140px' type='button' onclick=window.location.href='/redeclare?cid={}' value=重新申请 >",obj.id)
         elif obj.status >= 1:
             return '较活跃'
