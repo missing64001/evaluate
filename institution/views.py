@@ -331,8 +331,6 @@ def save_reportback_view(request):
     if request.POST['report_type'] == 'investreport':
         obj.investreport = InvestReport.objects.get(id=_id)
         cobj = CompanyInfo.objects.get(name=obj.investreport.companyInfo.name,user__id__gt=0) 
-
-
         cobj.status = 9
         cobj.save()
         CompanyStatus.objects.create(companyInfo=cobj,status=9)
@@ -346,6 +344,7 @@ def save_reportback_view(request):
         raise ValueError('错误的数据:' + request.POST['report_type'])
 
     obj.institution = Institution.objects.get(user=request.user)
+    obj.companyInfo = cobj
     obj.save()
     return ReportBackAdmin(ReportBack,admin.AdminSite()).change_view(request,str(obj.id))
 
