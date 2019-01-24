@@ -344,7 +344,6 @@ def save_reportback_view(request):
         raise ValueError('错误的数据:' + request.POST['report_type'])
 
     obj.institution = Institution.objects.get(user=request.user)
-    obj.companyInfo = cobj
     obj.save()
     return ReportBackAdmin(ReportBack,admin.AdminSite()).change_view(request,str(obj.id))
 

@@ -301,7 +301,7 @@ class ReportBackAdmin(admin.ModelAdmin):
         # elif get_user_group(request,'机构用户'):
         #     return ['institution']
         return self.readonly_fields
-        
+
     # def get_fieldsets(self, request, obj=None):
     #     # from pprint import pprint
     #     # pprint(dir(obj))
@@ -332,7 +332,7 @@ class ReportBackAdmin(admin.ModelAdmin):
             return qs.filter(investreport__companyInfo__incubator__user=request.user,isinstitutionview=2) | qs.filter(bankreport__companyInfo__incubator__user=request.user,isinstitutionview=2)
 
         elif get_user_group(request,'企业用户'):
-            return qs.filter(investreport__companyInfo__user=request.user,iscompanyview=2) | qs.filter(bankreport__companyInfo__user=request.user,iscompanyview=2)
+            return qs.filter(investreport__companyInfo__name=CompanyInfo.objects.get(user=request.user).name ,iscompanyview=2) | qs.filter(bankreport__companyInfo____name=CompanyInfo.objects.get(user=request.user).name ,iscompanyview=2)
 
 
     class Media:
