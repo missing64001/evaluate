@@ -266,7 +266,7 @@ class ReportBackAdmin(admin.ModelAdmin):
             return exclude
 
         elif get_user_group(request,'机构用户'):
-            exclude = ['iscompanyview','isinstitutionview'] + self.exclude
+            exclude = ['institution','iscompanyview','isinstitutionview'] + self.exclude
             return exclude
 
     def save_model(self, request, obj, form, change):
@@ -298,8 +298,16 @@ class ReportBackAdmin(admin.ModelAdmin):
             return ['institution','mget_company','note']
         elif get_user_group(request,'企业用户'):
             return ['institution','note']
+        # elif get_user_group(request,'机构用户'):
+        #     return ['institution']
         return self.readonly_fields
-
+        
+    # def get_fieldsets(self, request, obj=None):
+    #     # from pprint import pprint
+    #     # pprint(dir(obj))
+    #     if get_user_group(request,'机构用户'):
+    #         return ((None,{'fields':('username','password','email','last_name','is_staff','is_active','groups')}),)
+    #     return self.fieldsets
 
     def mget_company(self,obj):
         report = obj.investreport or obj.bankreport
