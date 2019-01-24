@@ -7,7 +7,7 @@ $(function(){
     
     // // 111 设置 首页的链接显示 不需要设置了
     // var global_group = $('#global_group').attr('name')
-    // var url = location.pathname
+    var url = location.pathname
 
     // //设置 平台管理员的
     // if (global_group == 'super' & url == '/admin/'){
@@ -91,7 +91,6 @@ $(function(){
 
     // 333 设置 /admin/auth/user/res_in 页面的breadcrumb
     if (url == "/admin/auth/user/res_in"){
-        console.log('xxxxxxxxxx')
         var b = '<ul class="breadcrumb">\
                       <li><a href="/admin/">首页</a>\
                         <span class="divider">»</span></li>\
@@ -109,7 +108,7 @@ $(function(){
 
 
 $(function(){
-    // 444 
+    // 444 '添加另一个' 改为 '添加'
    var addslst = $('.inline-group .add-row>a')
    for (var i=0;i<addslst.length;i++){
         var a = $(addslst[i])
@@ -119,12 +118,11 @@ $(function(){
 
 
 
-   // 555 删除不需要保存的 保存选项
-   isremove = $('#global_is_close_save').attr('name')
-   console.log(isremove)
-   if (isremove == '1'){
-        $('.save-box').remove()
-   }
+   // 555 删除不需要保存的 保存选项  先不需要了
+   // isremove = $('#global_is_close_save').attr('name')
+   // if (isremove == '1'){
+   //      $('.save-box').remove()
+   // }
    
 })
 

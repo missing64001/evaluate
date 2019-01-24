@@ -1,22 +1,15 @@
 from django.shortcuts import render,redirect
-from company.models import CompanyInfo,Balance,Profit,CashFlow,FinancialSituation,EvaluationOfEnterprises,IndependentEvaluationOfEnterprises,get_user_group
+from company.models import * #CompanyInfo,Balance,Profit,CashFlow,FinancialSituation,EvaluationOfEnterprises,IndependentEvaluationOfEnterprises,get_user_group
 from company.admin import CompanyInfoAdmin
 from django.db.models import Max,Min,Count
+from incubator.models import Incubator
 from .models import *
 from django.http import HttpResponseRedirect
 from .admin import *
 from django.contrib import admin
 from functools import reduce
 
-
-
-
-
 # Create your views here.
-# 
-# 
-# 
-# 
 def investreport_view(request):
     if get_user_group(request,'机构用户'):
         return InvestReportAdmin(InvestReport,admin.AdminSite()).changelist_view(request)
@@ -41,6 +34,48 @@ def report_companyinfo_view(request,_type,num):
     # print(res)
     # pprint(dir(res))
     return res
+
+def copy_company(cobj):
+
+    
+
+    # 删除 'companyInfo_id','id' companyInfo=cobj 来查找其他的
+    # 复制company 需要删除 'user_id', 'id', 'incubator_id'
+
+    del_company_fields = ('user_id', 'id', 'incubator_id')
+    del_other_fields = ('companyInfo_id','id')
+
+    # 需要清空的 平台管理员重新设置状态
+    clschanges = (CompanyStatus,)
+
+    # 需要复制的
+    clscopys = (RejectReason,Shareholder,EnterpriseAwards,PersonalAwards,
+            Project,Patent,DrugApproval,MIRC,StandardSetting,Otherm,CoreMember,
+            FinancialSituation,ProductsAndMarket,TechnologyRD,ServerRequest,
+            IndependentEvaluationOfEnterprises,EvaluationOfEnterprises,
+            PTOfEnterprises,Bonus,Subtraction)
+
+    # 不进行处理的 也可以进行复制
+    clsnones = (Balance,Profit,CashFlow)
+
+    companydict = CompanyInfo.objects.filter(id=cobj.id).values()[0]
+    incubator_id = companydict['incubator_id']
+    for field in del_company_fields:
+        del companydict[field]
+    companydict['incubator'] = Incubator.objects.get(id=incubator_id) 
+    newcobj = CompanyInfo.objects.create(**companydict)
+
+    for clscopy in clscopys:
+        objs = clscopy.objects.filter(companyInfo=cobj)
+        for obj in objs:
+            objdict = clscopy.objects.filter(id=obj.id).values()[0]
+            for field in del_other_fields:
+                del objdict[field]
+            objdict['companyInfo'] = newcobj
+            clscopy.objects.create(**objdict)
+    return newcobj
+# x = CompanyInfo.objects.all().order_by('-id')[0]
+# copy_company(x)
 
 def createcompanyreport_view(request):
     if request.method == 'POST':
@@ -193,6 +228,20 @@ def createcompanyreport_view(request):
 
 
 
+
+            zp = IndependentEvaluationOfEnterprises.objects.get(companyInfo=cobj)
+            data['zp1'] = zp.external_environment
+            data['zp2'] = zp.products_and_market
+            data['zp3'] = zp.technology_R_D
+            data['zp4'] = zp.team
+
+            pt = PTOfEnterprises.objects.get(companyInfo=cobj)
+            data['pt1'] = pt.external_environment
+            data['pt2'] = pt.products_and_market
+            data['pt3'] = pt.technology_R_D
+            data['pt4'] = pt.team
+
+            data['companyInfo'] = copy_company(cobj)
 
             _id = Report.objects.create(**data).id
             return HttpResponseRedirect('/admin/institution/%s'%modleName)

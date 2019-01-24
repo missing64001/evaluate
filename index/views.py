@@ -1069,6 +1069,21 @@ def derive_data_view_old(request):
 
     return HttpResponseRedirect('/admin')
 
+def redeclare_view(request):
+    cid = request.GET.get('cid')
+    print(cid)
+    cobj = CompanyInfo.objects.get(id=cid)
+    if cobj.status == 10:
+        cobj.status = 0
+    css = CompanyStatus.objects.filter(companyInfo=cobj)
+    for cs in css:
+        cs.is_alive=False
+        cs.save()
+    cobj.save()
+    CompanyStatus.objects.create(companyInfo=cobj,status=0)
+    return HttpResponseRedirect('/admin/company/companyinfo')
+
+
 def set_permission(request):
     if not get_user_group(request.user,'super'):
         return HttpResponseRedirect('/admin/')

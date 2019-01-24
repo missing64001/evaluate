@@ -1,3 +1,8 @@
+
+
+
+
+// 设置 外键优化选择
 window.onload=function(){
     var input = $('#lookup_companyInfo')
 

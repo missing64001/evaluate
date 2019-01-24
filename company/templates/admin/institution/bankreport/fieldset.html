@@ -103,17 +103,55 @@
 
 
 <h4 style="margin:10px 0px 5px 0px;">报告分值</h4>
-<div style=":width:100%;height: 800px; padding: 20px 100px; background-color: #F6F7F8;border-radius: 4px; box-shadow: 0 0 0 1px rgba(0,0,0,0.07);">
+<div style=":width:100%;height: 900px; padding: 20px 100px; background-color: #F6F7F8;border-radius: 4px; box-shadow: 0 0 0 1px rgba(0,0,0,0.07);">
 
 <h5 style="color: #666;font-weight: 400">*表格显示近五年报告</h5>
 <table>
-  {% for data in report_data %}
+  {% for data in report_data.0 %}
   <tr>
     {% for da in data %}
     {% if forloop.first %}
     <td  align="right" style="width: 220px;"> <span>{{da}}</span></td>
     {% else %}
-    <td  align="middle" style="width: 100px;"> <span>{{da}}</span></td>
+    <td  colspan={{colspan}}  align="middle" style="width: 120px;"> <span>{{da}}</span></td>
+    {% endif %}
+    {% endfor %}
+  </tr>
+  {% endfor %}
+
+    <tr style="background: #FAFAFA;">
+      <td style="background: #FAFAFA;"></td>
+      {% for xxxx in colspanyears %}
+      <td colspan=3 style="background: #FAFAFA;"></td>
+      {% endfor %}
+    </tr>
+
+  {% for data in report_data.1 %}
+  <tr>
+    {% for da in data %}
+    {% if forloop.first %}
+    <td  align="right" style="width: 220px;"> <span>{{da}}</span></td>
+    {% else %}
+    <td colspan=3 align="middle" style="width: 120px;"> <span>{{da}}</span></td>
+    {% endif %}
+    {% endfor %}
+  </tr>
+  {% endfor %}
+
+    <tr style="background: #FAFAFA;">
+      <td style="background: #FAFAFA;"></td>
+      {% for xxxx in colspanyears %}
+      <td colspan=3 style="background: #FAFAFA;"></td>
+      {% endfor %}
+    </tr>
+
+  {% for data in report_data.2 %}
+  <tr>
+    {% for da in data %}
+    {% if forloop.first %}
+    <td  align="right" style="width: 220px;"> <span>{{da}}</span></td>
+    {% else %}
+    <td  colspan={% widthratio colspan 1 3 %} align="middle" style="width: 120px;"> <span>{{da}}</span></td>
     {% endif %}
     {% endfor %}
   </tr>

@@ -48,7 +48,6 @@ field_1_choices = ((1,'A 农、林、牧、渔业'),
 
 
 
-
 technical_source_choices = ((1,'独立知识产权'), (2,'合作研发'), (3,'购买技术'), (4,'其他'))
 SOAT_choices = ((1,'高校/科研院所'), (2,'相关科技计划'), (3,'自行研发'), (4,'其他'))
 class CompanyInfo(models.Model):
@@ -58,7 +57,7 @@ class CompanyInfo(models.Model):
     status = models.SmallIntegerField(choices=status_choices,verbose_name='状态',default=0)
     incubator = models.ForeignKey(Incubator,verbose_name='所属孵化器',null=True)
 
-    name = models.CharField(max_length=50,unique=True,verbose_name='企业名称',null=True)
+    name = models.CharField(max_length=50,verbose_name='企业名称',null=True)
     create_date = models.DateField(verbose_name='成立时间',null=True)
     registered_capital = models.IntegerField(verbose_name='注册资本（万元）',null=True)
     paid_in_capital = models.IntegerField(verbose_name='实收资本（万元）',null=True)
@@ -97,6 +96,7 @@ class CompanyInfo(models.Model):
 class CompanyStatus(models.Model):
     companyInfo = models.ForeignKey(CompanyInfo,verbose_name='企业',blank=True,null=True)
     status = models.SmallIntegerField(verbose_name='状态',blank=True,null=True)
+    is_alive = models.BooleanField(verbose_name='是否有效',default=True)
     create_date = models.DateTimeField(verbose_name='生成时间',auto_now_add=True,blank=True,null=True)
 
 class RejectReason(models.Model):
@@ -483,6 +483,21 @@ class EvaluationOfEnterprises(models.Model):
 
     class Meta:
         verbose_name='校正评价'
+        verbose_name_plural=verbose_name
+
+class PTOfEnterprises(models.Model):
+    companyInfo = models.OneToOneField(CompanyInfo,verbose_name='企业',blank=True,null=True)
+    external_environment = models.SmallIntegerField(choices=external_environment_choices,verbose_name='企业所处外部环境（权重：2）',blank=True,null=True)
+    products_and_market = models.SmallIntegerField(choices=external_environment_choices,verbose_name='企业主营产品及市场开拓（权重：2）',blank=True,null=True)
+    technology_R_D = models.SmallIntegerField(choices=external_environment_choices,verbose_name='企业核心技术及研发实力（权重：2）',blank=True,null=True)
+    team = models.SmallIntegerField(choices=external_environment_choices,verbose_name='企业经营及管理团队（权重：4）',blank=True,null=True)
+    create_date = models.DateTimeField(verbose_name='生成时间',auto_now_add=True,blank=True,null=True)
+    
+    def __str__(self):
+        return '平台评价'
+
+    class Meta:
+        verbose_name='平台评价'
         verbose_name_plural=verbose_name
 
 class Balance(models.Model):

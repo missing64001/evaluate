@@ -70,6 +70,18 @@ class InvestReport(models.Model):
     for i in enumerate(invest_report_items[4:],5):
         exec("i%s = models.CharField(max_length=5,verbose_name='%s',blank=True,null=True)"%(*i,))
     
+    # 企业自评
+    zp1 = models.SmallIntegerField(choices=external_environment_choices,verbose_name='zp1',default=1,blank=True,null=True)
+    zp2 = models.SmallIntegerField(choices=external_environment_choices,verbose_name='zp2',default=1,blank=True,null=True)
+    zp3 = models.SmallIntegerField(choices=external_environment_choices,verbose_name='zp3',default=1,blank=True,null=True)
+    zp4 = models.SmallIntegerField(choices=external_environment_choices,verbose_name='zp4',default=1,blank=True,null=True)
+
+    # 平台评价
+    pt1 = models.SmallIntegerField(choices=external_environment_choices,verbose_name='pt1',default=1,blank=True,null=True)
+    pt2 = models.SmallIntegerField(choices=external_environment_choices,verbose_name='pt2',default=1,blank=True,null=True)
+    pt3 = models.SmallIntegerField(choices=external_environment_choices,verbose_name='pt3',default=1,blank=True,null=True)
+    pt4 = models.SmallIntegerField(choices=external_environment_choices,verbose_name='pt4',default=1,blank=True,null=True)
+
 
     years = models.CharField(max_length=50,verbose_name='年份',blank=True,null=True)
 
@@ -121,6 +133,28 @@ class BankReport(models.Model):
         exec("i%s = models.SmallIntegerField(choices=external_environment_choices,verbose_name='%s',default=1,blank=True,null=True)"%i)
     for i in enumerate(bank_report_items[4:],5):
         exec("i%s = models.CharField(max_length=5,verbose_name='%s',blank=True,null=True)"%(*i,))
+
+
+
+
+
+    # 企业自评
+    zp1 = models.SmallIntegerField(choices=external_environment_choices,verbose_name='zp1',default=1,blank=True,null=True)
+    zp2 = models.SmallIntegerField(choices=external_environment_choices,verbose_name='zp2',default=1,blank=True,null=True)
+    zp3 = models.SmallIntegerField(choices=external_environment_choices,verbose_name='zp3',default=1,blank=True,null=True)
+    zp4 = models.SmallIntegerField(choices=external_environment_choices,verbose_name='zp4',default=1,blank=True,null=True)
+
+    # 平台评价
+    pt1 = models.SmallIntegerField(choices=external_environment_choices,verbose_name='pt1',default=1,blank=True,null=True)
+    pt2 = models.SmallIntegerField(choices=external_environment_choices,verbose_name='pt2',default=1,blank=True,null=True)
+    pt3 = models.SmallIntegerField(choices=external_environment_choices,verbose_name='pt3',default=1,blank=True,null=True)
+    pt4 = models.SmallIntegerField(choices=external_environment_choices,verbose_name='pt4',default=1,blank=True,null=True)
+
+
+
+
+
+
 
     years = models.CharField(max_length=50,verbose_name='年份',blank=True,null=True)
 

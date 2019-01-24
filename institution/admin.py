@@ -148,7 +148,7 @@ class CompanyInfoReportAdmin(admin.ModelAdmin):
         # self.myrequest = request
         qs = super().get_queryset(request)
         if request.user.is_superuser:
-            return qs
+            return qs.filter(user__id__gt=0)
 
         elif get_user_group(request,'机构用户'):
             return qs.filter(investreport__institution__user=request.user)

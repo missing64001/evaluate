@@ -29,6 +29,10 @@ urlpatterns = [
     url(r'^deldata/$',deldata_view, name='deldata_view'),
     url(r'^independentevaluationofenterprises/(\d+)/',independentevaluationofenterprises_view, name='independentevaluationofenterprises_view'),
     url(r'^evaluationofenterprises/',evaluationofenterprises_to_independentevaluationofenterprises_view, name='evaluationofenterprises_to_independentevaluationofenterprises_view'),
+    url(r'^ptofenterprises/',evaluationofenterprises_to_independentevaluationofenterprises_view, name='evaluationofenterprises_to_independentevaluationofenterprises_view'),
+
+
+
     # url(r'^EvaluationOfEnterprises/(\d+)/',EvaluationOfEnterprisesview, name='EvaluationOfEnterprisesview'),
 
     

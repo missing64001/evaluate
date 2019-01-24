@@ -19,6 +19,7 @@ urlpatterns = [
     url(r'^admin/auth/user/res_in$',my_register_in, name='my_register_in'),
 
     url(r'^savedata/$',savedata_view, name='savedata_view'),
+    url(r'^redeclare/$',redeclare_view, name='redeclare_view'),
     url(r'^setpermission/$',set_permission, name='set_permission'),
     url(r'^download_data/$',derive_data_view, name='derive_data_view'), #
 

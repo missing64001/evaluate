@@ -24,7 +24,7 @@ class m1(MiddlewareMixin):
                   'app': 'incubator',
                   'models': (
 
-                             {'label': '校正评价', 'url': '/admin/company/independentevaluationofenterprises/'},
+                             {'label': '平台评价', 'url': '/admin/company/independentevaluationofenterprises/'},
 
                             'index.Bonus','index.Subtraction',
                 )},

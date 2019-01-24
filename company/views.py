@@ -9,7 +9,7 @@ from .models import *
 from pprint import pprint
 from django.db.models import F,Count
 from django.contrib import admin
-from .admin import IndependentEvaluationOfEnterprisesAdmin,EvaluationOfEnterprisesAdmin,CompanyInfoAdmin
+from .admin import IndependentEvaluationOfEnterprisesAdmin,EvaluationOfEnterprisesAdmin,CompanyInfoAdmin,PTOfEnterprisesAdmin
 from django.contrib import messages
 import os
 from functools import reduce
@@ -96,8 +96,13 @@ def company_status_view(request):
 
     # 设置流程说明
     nodes = []
-    nodes.append((0,request.user.date_joined,'企业填写企业信息　　下一步：上传企业财务报表'))
-    cstatusall = CompanyStatus.objects.filter(companyInfo=cobj).order_by('id')
+    cstatusall = CompanyStatus.objects.filter(companyInfo=cobj,is_alive=True).order_by('id')
+    cstatusjoined = CompanyStatus.objects.filter(companyInfo=cobj,is_alive=True,status=0)
+    if cstatusjoined:
+        date_joined = cstatusjoined[0].create_date
+    else:
+        date_joined = request.user.date_joined
+    nodes.append((0,date_joined,'企业填写企业信息　　下一步：上传企业财务报表'))
     rreasons = RejectReason.objects.filter(companyInfo=cobj)
     rreasonlst = []
     for reason in rreasons:
@@ -835,8 +840,26 @@ def cash_flow_submit_table_view(request):
 def independentevaluationofenterprises_view(request,arg1):
     group_name = None
     if request.user.is_superuser:
-        return IndependentEvaluationOfEnterprisesAdmin(IndependentEvaluationOfEnterprises,admin.AdminSite()).change_view(request,arg1)
-        group_name = None
+        iobj = IndependentEvaluationOfEnterprises.objects.get(id=arg1)
+        try:
+            eobj = EvaluationOfEnterprises.objects.get(companyInfo=iobj.companyInfo)
+        except EvaluationOfEnterprises.DoesNotExist as e:
+            eobj = EvaluationOfEnterprises.objects.create(companyInfo=iobj.companyInfo)
+        try:
+            ptobj = PTOfEnterprises.objects.get(companyInfo=iobj.companyInfo)
+        except PTOfEnterprises.DoesNotExist as e:
+            ptobj = PTOfEnterprises.objects.create(companyInfo=iobj.companyInfo)
+
+        data = {'isocre1':iobj.external_environment,
+                'isocre2':iobj.products_and_market,
+                'isocre3':iobj.technology_R_D,
+                'isocre4':iobj.team,
+                'esocre1':eobj.external_environment,
+                'esocre2':eobj.products_and_market,
+                'esocre3':eobj.technology_R_D,
+                'esocre4':eobj.team,
+                }
+        return PTOfEnterprisesAdmin(PTOfEnterprises,admin.AdminSite()).change_view(request,str(ptobj.id),extra_context=data)
     else:
         group_name = request.user.groups.all()[0].name
 
@@ -848,14 +871,17 @@ def independentevaluationofenterprises_view(request,arg1):
             eobj = EvaluationOfEnterprises.objects.get(companyInfo=iobj.companyInfo)
         except EvaluationOfEnterprises.DoesNotExist as e:
             eobj = EvaluationOfEnterprises.objects.create(companyInfo=iobj.companyInfo)
+        try:
+            ptobj = PTOfEnterprises.objects.get(companyInfo=iobj.companyInfo)
+        except PTOfEnterprises.DoesNotExist as e:
+            ptobj = PTOfEnterprises.objects.create(companyInfo=iobj.companyInfo)
+
         data = {'isocre1':iobj.external_environment,
                 'isocre2':iobj.products_and_market,
                 'isocre3':iobj.technology_R_D,
                 'isocre4':iobj.team,
                 }
         return EvaluationOfEnterprisesAdmin(EvaluationOfEnterprises,admin.AdminSite()).change_view(request,str(eobj.id),extra_context=data)
-
-        
 
 def evaluationofenterprises_to_independentevaluationofenterprises_view(request):
     return redirect ('/admin/company/independentevaluationofenterprises/')

@@ -360,9 +360,9 @@ class CompanyInfoAdmin(admin.ModelAdmin):
     def get_queryset(self, request):
         qs = super().get_queryset(request)
         if request.user.is_superuser:
-            return qs
+            return qs.filter(user__id__gt=0)
         elif get_user_group(request,'孵化器用户'):
-            return qs.filter(incubator=Incubator.objects.get(user=request.user))
+            return qs.filter(incubator=Incubator.objects.get(user=request.user),user__id__gt=0)
         elif get_user_group(request,'机构用户'):
             return qs.filter(investreport__institution__user=request.user).annotate(Max('id'))
             # return investreport.filter(institution=Institution.objects.get(user=request.user)).companyInfo
@@ -417,7 +417,10 @@ class CompanyInfoAdmin(admin.ModelAdmin):
     #     js = ('/static/js/balance.js',)
 
     def liveness(self,obj):
-        if obj.status >= 1:
+        
+        if obj.status == 10:
+            return format_html("<input style='width:140px' type='button' onclick=window.location.href='/redeclare?cid={}' value=重新申请 >",obj.id)
+        elif obj.status >= 1:
             return '较活跃'
         else:
             return '欠活跃'
@@ -476,6 +479,30 @@ class ServerRequestAdmin(admin.ModelAdmin):
         return qs.filter(companyInfo=CompanyInfo.objects.get(user=request.user))
 
 
+
+@admin.register(PTOfEnterprises)
+class PTOfEnterprisesAdmin(admin.ModelAdmin):
+    readonly_fields = ('companyInfo',)
+    search_fields = ('companyInfo__name',)
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        if get_user_group(request,'super'):
+            return qs.filter(companyInfo__user__id__gt=0)
+
+    # def get_readonly_fields(self,request,obj):
+    #     if obj and obj.companyInfo.status > 3:
+    #         return ('companyInfo','external_environment','products_and_market','technology_R_D','team')
+    #     return self.readonly_fields
+
+    class Media:
+        js = ('/static/js/opt_evaluation.js',)
+
+
+
+
+        
+
+
 @admin.register(IndependentEvaluationOfEnterprises)
 class IndependentEvaluationOfEnterprisesAdmin(admin.ModelAdmin):
     list_display=['companyInfo','external_environment','products_and_market','technology_R_D','team','create_date']
@@ -485,11 +512,11 @@ class IndependentEvaluationOfEnterprisesAdmin(admin.ModelAdmin):
     def get_queryset(self, request):
         qs = super().get_queryset(request)
         if get_user_group(request,'super'):
-            return qs
+            return qs.filter(companyInfo__user__id__gt=0)
         elif get_user_group(request,'企业用户'):
             return qs.filter(companyInfo=CompanyInfo.objects.get(user=request.user))
         elif get_user_group(request,'孵化器用户'):
-            return qs.filter(companyInfo__incubator=Incubator.objects.get(user=request.user))
+            return qs.filter(companyInfo__incubator=Incubator.objects.get(user=request.user),companyInfo__user__id__gt=0)
 
     def get_readonly_fields(self,request,obj):
         if obj and obj.companyInfo.status > 3:
@@ -497,12 +524,12 @@ class IndependentEvaluationOfEnterprisesAdmin(admin.ModelAdmin):
         return self.readonly_fields
 
     def get_list_display(self, request, obj=None):
-        if not get_user_group(request,'企业用户'):
+        if  get_user_group(request,'孵化器用户'):
             return ['companyInfo','external_environment_add','products_and_market_add','technology_R_D_add','team_add','create_date']
+        elif get_user_group(request,'super'):
+            return ['companyInfo','external_environment_addpt','products_and_market_addpt','technology_R_D_addpt','team_addpt','create_date']
         return self.list_display
 
-    class Media:
-        js = ('/static/js/opt_evaluation.js',)
 
     def save_model(self, request, obj, form, change):
         obj.companyInfo = CompanyInfo.objects.get(user=request.user)
@@ -544,16 +571,107 @@ class IndependentEvaluationOfEnterprisesAdmin(admin.ModelAdmin):
         else:
             return '%s （%s分）' % ('--' ,obj.team)
 
+
+    # def change_view(self, request, object_id, form_url='', extra_context=None):
+    #     return self.changeform_view(request, object_id, form_url, extra_context)
+
+    def external_environment_addpt(self,obj):
+        eobjs = EvaluationOfEnterprises.objects.filter(companyInfo=obj.companyInfo)
+        pobjs = PTOfEnterprises.objects.filter(companyInfo=obj.companyInfo)
+
+
+        if eobjs and eobjs[0].external_environment:
+            eda = '%s分' % eobjs[0].external_environment
+        else:
+            eda = '--'
+
+        if pobjs and pobjs[0].external_environment:
+            pda = '%s分' % pobjs[0].external_environment
+        else:
+            pda = '--'
+
+        if obj.external_environment:
+            ida = '%s分' % obj.external_environment
+        else:
+            ida = '--'
+        return '%s （%s %s）' % (pda ,eda,ida)
+
+    def products_and_market_addpt(self,obj):
+        eobjs = EvaluationOfEnterprises.objects.filter(companyInfo=obj.companyInfo)
+        pobjs = PTOfEnterprises.objects.filter(companyInfo=obj.companyInfo)
+
+
+        if eobjs and eobjs[0].products_and_market:
+            eda = '%s分' % eobjs[0].products_and_market
+        else:
+            eda = '--'
+
+        if pobjs and pobjs[0].products_and_market:
+            pda = '%s分' % pobjs[0].products_and_market
+        else:
+            pda = '--'
+
+        if obj.products_and_market:
+            ida = '%s分' % obj.products_and_market
+        else:
+            ida = '--'
+        return '%s （%s %s）' % (pda ,eda,ida)
+
+    def technology_R_D_addpt(self,obj):
+        eobjs = EvaluationOfEnterprises.objects.filter(companyInfo=obj.companyInfo)
+        pobjs = PTOfEnterprises.objects.filter(companyInfo=obj.companyInfo)
+
+
+        if eobjs and eobjs[0].technology_R_D:
+            eda = '%s分' % eobjs[0].technology_R_D
+        else:
+            eda = '--'
+
+        if pobjs and pobjs[0].technology_R_D:
+            pda = '%s分' % pobjs[0].technology_R_D
+        else:
+            pda = '--'
+
+        if obj.technology_R_D:
+            ida = '%s分' % obj.technology_R_D
+        else:
+            ida = '--'
+        return '%s （%s %s）' % (pda ,eda,ida)
+
+    def team_addpt(self,obj):
+        eobjs = EvaluationOfEnterprises.objects.filter(companyInfo=obj.companyInfo)
+        pobjs = PTOfEnterprises.objects.filter(companyInfo=obj.companyInfo)
+
+
+        if eobjs and eobjs[0].team:
+            eda = '%s分' % eobjs[0].team
+        else:
+            eda = '--'
+
+        if pobjs and pobjs[0].team:
+            pda = '%s分' % pobjs[0].team
+        else:
+            pda = '--'
+
+        if obj.team:
+            ida = '%s分' % obj.team
+        else:
+            ida = '--'
+        return '%s （%s %s）' % (pda ,eda,ida)
+
     external_environment_add.short_description = '企业所处外部环境（企业自评）'
     products_and_market_add.short_description = '企业主营产品及市场开拓（企业自评）'
     technology_R_D_add.short_description = '企业核心技术及研发实力（企业自评）'
     team_add.short_description = '企业经营及管理团队（企业自评）'
-    # def change_view(self, request, object_id, form_url='', extra_context=None):
-    #     return self.changeform_view(request, object_id, form_url, extra_context)
+
+    external_environment_addpt.short_description = '企业所处外部环境（校正评价 企业自评）'
+    products_and_market_addpt.short_description = '企业主营产品及市场开拓（校正评价 企业自评）'
+    technology_R_D_addpt.short_description = '企业核心技术及研发实力（校正评价 企业自评）'
+    team_addpt.short_description = '企业经营及管理团队（校正评价 企业自评）'
 
 
-
-
+    class Media:
+        js = ('/static/js/opt_evaluation.js',)
 
 @admin.register(EvaluationOfEnterprises)
 class EvaluationOfEnterprisesAdmin(admin.ModelAdmin):

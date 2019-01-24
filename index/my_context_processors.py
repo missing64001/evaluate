@@ -5,6 +5,7 @@ from django.contrib.auth.models import Group
 from company.models import get_user_group,CompanyInfo
 from institution.models import BankReport,InvestReport,Institution
 import re
+import copy
 
 def globar_var(request):
     global_url = []
@@ -49,7 +50,7 @@ def globar_var(request):
     # 设置修改文件的保存按钮
     urls = []
     urls_super = [r'/admin/company/companyinfo/\d+/change/',
-                  r'/admin/company/independentevaluationofenterprises/\d+/change/',
+                  # r'/admin/company/independentevaluationofenterprises/\d+/change/',
         ]
     urls_company_f = [r'/admin/company/companyinfo/\d+/change/',
                   r'/admin/company/independentevaluationofenterprises/\d+/change/',
@@ -106,7 +107,7 @@ def globar_var(request):
             # print('匹配')
             bobj = BankReport.objects.get(id=int(res[0]))
             report_items = (
-                '评分要点',
+                '评分要点　',
                 '外部环境（20）',
                 '企业主营产品及市场开拓（20）',
                 '企业核心技术及研发实力（20）',
@@ -137,7 +138,7 @@ def globar_var(request):
             # print('匹配')
             bobj = InvestReport.objects.get(id=int(res[0]))
             report_items = (
-                '评分要点',
+                '评分要点　',
                 '外部环境（20）',
                 '企业主营产品及市场开拓（20）',
                 '企业核心技术及研发实力（20）',
@@ -155,7 +156,7 @@ def globar_var(request):
                 '*经营现金流量负债比（5）',
                 '*流动比率（5）',
                 '*利息保障倍数（5）',
-                '研发费用收入比例(10)',
+                '研发费用收入比例（10）',
                 )
             fenzhi = (10,7,8,10,5,10,10,5,5,5,5,5,5,10)
             
@@ -165,7 +166,9 @@ def globar_var(request):
             report_data.append(years)
             for i in range(1,5):
                 x = getattr(bobj,'i%s'%i)
-                report_data.append( [report_items[i] ] + ['%s分' % x] + [ '' ] * (len(years)-2))
+                y = getattr(bobj,'zp%s'%i)
+                z = getattr(bobj,'pt%s'%i)
+                report_data.append( [report_items[i] ] + ['%s分' % y,'%s分' % x,'%s分' % z])
 
             for i in range(5,19):
                 x = getattr(bobj,'i%s'%i)
@@ -178,7 +181,7 @@ def globar_var(request):
             def getdata_data(j,i):
                 i = int(i[1:])
                 return report_data[i][j]
-            fin_totle = ['财务报表总得分']
+            fin_totle = ['财务报表总得分　']
             for j in range(1,len(years)):
                 fin = (
                     getdata_data(j,'i5') +getdata_data(j,'i6') +getdata_data(j,'i7') +getdata_data(j,'i8') +getdata_data(j,'i9') +getdata_data(j,'i10') +
@@ -191,14 +194,38 @@ def globar_var(request):
                     report_data[i][j] = str(report_data[i][j]) + '分'
 
 
-            bonus = (['加分'] + ['%s分' % bobj.bonus] + [ '' ] * (len(years)-2))
-            subtraction = (['减分'] + ['%s分' % bobj.subtraction] + [ '' ] * (len(years)-2))
-            totle = (['总分'] + ['%s分' % bobj.totle] + [ '' ] * (len(years)-2))
+            bonus = (['加分　'] + ['%s分' % bobj.bonus] + [ '' ] * (len(years)-2))
+            subtraction = (['减分　'] + ['%s分' % bobj.subtraction] + [ '' ] * (len(years)-2))
+            totle = (['总分　'] + ['%s分' % bobj.totle] + [ '' ] * (len(years)-2))
 
             report_data += [fin_totle,bonus,subtraction,totle]
 
 
+
+            report_data1 = report_data[:5]
+            report_data1[0] = ['评分要点　','企业自评得分','孵化器校正得分','平台校正得分']
+
+            yearlst = copy.deepcopy(report_data[0])
+            yearlst[0] = ''
+
+            zongfen = [ da[:2] for da in report_data[-3:]]
+
+
+            report_data = [report_data1,[yearlst]+report_data[5:-3],zongfen]
+
+
+
+
+            
             data['report_data'] = report_data
+            data['colspan'] = len(years[1:])
+            data['colspanyears'] = years[1:]
+
+
+            # report_data[1] = [  (x[0],x[1],x[1],x[1],x[1],x[1])    for x in report_data[1]]
+            # data['report_data'] = report_data
+            # data['colspan'] = 5
+            # data['colspanyears'] = '12345'
 
 
         if get_user_group(request,'super') and request.path in ('/admin/index/bonus/','/admin/index/subtraction/'):

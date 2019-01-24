@@ -4,17 +4,17 @@
 <div class="submit-row clearfix">
   {% if show_save %}<button 
 
-  {% if global_is_close_save %}
-  disabled style="background-color: #aaa"
-  {% endif %}
+
 
 
    type="submit" class="btn btn-high btn-info" name="_save">{% trans 'Save' %}</button>{% endif %}
-  
+
 
 </div>
-<!--   <input type="hidden" class="isocre1" value="{{isocre1}}">
-  <input type="hidden" class="isocre2" value="{{isocre2}}">
-  <input type="hidden" class="isocre3" value="{{isocre3}}">
-  <input type="hidden" class="isocre4" value="{{isocre4}}"> -->
+  {% if global_is_close_save %}
+  <script type="text/javascript">
+    $('div.save-box').remove()
+
+</script>
+  {% endif %}
 {% endif %}

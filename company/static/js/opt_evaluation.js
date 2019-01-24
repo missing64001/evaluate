@@ -45,6 +45,10 @@ $(function(){
     var isocre2 = ""
     var isocre3 = ""
     var isocre4 = ""
+    var esocre1 = ""
+    var esocre2 = ""
+    var esocre3 = ""
+    var esocre4 = ""
 
     if (parseInt($("input.isocre1").val())){
         isocre1 = "　　自评：" + $("input.isocre1").val() +"分"
@@ -58,6 +62,21 @@ $(function(){
     if (parseInt($("input.isocre4").val())){
         isocre4 = "　　自评：" + $("input.isocre4").val() +"分"
     }
+
+    if (parseInt($("input.esocre1").val())){
+        esocre1 = "　　校正：" + $("input.esocre1").val() +"分"
+    }
+    if (parseInt($("input.esocre2").val())){
+        esocre2 = "　　校正：" + $("input.esocre2").val() +"分"
+    }
+    if (parseInt($("input.esocre3").val())){
+        esocre3 = "　　校正：" + $("input.esocre3").val() +"分"
+    }
+    if (parseInt($("input.esocre4").val())){
+        esocre4 = "　　校正：" + $("input.esocre4").val() +"分"
+    }
+
+
     form = $("#evaluationofenterprises_form")
     form.submit(function(e){
     return confirm('提交后数据不可更改\n请确认是否提交');
@@ -74,6 +93,7 @@ $(function(){
         item.find('div.controls').css({'padding-top':'10px'})
         item.find('div.control-label').append('<label for="id_name">企业所处外部环境:</label>')
         item.find('div.controls').append(s1)
+        item.find('div.controls').append(esocre1)
         item.find('div.controls').append(isocre1)
         item.find('div.controls').append($("<h5>根据企业经营业务与政府优先发展的战略性优势产业契合度自评；</h5>"))
         item.find('div.controls').append($("<h5>根据政府对企业所处行业政策利好情况自评；</h5>"))
@@ -84,7 +104,8 @@ $(function(){
         var item = $(itemstr)
         item.find('div.control-label').append('<label for="id_name">企业主营产品及市场开拓:</label>')
         item.find('div.controls').append(s2)
-        item.find('div.controls').append(isocre1)
+        item.find('div.controls').append(esocre2)
+        item.find('div.controls').append(isocre2)
         item.find('div.controls').append($("<h5>企业主营产品或服务及业务领域稳定性自评；</h5>"))
         item.find('div.controls').append($("<h5>企业主营产品或服务在市场容量中份额自评；</h5>"))
         item.find('div.controls').append($("<h5>企业主营产品或服务在未来市场预测的自评；</h5>"))
@@ -93,7 +114,8 @@ $(function(){
         var item = $(itemstr)
         item.find('div.control-label').append('<label for="id_name">企业核心技术及研发实力:</label>')
         item.find('div.controls').append(s3)
-        item.find('div.controls').append(isocre1)
+        item.find('div.controls').append(esocre3)
+        item.find('div.controls').append(isocre3)
         item.find('div.controls').append($("<h5>企业核心技术创新性、技术所产阶段自评；</h5>"))
         item.find('div.controls').append($("<h5>企业核心技术的自主研发能力自评；</h5>"))
         item.find('div.controls').append($("<h5>企业研发团队能力、承担课题、专利等情况的自评；</h5>"))
@@ -102,7 +124,8 @@ $(function(){
         var item = $(itemstr)
         item.find('div.control-label').append('<label for="id_name">企业经营及管理团队:</label>')
         item.find('div.controls').append(s4)
-        item.find('div.controls').append(isocre1)
+        item.find('div.controls').append(esocre4)
+        item.find('div.controls').append(isocre4)
         item.find('div.controls').append($("<h5>管理层学历状况、主要管理层在同行业从业经历、从业时间、管理经验、经营业绩及相关社会背景自评；</h5>"))
         z.append(item)
 
@@ -140,7 +163,7 @@ $(function(){
         seth2.css({'margin-top':'28px'})
 
         var dclabel = $('div.control-label')
-        console.log(dclabel)
+        // console.log(dclabel)
         dclabel.css({'min-width':'180px'})
     }
 

@@ -10,6 +10,12 @@ from django_extensions.admin import ForeignKeyAutocompleteAdmin
 from django.contrib.auth.admin import UserAdmin as ua
 
 
+
+
+
+
+
+
 class IncubatorInl(admin.StackedInline):
     model = Incubator
 
@@ -57,12 +63,18 @@ admin.site.unregister(User)
 class UserAdmin(ua):
     list_display = ('username','mname','phone','email','group','owned_incubator','date_joined','is_staff')
     fieldsets = ((None,{'fields':('username','password','email','is_staff','is_active','groups')}),)
-    readonly_fields = ('username','email')
+    readonly_fields = ('username',)
     inlines = [IncubatorInl,InstitutionInl]
     # readonly_fields = ('groups',)
 
 
-    
+    def get_fieldsets(self, request, obj=None):
+        # from pprint import pprint
+        # pprint(dir(obj))
+        if get_user_group(request,'super'):
+            return ((None,{'fields':('username','password','email','last_name','is_staff','is_active','groups')}),)
+        return self.fieldsets
+
     def get_inline_instances(self, request, obj=None):
         id = request.path.split('/')[-3]
         if get_user_group(User.objects.get(id=id),'super'):
@@ -89,8 +101,10 @@ class UserAdmin(ua):
             obj=Incubator.objects.get(user=user)
         elif get_user_group(user,'机构用户'):
             obj=Institution.objects.get(user=user)
+        elif get_user_group(user,'super'):
+            return user.last_name
         else:
-            obj=Institution.objects.get(user=user)
+            return '-'
 
         return str(obj.phone)
     phone.short_description = '联系电话'
@@ -155,6 +169,9 @@ class UserAdmin(ua):
 
         return field
 
+    class Media:
+        js = ('/static/js/change_name_to_phone.js',)
+        
     # def formfield_for_manytomany(self, db_field, request, **kwargs):
     #     if db_field.name == 'groups':
     #         kwargs["queryset"] = Group.objects.filter(id= request.GET['type'])
@@ -190,43 +207,53 @@ class UserAdmin(ua):
     # expired.short_description = '是否已过期'
     # 
     # 
-    @admin.register(Bonus)
-    class BonusAdmin(ForeignKeyAutocompleteAdmin):
-        related_search_fields = {
-               'companyInfo': ('name','incubator'),
-            }
-        list_display = ('companyInfo','incubatorr','item','note','value')
-        search_fields = ('companyInfo__name','companyInfo__incubator__name')
+@admin.register(Bonus)
+class BonusAdmin(ForeignKeyAutocompleteAdmin):
+    related_search_fields = {
+           'companyInfo': ('name','incubator'),
+        }
+    list_display = ('companyInfo','incubatorr','item','note','value')
+    search_fields = ('companyInfo__name','companyInfo__incubator__name')
 
-        def incubatorr(self,obj):
+    def incubatorr(self,obj):
 
-            return obj.companyInfo.incubator
-        incubatorr.short_description = '机构'
+        return obj.companyInfo.incubator
+    incubatorr.short_description = '机构'
 
-        class Media:
-            js = ('/static/js/deal_bug.js',)
+    
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        return qs.filter(companyInfo__user__id__gt=0)
 
-    @admin.register(Subtraction)
-    class SubtractionAdmin(ForeignKeyAutocompleteAdmin):
-        related_search_fields = {
-               'companyInfo': ('name','incubator'),
-            }
-        list_display = ('companyInfo','incubatorr','item','note','value')
-        search_fields = ('companyInfo__name','companyInfo__incubator__name')
+    class Media:
+        js = ('/static/js/deal_bug.js',)
 
-        def incubatorr(self,obj):
+@admin.register(Subtraction)
+class SubtractionAdmin(ForeignKeyAutocompleteAdmin):
+    related_search_fields = {
+           'companyInfo': ('name','incubator'),
+        }
+    list_display = ('companyInfo','incubatorr','item','note','value')
+    search_fields = ('companyInfo__name','companyInfo__incubator__name')
 
-            return obj.companyInfo.incubator
-        incubatorr.short_description = '机构'
+    def incubatorr(self,obj):
 
-        class Media:
-            js = ('/static/js/deal_bug.js',)
-
+        return obj.companyInfo.incubator
+    incubatorr.short_description = '机构'
 
 
-        def save_model(self, request, obj, form, change):
-            obj.value = -abs(obj.value)
-            obj.save()
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        return qs.filter(companyInfo__user__id__gt=0)
+
+    class Media:
+        js = ('/static/js/deal_bug.js',)
+
+
+
+    def save_model(self, request, obj, form, change):
+        obj.value = -abs(obj.value)
+        obj.save()
 
 
 
