@@ -76,10 +76,11 @@ class InvestReportAdmin(admin.ModelAdmin):
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
     def save_model(self, request, obj, form, change):
-        obj.companyInfo.status = 8
-        obj.companyInfo.save()
+        cobj = CompanyInfo.objects.get(name=obj.companyInfo.name,user__id__gt=0) 
+        cobj.status = 8
+        cobj.save()
         obj.save()
-        CompanyStatus.objects.create(companyInfo=obj.companyInfo,status=8)
+        CompanyStatus.objects.create(companyInfo=cobj,status=8)
 
 
 @admin.register(BankReport)
@@ -135,10 +136,11 @@ class BankReportAdmin(admin.ModelAdmin):
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
     def save_model(self, request, obj, form, change):
-        obj.companyInfo.status = 8
-        obj.companyInfo.save()
+        cobj = CompanyInfo.objects.get(name=obj.companyInfo.name,user__id__gt=0) 
+        cobj.status = 8
+        cobj.save()
         obj.save()
-        CompanyStatus.objects.create(companyInfo=obj.companyInfo,status=8)
+        CompanyStatus.objects.create(companyInfo=cobj,status=8)
 
 class CompanyInfoReportAdmin(admin.ModelAdmin):
     list_display=['name','incubator','invest_report','bank_report']
@@ -283,9 +285,10 @@ class ReportBackAdmin(admin.ModelAdmin):
         obj.save()
         robj = obj.investreport or obj.bankreport
         if obj.iscompanyview == 2:
-            robj.companyInfo.status = 10
-            robj.companyInfo.save()
-            CompanyStatus.objects.create(companyInfo=robj.companyInfo,status=10)
+            cobj = CompanyInfo.objects.get(name=robj.companyInfo.name,user__id__gt=0) 
+            cobj.status = 10
+            cobj.save()
+            CompanyStatus.objects.create(companyInfo=cobj,status=10)
 
 
     def get_readonly_fields(self, request,obj=None):
