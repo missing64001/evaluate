@@ -138,7 +138,7 @@ def company_status_view(request):
             nodes.append((status,create_date,'您已收到来自平台的反馈信息'))
                 
     incubatorphone = cobj.incubator.phone
-    superphone = User.objects.get(id=1).first_name
+    superphone = User.objects.get(id=1).last_name
 
 
     res = render(request,'company_status.html',{'nodes':reversed(nodes),'showbutton':showbutton,
