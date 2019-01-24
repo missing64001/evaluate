@@ -321,7 +321,7 @@ class CompanyInfoAdmin(admin.ModelAdmin):
     def get_list_display(self, request, obj=None):
         if get_user_group(request,'super'):
             self.list_editable = ('status',)
-            return ['name','phone','incubator','credit_code','business_license_pic_show','status','liveness']
+            return ['name','phone','incubator','credit_code','business_license_pic_show','status','livenesssuper']
         elif get_user_group(request,'孵化器用户'):
             return ['name','phone','incubator','credit_code','business_license_pic_show','new_status','liveness']
         else:
@@ -416,14 +416,21 @@ class CompanyInfoAdmin(admin.ModelAdmin):
     # class Media:        
     #     js = ('/static/js/balance.js',)
 
-    def liveness(self,obj):
+    def livenesssuper(self,obj):
         
-        if obj.status == 10 and get_user_group('super'):
+        if obj.status == 10:
             return format_html("<input style='width:140px' type='button' onclick=window.location.href='/redeclare?cid={}' value=重新申请 >",obj.id)
         elif obj.status >= 1:
             return '较活跃'
         else:
             return '欠活跃'
+
+    def liveness(self,obj):
+        if obj.status >= 1:
+            return '较活跃'
+        else:
+            return '欠活跃'
+
     liveness.short_description = '活跃度'
 
     def business_license_pic_show(self,obj):
